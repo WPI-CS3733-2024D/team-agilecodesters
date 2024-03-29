@@ -259,8 +259,12 @@ You may use the following table template for your use cases. Copy-paste this tab
 # 3. User Interface 
  
 Here you should include the sketches or mockups for the main parts of the interface. 
- 
- 
+![[markdown-student-homeview.png]]
+![[mockup-student-profile.png]]
+![[mockup-apply.png]]
+![[mockup-view-applied.png]]
+![[mockup-view-students.png]]
+![[mockup-create-position.png]]
  
 ---- 
 # 4. Product Backlog 
