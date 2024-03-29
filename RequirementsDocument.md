@@ -210,7 +210,6 @@ You may use the following table template for your use cases. Copy-paste this tab
 | Flow of events | 1. The student logs in to the website (assuming they have already registered). <br> 2. The student is automatically brought to a webpage where they can see all research opportunities. <br> 3. There is a menu option to select recommended research positions based on their information registered on the registration page. <br> 4. The student can see all necessary information regarding the research position when selected. <br> 5. The student can click an option to apply for the research opportunity. | 
 | Alternative Flow of Events | 1. The student logs in to the website (assuming they have already registered). <br> 2. The student is automatically brought to a webpage where they can see all research opportunities. <br> 3. Alternative Step: Before selecting recommended research positions, the student decides to filter the list of opportunities based on specific criteria (e.g., field of study, location, duration). <br> 4. The student applies the filters, and the webpage refreshes to display only the research opportunities that match the selected criteria. | 
  
-
 | Use Case #2 | |   
 | ------------------ |--|   
 | Name | Sharing a Project’s Goals and Objectives |  
@@ -219,7 +218,6 @@ You may use the following table template for your use cases. Copy-paste this tab
 | Exit Conditions | The faculty member has special access to post research positions and only change their own research positions. |  
 | Flow of events | 1. The staff member logs into their account. <br> 2. The staff member creates a research position and fills out all the information required to submit that form. <br> 3. The instructor selects the field(s) that pertain to the research position. <br> 4. The instructor submits the research position. <br> 5. The instructor can see the list of students applying for the position and their qualifications. |  
 | Alternative Flow of Events | <br> The staff member logs into their account. There is an option for the staff member to add a new position and see the list of positions they’ve already created, along with the number of students who applied. The staff member does not fill in all the information for the research position. An error message is flashed, and the form cannot be submitted. <br> <br> The staff member initially logs into their account. There is an option for the staff member to add a new position and see the list of positions they’ve already created, along with the number of students who applied. The staff member fills out all needed information and submits the form. The staff member realizes they wish to make changes to their research position (e.g. deadline for position). They can click an edit option and update information for the position as needed. | 
- 
  
 | Use Case #3 | |  
 | ------------------ |--|  
@@ -230,7 +228,6 @@ You may use the following table template for your use cases. Copy-paste this tab
 | Flow of events | 1. The user logs into their account <br> 2. The user sees recommendations and selects the research positions they wish. <br> 3. The user navigates to a different page and sees the list of applied research positions. 3. The user sees the status of each applied research opportunity. |  
 | Alternative Flow of Events | The user logs into their account and is brought to the webpage to search for their research position. The user sees the status of each applied position and sees “denied” on their status tag. If the student finds that the the professor has not reviewed their application, they will see a “pending” message associated with the research position.  | 
  
-
 | Use Case #4| |  
 | ------------------ |--|  
 | Name | Withdraw an application | 
@@ -239,7 +236,6 @@ You may use the following table template for your use cases. Copy-paste this tab
 | Exit Conditions |The student can successfully withdraw an application | 
 | Flow of events | 1. The student logs in to the website (assuming they have already registered). <br> 2. The student is automatically brought to a webpage where they can see all research opportunities. <br> 3. There is a menu option to select to view their applied positions. <br> 4. The student can see all the applications they created. <br> 5. The student can click a button to withdraw from a research opportunity.| Alternative Step: 
 | Alternative Flow of Events | If the student has not created any applications yet, they will not have the option to withdraw from anything on the account details page. Instead, it will prompt them to return to the home page and create an application.| 
- 
 
 | Use Case #5| |  
 | ------------------ |--|  
@@ -249,7 +245,6 @@ You may use the following table template for your use cases. Copy-paste this tab
 | Exit Conditions | The faculty member can delete, add and updated information for various research positions. | 
 | Flow of events | 1.  The faculty member logs into the website. <br> 2. The faculty member sees a page displayed before them of the list of positions that they have created. <br> 3. The faculty member can click to edit the research position. <br> 4. After they finish making the changes, they can submit the position. <br> 5. A notification of success flashes on their page. | 
 | Alternative Flow of Events | The faculty member logs in to the website. A page appears for them to view all their created research position. They click to edit the position. If they write they give nonsensical information (e.g. dates set in the past) or miss any fields, an error message is flashed on their page. 
- 
  
 | Use Case #6|  |  
 | ------------------ |--------------|  
