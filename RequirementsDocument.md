@@ -261,17 +261,16 @@ You may use the following table template for your use cases. Copy-paste this tab
 Here you should include the sketches or mockups for the main parts of the interface. 
 
 
-![[markdown-student-homeview.png]]
+![Home View](static/markdown-student-homeview.png)
+![student profile](static/mockup-student-profile.png)
 
-![[mockup-student-profile.png]]
+![apply](static/mockup-apply.png)
 
-![[mockup-apply.png]]
+![mockup-view-applied.png](static/mockup-view-applied.png)
 
-![[mockup-view-applied.png]]
+![mockup-view-students.png](static/mockup-view-students.png)
 
-![[mockup-view-students.png]]
-
-![[mockup-create-position.png]]
+![mockup-create-position.png](static/mockup-create-position.png)
 
  
 ---- 
