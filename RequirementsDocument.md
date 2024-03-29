@@ -1,6 +1,6 @@
 # Software Requirements and Use Cases 
  
-## Your Project Title 
+## <span style="color:#a9b0b7">Re</span><span style="color:#ac2b37">Connect</span> 
 -------- 
 Prepared by: 
  
