@@ -44,8 +44,7 @@ Prepared by:
 | Revision 2 | 2024-04-01 | Added names   | 1.01    |
 
 # 1. Introduction
-
-Explain the purpose for providing this design document. If this is a revision of an earlier document, please make sure to summarize what changes have been made during the revision (keep this discussion brief).
+With the completion of the scope of the project, it is pertinent to discuss how the project will be completed. Specifically, clarifying the desired routes, the form of the models to be used, and the method in which the User Interface (UI) will be created.
 
 # 2. Component-level Design
 
@@ -56,9 +55,10 @@ Explain the purpose for providing this design document. If this is a revision of
 **Provide a list of your tables (i.e., SQL Alchemy classes) in your database model and briefly explain the role of each table.**
 
 - Student: stores information about students.
-- Professors: stores information about professors.
-- Projects: stores information about research projects.
+- Faculty: stores information about professors.
+- ResearchPosition: stores information about research projects.
 - ProjectStaff: links Students and Professors to Projects. (TODO make sure a 3-way table is possible)
+- Enrolled/Accepted Position: links students to a research position they have applied to
 
 Provide a UML diagram of your database model showing the associations and relationships among tables.
 
