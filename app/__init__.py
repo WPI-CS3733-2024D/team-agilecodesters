@@ -8,8 +8,8 @@ from config import Config
 
 db = SQLAlchemy()
 Bootstrap = Bootstrap()
-login = LoginManager()
-login.login_view = 'auth.login' # application needs to know which view function is configured for the login
+#login = LoginManager()
+#login.login_view = 'auth.login' # application needs to know which view function is configured for the login
 moment = Moment()
 # package app
 
@@ -25,7 +25,7 @@ def create_app(config_class = Config):
     app.template_folder = config_class.TEMPLATE_FOLDER
     # creates the database for communication
     db.init_app(app)
-    login.init_app(app)
+    #login.init_app(app)
     moment.init_app(app)
     Bootstrap.init_app(app)
     #blue print registration
