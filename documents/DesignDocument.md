@@ -1,15 +1,16 @@
 # Project Design Document
 
 ## Your Project Title
-
+ReConnect
 ---
 
 Prepared by:
 
-- `<author1>`,`<organization>`
-- `<author2>`,`<organization>`
-- `<author3>`,`<organization>`
-- `<author4>`,`<organization>`
+- `Jonathan Buwembo`,`AgileCodesters`
+- `Amber Drinkwater`,`AgileCodesters`
+- `Dennis Field`,`AgileCodesters`
+- `Connor Jason`,`AgileCodesters`
+- `Myrrh Khan`,`AgileCodesters`
 
 ---
 
@@ -39,8 +40,8 @@ Prepared by:
 
 | Name       | Date       | Changes       | Version |
 | ---------- | ---------- | ------------- | ------- |
-| Revision 1 | 2024-04-02 | Initial draft | 1.0     |
-|            |            |               |         |
+| Revision 1 | 2024-04-01 | Initial draft | 1.0     |
+| Revision 2 | 2024-04-01 | Added names   | 1.01    |
 
 # 1. Introduction
 
