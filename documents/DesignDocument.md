@@ -1,7 +1,6 @@
 # Project Design Document
 
-## Your Project Title
-ReConnect
+## <span style="color:#a9b0b7">Re</span><span style="color:#ac2b37">Connect</span> 
 ---
 
 Prepared by:
@@ -83,7 +82,10 @@ Include a detailed description of the routes your application will implement.
 
 Explain how you plan to build the user interfaces and mention the frameworks/libraries you plan to use (e.g., Bootstrap).
 
+We plan to implement Bootstrap to do most, if not, all of the styling in this project. Bootstrap is very quick to style webpages with and ensures all styling is clean and consistent throughout the entirety of the project. Similarly, we will be using WTForms to create simple forms to gather and handle user input on our website. We will also use the Moment library to easily format dates and times we encounter in this project. We will make use of Flask Login in our program to handle authentication of users. Lastly, we will be using Werkzeug's security library to handle password hashing for easy and safe storage of login credentials.
+
 Provide a list of the page templates you plan to create and supplement your description with UI sketches or screenshots. Make sure to mention which user-stories in your “Requirements and Use Cases" document will utilize these interfaces for user interaction.
+
 
 # 3. References
 
