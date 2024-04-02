@@ -43,7 +43,11 @@ Prepared by:
 | Revision 2 | 2024-04-01 | Added names   | 1.01    |
 
 # 1. Introduction
-With the completion of the scope of the project, it is pertinent to discuss how the project will be completed. Specifically, clarifying the desired routes, the form of the models to be used, and the method in which the User Interface (UI) will be created.
+*With the completion of the scope of the project, it is pertinent to discuss how the project will be completed. Specifically, clarifying the desired routes, the form of the models to be used, and the method in which the User Interface (UI) will be created.*
+
+We will complete this project with Flask as the backend and plain HTML and CSS in the frontend, using Flask templates.
+For the database, we will be using SQLite as it is portable and lightweight. In order to make accessing the database easier, we will use SQLAlchemy, an object-relation mapper to map the SQL databases into Python objects.
+TODO more
 
 # 2. Component-level Design
 
