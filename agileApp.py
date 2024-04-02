@@ -1,5 +1,6 @@
 from config import Config
 from app import create_app, db
+
 app = create_app(Config)
 
 def initDB(*args, **kwargs):
