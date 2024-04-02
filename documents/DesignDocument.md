@@ -62,8 +62,7 @@ UI, expanded upon later, primarily uses Bootstrap to keep everything formatted a
 - ResearchPosition: stores information about research projects.
 - Enrolled/Accepted Position: links students to a research position they have applied to
 
-*Provide a UML diagram of your database model showing the associations and relationships among tables.*
-TODO
+![image](DB_UML.png)
 
 ### 2.2 Controller
 
