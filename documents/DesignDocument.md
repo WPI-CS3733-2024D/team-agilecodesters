@@ -4,10 +4,11 @@
 --------
 Prepared by:
 
-* `<author1>`,`<organization>`
-* `<author2>`,`<organization>`
-* `<author3>`,`<organization>`
-* `<author4>`,`<organization>`
+* `<Jonathan Buwembo>`,`<AgileCodestors>`
+* `<Amber Drinkwater>`,`<AgileCodestors>`
+* `<Myrrh Khan>`,`<AgileCodestors>`
+* `<Conner Jason>`,`<AgileCodestors>`
+* `<Dennis Field>`,`<AgileCodestors>`
 ---
 
 **Course** : CS 3733 - Software Engineering 
@@ -43,7 +44,7 @@ Prepared by:
 
 Explain the purpose for providing this design document. If this is a revision of an earlier document, please make sure to summarize what changes have been made during the revision (keep this discussion brief). 
 
-
+"Purpose of this design document is to list out the database model"
 # 2. Component-level Design
 
 (**Note**: You should describe the design for the end product (completed application) - not only your iteration1 version. You will revise this document and add more details later.)
@@ -63,7 +64,7 @@ You can use the following table template to list your route specifications.
 
 |   | Methods           | URL Path   | Description  |
 |:--|:------------------|:-----------|:-------------|
-|1. |                   |            |              |
+|1. | login()           | /login     | already registered user logs into the sight. |
 |2. |                   |            |              |
 |3. |                   |            |              |
 |4. |                   |            |              |
