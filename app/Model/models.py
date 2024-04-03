@@ -65,7 +65,6 @@ class ResearchFields(db.Model):
 class ResearchPosition(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30), unique=True)
-    topics = db.Column(db.String(150))
     #Specifies the lowest desired GPA
     wantedGPA = db.Column(db.Float)
     languages = db.Column(db.String(150))
