@@ -161,7 +161,7 @@ As a student, I can view the start and end dates to see if the project fits my s
 As a faculty member, I can share the start and end dates to ensure that all students interested in the project immediately know if the project can fit their schedules or not.  
 
 **Required time commitment (e.g., 10 hours per week)**  
-As a student, I can see the time commitment to further see if the project fits my schedule.  
+As a student, I can see the time commitment to further see if the project fits my schedule.
 As a faculty member, I can share the time commitment so that interested students know what they are getting into. 
 
 **Research field(s) (e.g., “Machine Learning”, “High Performance Computing”, etc.)** 
@@ -171,11 +171,11 @@ As a student, I can see the different research fields that match this research o
 As a student, I want to see the programming language experience required for this research role.  
 
 **The name and contact information of the faculty who posted the position.** 
-As a student, I can see the name and contact information of the facaulty who posted this position clearly.  
+As a student, I can see the name and contact information of the faculty who posted this position clearly.  
 As a student, I can see the department this faculty member works in.  
 
 **Apply for research positions. A student can apply for more than one research position. For each position they apply to,**  
-They should submit a brief statement describing why they are interested in this research topic and what they hope to gain by participating in that project.  
+As a student, I can submit a brief statement describing why they are interested in this research topic and what they hope to gain by participating in that project.  
 As a student, I can share a brief statement of interest with the professors. 
 As a student, I can share another professor as a reference so that they can share their recommendations on my behalf. 
  
@@ -261,7 +261,7 @@ You may use the following table template for your use cases. Copy-paste this tab
 Here you should include the sketches or mockups for the main parts of the interface. 
 
 
-![Home View](static/markdown-student-homeview.png)
+![Home View](mockup-student-homeview.png)
 ![student profile](static/mockup-student-profile.png)
 
 ![apply](static/mockup-apply.png)

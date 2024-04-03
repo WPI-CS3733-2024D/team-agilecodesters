@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1> Sign in</h1>
+    {% if form %}
+
+        <div class="row">
+            <div class="col-md-4">
+                {{ wtf.quick_form(form, action = url_for('auth.login') ) }}
+            </div>
+        </div>
+
+    {% endif %}
+    <br>
+    <p>New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a></p>
+    
+{% endblock %}

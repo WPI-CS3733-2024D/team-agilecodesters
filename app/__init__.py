@@ -7,7 +7,7 @@ from flask_bootstrap import Bootstrap
 from config import Config
 
 db = SQLAlchemy()
-Bootstrap = Bootstrap()
+bootstrap = Bootstrap()
 login = LoginManager()
 login.login_view = 'auth.login' # application needs to know which view function is configured for the login
 moment = Moment()
@@ -27,7 +27,7 @@ def create_app(config_class = Config):
     db.init_app(app)
     login.init_app(app)
     moment.init_app(app)
-    Bootstrap.init_app(app)
+    bootstrap.init_app(app)
     #blue print registration
     from app.Controller.errors import errors_blueprint as errors
     app.register_blueprint(errors)
