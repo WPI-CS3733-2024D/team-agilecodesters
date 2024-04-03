@@ -47,7 +47,7 @@ Prepared by:
 
 We will complete this project with Flask as the backend and plain HTML and CSS in the frontend, using Flask templates.
 For the database, we will be using SQLite as it is portable and lightweight. In order to make accessing the database easier, we will use SQLAlchemy, an object-relation mapper to map the SQL databases into Python objects.
-TODO more
+UI, expanded upon later, primarily uses Bootstrap to keep everything formatted as similarly as possible. With this, every page of the website will look connected so as to not jar the user.
 
 # 2. Component-level Design
 
@@ -60,7 +60,6 @@ TODO more
 - Student: stores information about students.
 - Faculty: stores information about professors.
 - ResearchPosition: stores information about research projects.
-- ProjectStaff: links Students and Professors to Projects. (TODO make sure a 3-way table is possible)
 - Enrolled/Accepted Position: links students to a research position they have applied to
 
 Provide a UML diagram of your database model showing the associations and relationships among tables.
@@ -80,7 +79,8 @@ Include a detailed description of the routes your application will implement.
 | 3.  |         | /apply            | Application for students                   |
 | 4.  |         | /edit-application | Place for students to edit application     |
 | 5.  |         | /post-opportunity | Professor post opportunity                 |
-| 6.  |         |                   |                                            |
+| 6.  |         | /login            | Allows students and professors to log in   |
+| 7.  |         | /profile          | Allows students to view their own profile  |
 
 ### 2.3 View and User Interface Design
 
