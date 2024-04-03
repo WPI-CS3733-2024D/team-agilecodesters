@@ -92,7 +92,7 @@ We plan to implement Bootstrap to do most, if not, all of the styling in this pr
 
 Templates:
 - `base.html`
-- `index.html`
+- `index_student.html`
 	- As a student, I can view a research project’s title so that I can get a quick first impression of the research project.  
 	- As a faculty member, I can share my project’s title to give students a very basic understanding of my project.  
 ![index.html](mockup-student-homeview.png)
