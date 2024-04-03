@@ -40,10 +40,12 @@ Prepared by:
 | Name       | Date       | Changes       | Version |
 | ---------- | ---------- | ------------- | ------- |
 | Revision 1 | 2024-04-01 | Initial draft | 1.0     |
-| Revision 2 | 2024-04-01 | Added names   | 1.01    |
+| Revision 2 | 2024-04-01 | Add*With the completion of the scope of the project, it is pertinent to discuss how the project will be completed. Specifically, clarifying the desired routes, the form of the models to be used, and the method in which the User Interface (UI) will be created.*
 
-# 1. Introduction
-With the completion of the scope of the project, it is pertinent to discuss how the project will be completed. Specifically, clarifying the desired routes, the form of the models to be used, and the method in which the User Interface (UI) will be created.
+We will complete this project with Flask as the backend and use Bootstrap to design the frontend.
+For the database, we will be using SQLite as it is portable and lightweight. In order to make accessing the database easier, we will use SQLAlchemy, an object-relation mapper to map the SQL databases into Python objects.
+TODO more
+he models to be used, and the method in which the User Interface (UI) will be created.
 
 # 2. Component-level Design
 
@@ -86,12 +88,7 @@ We plan to implement Bootstrap to do most, if not, all of the styling in this pr
 
 Provide a list of the page templates you plan to create and supplement your description with UI sketches or screenshots. Make sure to mention which user-stories in your “Requirements and Use Cases" document will utilize these interfaces for user interaction.
 
-
-# 3. References
-
-Cite your references here.
-
-For the papers you cite give the authors, the title of the article, the journal name, journal volume number, date of publication and inclusive page numbers. Giving only the URL for the journal is not appropriate.
+Journal name, journal volume number, date of publication and inclusive page numbers. Giving only the URL for the journal is not appropriate.
 
 For the websites, give the title, author (if applicable) and the website URL.
 
