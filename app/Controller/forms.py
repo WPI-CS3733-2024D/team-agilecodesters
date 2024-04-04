@@ -12,9 +12,9 @@ class applicationForm():
     statement_of_interest = TextAreaField("Body",  validators=[DataRequired(), Length(max=1500)])
     reference_faculty_firstname = StringField('Reference First Name', validators=[DataRequired()])
     reference_faculty_lasntame = StringField('Reference Last Name', validators=[DataRequired()])
-    reference_faculty_email = StringField('Reference Email', validators=[DataRequired()])
+    reference_faculty_email = StringField('Reference Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Submit')
 
-    # TODO Jonathan(self): possibly write code to check if the email is valid.
     # TODO Jonathan(self): Write code logic for getting a professor to send a letter of recommendation
 
 class postPositionForm():
@@ -24,3 +24,4 @@ class postPositionForm():
     researchGoals = StringField('Research Goals', validators=[DataRequired()])
     startDate = DateTimeField('Start Date', validators=[DataRequired()])
     endDate = DateTimeField('End Date', validators=[DataRequired()])
+    submit = SubmitField('Post')

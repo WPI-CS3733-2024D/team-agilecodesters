@@ -12,8 +12,7 @@ routes_blueprint.template_folder = Config.TEMPLATE_FOLDER
 @routes_blueprint.route('/', methods=['GET', 'POST'])
 @routes_blueprint.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', title='Index')
-
+    return render_template('index.html', title='Home')
 
 @routes_blueprint.route('/create_position', methods=['GET', 'POST'])
 def create_post():

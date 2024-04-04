@@ -19,7 +19,7 @@ class User(db.Model):
     phone = db.Column(db.String(10))
 
 #A sub-class of User, representing a student user
-class Student(db.Model, User):
+class Student(User, db.Model):
     major = db.Column(db.String(20))
     GPA = db.Column(db.Float)
     graduationdate = db.Column(db.String(20))
@@ -40,7 +40,7 @@ class Student(db.Model, User):
         return check_password_hash(self.password_hash, password)
 
 #A sub-class of User, representing the faculty users
-class Faculty(db.Model, User):
+class Faculty(User, db.Model):
     #Research Areas coincide with Topics of Interest in the Student model
     researchAreas = db.Column(db.String(150))
 
