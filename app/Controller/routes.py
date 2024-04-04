@@ -10,11 +10,18 @@ routes_blueprint = Blueprint('routes', __name__)
 routes_blueprint.template_folder = Config.TEMPLATE_FOLDER
 
 @routes_blueprint.route('/', methods=['GET', 'POST'])
-@routes_blueprint.route('/index', methods=['GET', 'POST'])
-def index():
-    return render_template('index.html', title='Home')
+@routes_blueprint.route('/index/student', methods=['GET', 'POST'])
+@login_required
+def index_student():
+    return render_template('index_student.html', title='Student Home')
+
+@routes_blueprint.route('/index/faculty', methods=['GET', 'POST'])
+@login_required
+def index_faculty():
+    return render_template('index_faculty.html', title='Faculty Home')
 
 @routes_blueprint.route('/create_position', methods=['GET', 'POST'])
+@login_required
 def create_post():
     form = postPositionForm()
     if form.validate_on_submit():

@@ -24,10 +24,8 @@ class Student(User, db.Model):
     GPA = db.Column(db.Float)
     graduationdate = db.Column(db.String(20))
     #Topics of interest coincides with research Areas in faculty
-    topics_of_interest = db.relationship('Topics of Interest', back_populates='student_interested')
-
-    appliedPositions = db.relationship('EnrolledPositions', back_populates='student_enrolled')
-
+    topics_of_interest = db.relationship('TopicOfInterest', back_populates='student')
+    appliedPositions = db.relationship('EnrolledPosition', back_populates='student')
 
     def __repr__(self):
         return '<Student {} - {} - {}>'.format(self.wpi_id, self.firstname, self.lastname)
@@ -58,7 +56,7 @@ class Faculty(User, db.Model):
 class ResearchFields(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30))
-    attachedPosition = db.relationship('Position_Fields', back_populates='fields')
+    attachedPosition = db.relationship('PositionField', back_populates='fields')
     student = db.relationship('Student_Interested', back_populates='fields_student')
 
 #Represents the posted research positions
@@ -76,7 +74,7 @@ class ResearchPosition(db.Model):
     faculty_email = db.Column(db.String(20), db.ForeignKey('faculty.email'))
 
     students_application = db.relationship('Student_App', back_populates='enrolled_position')
-    researchFields = db.relationship('Position_Fields', back_populates='position')
+    researchFields = db.relationship('PositionField', back_populates='position')
 
     def __repr__(self):
          return '<Research Position: {} -- Description: {}>'.format(self.title, self.description)
@@ -110,3 +108,27 @@ class Applications(db.Model):
 
     def __repr__(self):
           return '<studentID: {} --- position: {}>'.format(self.studentID, self.position)
+    
+# A relationship table relating topics of interest to students
+class TopicOfInterest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    topic = db.Column(db.String(100))
+
+    student_id = db.Column(db.Integer, db.ForeignKey('student.wpi_id'))
+
+    student = db.relationship('Student', back_populates='topics_of_interest')
+
+    def __repr__(self):
+        return '<TopicOfInterest {}>'.format(self.topic)
+
+# A relationsgip table relating the research positions to students are enrolled in
+class EnrolledPosition(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    position = db.Column(db.String(100))
+
+    student_id = db.Column(db.Integer, db.ForeignKey('student.wpi_id'))
+
+    student = db.relationship('Student', back_populates='appliedPositions')
+
+    def __repr__(self):
+        return '<EnrolledPosition {}>'.format(self.position)

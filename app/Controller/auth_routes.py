@@ -12,6 +12,11 @@ auth_blueprint.template_folder = Config.TEMPLATE_FOLDER
 def register_student():
     sform = StudentRegistrationForm()
     if sform.validate_on_submit():
+        # Check if the username or email already exists in Faculty table
+        existing_faculty = Faculty.query.filter((Faculty.username == sform.username.data) | (Faculty.email == sform.email.data)).first()
+        if existing_faculty:
+            flash('Username or email is taken! Please try again.')
+            return redirect(url_for('auth.register_student'))
         student = Student(username=sform.username.data, email=sform.email.data, firstname=sform.firstname.data, lastname=sform.lastname.data, major=sform.major.data, GPA=sform.gpa.data, graduationdate=sform.graduation_date.data, topics_of_interest=sform.topics_of_interest.data)
         student.set_password(sform.password.data)
         db.session.add(student)
@@ -24,6 +29,11 @@ def register_student():
 def register_faculty():
     fform = FacultyRegistrationForm()
     if fform.validate_on_submit():
+        # Check if the username or email already exists in Student table
+        existing_student = Student.query.filter((Student.username == fform.username.data) | (Student.email == fform.email.data)).first()
+        if existing_student:
+            flash('Username or email is already registered as student.')
+            return redirect(url_for('auth.register_faculty'))
         faculty = Faculty(username=fform.username.data, email=fform.email.data, firstname=fform.firstname.data, lastname=fform.lastname.data, research_areas=fform.research_areas.data)
         faculty.set_password(fform.password.data)
         db.session.add(faculty)
