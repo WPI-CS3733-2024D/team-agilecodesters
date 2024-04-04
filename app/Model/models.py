@@ -24,9 +24,8 @@ class Student(User, db.Model):
     GPA = db.Column(db.Float)
     graduationdate = db.Column(db.String(20))
     #Topics of interest coincides with research Areas in faculty
-    topics_of_interest = db.relationship('Topics of Interest', back_populates='student_interested')
-
-    appliedPositions = db.relationship('EnrolledPositions', back_populates='student_enrolled')
+    topics_of_interest = db.relationship('StudentFields', back_populates='student_interested')
+    appliedPositions = db.relationship('Applications', back_populates='student_enrolled')
 
 
     def __repr__(self):
@@ -73,7 +72,7 @@ class ResearchPosition(db.Model):
     startDate = db.Column(db.DateTime)
     endDate = db.Column(db.DateTime)
     faculty_name = db.Column(db.String(20))
-    faculty_email = db.Column(db.String(20), db.ForeignKey('faculty.email'))
+    faculty_email = db.Column(db.String(20), db.ForeignKey('user.email'))
 
     students_application = db.relationship('Student_App', back_populates='enrolled_position')
     researchFields = db.relationship('Position_Fields', back_populates='position')
@@ -83,16 +82,16 @@ class ResearchPosition(db.Model):
 
 #A relationship table relation research positions and the fields they pertain to
 class PositionField(db.Model):
-     pos_ID = db.Column(db.Integer, db.ForeignKey('researchposition.id'), primary_key=True)
-     field_ID = db.Column(db.Integer, db.ForeignKey('researchfields.id'), primary_key=True)
+     pos_ID = db.Column(db.Integer, db.ForeignKey('research_position.id'), primary_key=True)
+     field_ID = db.Column(db.Integer, db.ForeignKey('research_fields.id'), primary_key=True)
 
      #Represent relationships to Positions and ResearchFields respectively
-     position = db.relationship('ResearchPosition')
-     fields = db.relationship('ResearchFields')
+     position = db.relationship('Research_Position')
+     fields = db.relationship('Research_Fields')
 
 #A relationship table that shows what a student is interested in
-class studentFields(db.Model):
-     student_ID = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
+class StudentFields(db.Model):
+     student_ID = db.Column(db.Integer, db.ForeignKey('student.wpi_id'), primary_key=True)
      field_ID = db.Column(db.Integer, db.ForeignKey('researchfields.id'), primary_key=True)
 
      #Represent relationships to student and research fields respectively 
@@ -102,11 +101,11 @@ class studentFields(db.Model):
 #A relationship table relating students to positions they have applied to
 class Applications(db.Model):
     studentID = db.Column(db.Integer, db.ForeignKey('student.wpi_id'), primary_key=True)
-    position = db.Column(db.Integer, db.ForeignKey('researchposition.id'), primary_key=True)
+    position = db.Column(db.Integer, db.ForeignKey('research_position.id'), primary_key=True)
 
     #Represent relationships to student and ResearchPosition respectively
     student_erolled = db.relationship('Student')
-    enrolled_position = db.relationship('ResearchPosition')
+    enrolled_position = db.relationship('Research_Position')
 
     def __repr__(self):
           return '<studentID: {} --- position: {}>'.format(self.studentID, self.position)

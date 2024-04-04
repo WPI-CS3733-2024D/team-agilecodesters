@@ -6,7 +6,7 @@ from wtforms_sqlalchemy.fields import QuerySelectField
 from flask_login import current_user
 
 
-class applicationForm():
+class applicationForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired()])
     lastname = StringField('Last Name', validators=[DataRequired()])
     statement_of_interest = TextAreaField("Body",  validators=[DataRequired(), Length(max=1500)])
@@ -17,7 +17,7 @@ class applicationForm():
 
     # TODO Jonathan(self): Write code logic for getting a professor to send a letter of recommendation
 
-class postPositionForm():
+class postPositionForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     wantedGPA = FloatField('Lowest Desired GPA', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired(), Length(max=1500)])
