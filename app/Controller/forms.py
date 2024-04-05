@@ -11,7 +11,7 @@ class applicationForm(FlaskForm):
     lastname = StringField('Last Name', validators=[DataRequired()])
     statement_of_interest = TextAreaField("Body",  validators=[DataRequired(), Length(max=1500)])
     reference_faculty_firstname = StringField('Reference First Name', validators=[DataRequired()])
-    reference_faculty_lasntame = StringField('Reference Last Name', validators=[DataRequired()])
+    reference_faculty_lastname = StringField('Reference Last Name', validators=[DataRequired()])
     reference_faculty_email = StringField('Reference Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Submit')
 

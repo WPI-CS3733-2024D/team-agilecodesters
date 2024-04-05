@@ -72,8 +72,17 @@ class Faculty(User):
 
 
 class Department(db.Model):
+    """
+    Represents departments in university that professors are associated with
+    Attributes: 
+        id: Integer, primary key
+        name: String, unique 
+    """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
+
+    def __repr__(self):
+        return f"<Department: {self.name} [id {self.id}]>"
 
 
 # Represents the research fields that the website can handle
@@ -140,6 +149,11 @@ class Applications(db.Model):
     # Represent relationships to student and ResearchPosition respectively
     student_erolled = db.relationship("Student")
     enrolled_position = db.relationship("Research_Position")
+
+    # statement of interest
+    statement_of_interest = db.Column(db.String(1200))
+
+    # TODO (listed by Myrrh): reference fields
 
     def __repr__(self):
         return "<studentID: {} --- position: {}>".format(self.studentID, self.position)
