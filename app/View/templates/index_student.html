@@ -4,4 +4,26 @@
 
     <h1>Student Index Page</h1>
     
+    <form method="post" action="">
+        {{ search_form.hidden_tag() }}
+        <div class="search-box">
+            {{search_form.search_query}}
+            <!-- Form to implement a search field section to search for particular research positions-->
+        </div>
+        
+        <div>
+            {{search_form.submit(class="button")}}
+            <!-- THIS EXAMPLE is to add a button we can submit the search for.-->
+        </div>
+        
+    </form>
+    <!-- List out all the research positions available (or to his/her recommendations) on the student's end-->
+    <div class="">
+        {% for post in posts %}
+            <div class="post-box">
+                {% include '_research-position.html' %} 
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}

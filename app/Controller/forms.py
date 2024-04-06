@@ -25,3 +25,8 @@ class postPositionForm(FlaskForm):
     startDate = DateTimeField('Start Date', validators=[DataRequired()])
     endDate = DateTimeField('End Date', validators=[DataRequired()])
     submit = SubmitField('Post')
+
+# SEARCH FEATURE on index page
+class searchForm(FlaskForm):
+    search_query = StringField('Search', validators=[DataRequired()])
+    submit = SubmitField('Search')
