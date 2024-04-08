@@ -26,6 +26,7 @@ class User(db.Model):
 
 # A sub-class of User, representing a student user
 class Student(User):
+    id = db.Column(db.Integer, primary_key=True)
     major = db.Column(db.String(20))
     GPA = db.Column(db.Float)
     graduationdate = db.Column(db.String(20))
