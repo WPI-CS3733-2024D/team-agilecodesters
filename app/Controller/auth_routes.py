@@ -25,17 +25,15 @@ def register_student():
         if existing_student:
             flash("Username or email is taken! Please try again.")
             return redirect(url_for("auth.register_student"))
-        student = Student(username=sform.username.data)
-        # student = Student(
-        #     username=sform.username.data,
-        #     email=sform.email.data,
-        #     firstname=sform.firstname.data,
-        #     lastname=sform.lastname.data,
-        #     major=sform.major.data,
-        #     GPA=sform.gpa.data,
-        #     graduationdate=sform.graduation_date.data,
-        #     topics_of_interest=sform.topics_of_interest.data, 
-        #     user_type="Student")
+        student = Student(
+            username=sform.username.data,
+            email=sform.email.data,
+            firstname=sform.firstname.data,
+            lastname=sform.lastname.data,
+            major=sform.major.data,
+            GPA=sform.gpa.data,
+            graduationdate=sform.graduation_date.data,
+            user_type="Student")
         student.set_password(sform.password.data)
         db.session.add(student)
         db.session.commit()
