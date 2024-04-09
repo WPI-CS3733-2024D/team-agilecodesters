@@ -2,6 +2,26 @@
 
 {% block content %}
 
-    <h1>View Position Page</h1>
+    <h1>{{ research_position.title }}</h1>
+    <p>Wanted GPA: {{ research_position.wantedGPA }}</p>
+    <p>Languages: {{ research_position.languages }}</p>
+    <p>Description: {{ research_position.description }}</p>
+    <p>Research Goals: {{ research_position.researchGoals }}</p>
+    <p>Start Date: {{ research_position.startDate }}</p>
+    <p>End Date: {{ research_position.endDate }}</p>
+
+    {% if current_user.is_authenticated %}
+        {% if user_type == 'student' %}
+            {% if current_user.has_applied_to(position_id) %}
+                <form action="{{ url_for('routes.unapply_for_position', position_id=position_id) }}" method="post">
+                    <button type="submit" class="btn btn-danger">Unapply</button>
+                </form>
+            {% else %}
+                <form action="{{ url_for('routes.apply_for_position', position_id=position_id) }}" method="post">
+                    <button type="submit" class="btn btn-primary">Apply</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    {% endif %}
     
 {% endblock %}

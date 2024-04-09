@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from app.Controller.forms import postPositionForm, searchForm
-from app.Model.models import ResearchPosition
+from app.Model.models import Applications, ResearchPosition
 from config import Config
 from app import db
 
@@ -26,7 +26,7 @@ def index_faculty():
 
 @routes_blueprint.route('/create_position', methods=['GET', 'POST'])
 @login_required
-def create_post():
+def create_position():
     form = postPositionForm()
     if form.validate_on_submit():
         position = ResearchPosition(title=form.title.data, wantedGPA=form.wantedGPA.data, description=form.description.data, researchGoals=form.researchGoals.data, startDate=form.startDate.data, endDate=form.endDate.data)
@@ -37,5 +37,37 @@ def create_post():
         return redirect(url_for('routes.index'))
     return render_template('_create-position.html', title='Create Position')
 
+@routes_blueprint.route('/apply/<position_id>', methods=['POST'])
+@login_required
+def apply_for_position(position_id):
+    wpi_id = current_user.wpi_id
+    application = Applications(studentID=wpi_id, position=position_id)
+    db.session.add(application)
+    db.session.commit()
+    flash('Application submitted successfully!')
+    return redirect(url_for('routes.index_student'))
 
+@routes_blueprint.route('/unapply/<position_id>', methods=['POST'])
+@login_required
+def unapply_for_position(position_id):
+    application = Applications.query.filter_by(studentID=current_user.wpi_id, position=position_id).first()
+    if application:
+        db.session.delete(application)
+        db.session.commit()
+        flash('Successfully unapplied for the position.')
+    return redirect(url_for('routes.index_student'))
 
+@routes_blueprint.route('/post/<position_id>', methods=['GET', 'POST'])
+@login_required
+def view_profile(position_id):
+    return render_template('view_post.html', title='Profile', position_id=position_id)
+
+@routes_blueprint.route('/profile', methods=['GET'])
+@login_required
+def view_profile():
+    return render_template('profile.html', title='Profile')
+
+@routes_blueprint.route('/profile/edit', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    return render_template('edit_profile.html', title='Edit Profile')

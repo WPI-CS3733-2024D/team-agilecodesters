@@ -26,10 +26,10 @@ class User(db.Model):
 
 # A sub-class of User, representing a student user
 class Student(User):
-    id = db.Column(db.Integer, primary_key=True)
     major = db.Column(db.String(20))
     GPA = db.Column(db.Float)
     graduationdate = db.Column(db.String(20))
+    user_type = db.Column(db.String(20))
     # Topics of interest coincides with research Areas in faculty
     topics_of_interest = db.relationship(
         "ResearchFields",
@@ -58,6 +58,7 @@ class Faculty(User):
     # Research Areas coincide with Topics of Interest in the Student model
     researchAreas = db.Column(db.String(150))
     department = db.Column(db.String(20), db.ForeignKey("department.name"))
+    user_type = db.Column(db.String(20))
 
     def __repr__(self):
         return "<Faculty {} - {}, {}. {} Deparment>".format(
