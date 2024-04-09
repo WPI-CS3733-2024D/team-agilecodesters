@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
-from app.Controller.forms import postPositionForm, searchForm
+from app.Controller.forms import postPositionForm, searchForm, applicationForm
 from app.Model.models import ResearchPosition
 from config import Config
 from app import db
@@ -18,6 +18,12 @@ def index_student():
     search_form = searchForm()
     posts = ResearchPosition.query.all()
     return render_template('index_student.html', title='Student Home', posts=posts, search_form = search_form)
+
+@routes_blueprint.route('/apply', methods=['GET', 'POST'])
+def apply():
+    aform = applicationForm()
+    # TODO Logic to add student to professor's roster.**
+    return render_template('_apply.html', form = aform)
 
 @routes_blueprint.route('/index/faculty', methods=['GET', 'POST'])
 @login_required
