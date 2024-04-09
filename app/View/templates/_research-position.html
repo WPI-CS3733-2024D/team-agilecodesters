@@ -1,0 +1,50 @@
+<table class = "posttable" style = "width:100%" valign="top">
+    <tr> 
+        <td colspan="3"><div class=""> {{post.title}} </div>
+        </td>
+    </tr>
+    <tr>
+
+        <td width="80%" class="postmessage" >
+            <div>
+                <!-- INFO about a research position-->
+                Desired GPA: {{post.wantedGPA}}
+                Desired Languages: {{post.languages}}
+                Start Date: {{post.startDate}}
+                End Date: {{post.endDate}}
+
+            </div>
+            <div>
+              <!-- the description of the research position -->  
+              Description: {{post.description}}
+           </div>
+           <div class="posttimestamp">
+           
+            <!-- Time/Date that the research position was posted by the faculty member -->
+                <div class="post">
+                    <p>Posted on: <span>{{ moment(post.timestamp).format('LLL') }}</span></p>
+                </div>
+           </div> 
+        </td> 
+
+        <td width = "5%"> 
+            <div>
+                <!-- TODO: add "Apply" button
+                Define an HTML `post` form with a submit button. The form action should redirect to `routes.Apply` route.
+                 -->
+                <form action="" method="post">
+                    <input type="submit" value="Apply" class="" >
+                </form>
+            </div>  
+        </td>
+    </tr>
+    
+    <tr>
+        <td colspan="3" style = "text-align:center" valign="bottom">  
+            <br>
+              <!-- include username/faculty member who posted the post [Research Position]-->
+              Posted By: {{current_user.username}}
+          </td>
+        </tr>
+    </tr>
+</table>
