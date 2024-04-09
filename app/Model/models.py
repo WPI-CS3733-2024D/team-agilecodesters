@@ -56,7 +56,7 @@ class Student(User):
         secondary=studentFields,
         primaryjoin=(studentFields.c.student_id == id),
         backref=db.backref("studentFields", lazy="dynamic"),
-        lazy="dynamic",
+        lazy="dynamic"
     )
     appliedPositions = db.relationship(
         "Applications", back_populates="student_enrolled"
@@ -83,7 +83,7 @@ class Faculty(User):
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
     #researchAreas = db.Column(db.String(150))
     department = db.Column(db.String(20), db.ForeignKey("department.name"))
-    #user_type = db.Column(db.String(20))
+    user_type = db.Column(db.String(20))
 
     __mapper_args__ = {"polymorphic_identity": UserType.Faculty}
 
@@ -126,8 +126,11 @@ class ResearchField(db.Model):
         secondary=studentFields,
         primaryjoin=(studentFields.c.field_id == id),
         backref=db.backref("studentFields", lazy="dynamic"),
-        lazy="dynamic",
+        lazy="dynamic"
     )
+
+    def get_fields(self):
+        return self.query.all()
 
 
 # Represents the posted research positions

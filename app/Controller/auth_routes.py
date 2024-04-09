@@ -20,7 +20,7 @@ def register_student():
         # Check if the username or email already exists in Faculty table
         existing_student = Student.query.filter(
             (Student.username == sform.username.data)
-            #| (Student.email == sform.email.data)
+            | (Student.email == sform.email.data)
         ).first()
         if existing_student:
             flash("Username or email is taken! Please try again.")
@@ -34,6 +34,8 @@ def register_student():
             GPA=sform.gpa.data,
             graduationdate=sform.graduation_date.data,
             user_type="Student")
+        for topic in sform.topics_of_interest.data:
+            student.topics_of_interest.append(topic)
         student.set_password(sform.password.data)
         db.session.add(student)
         db.session.commit()
@@ -49,19 +51,18 @@ def register_faculty():
         # Check if the username or email already exists in Student table
         existing_student = Student.query.filter(
             (Student.username == fform.username.data)
-            #| (Student.email == fform.email.data)
+            | (Student.email == fform.email.data)
         ).first()
         if existing_student:
             flash("Username or email is already registered as student.")
             return redirect(url_for("auth.register_faculty"))
         faculty = Faculty(username=fform.username.data)
-        # faculty = Faculty(
-        #     username=fform.username.data,
-        #     email=fform.email.data,
-        #     firstname=fform.firstname.data,
-        #     astname=fform.lastname.data,
-        #     research_areas=fform.research_areas.data,
-        #     user_type='faculty')
+        faculty = Faculty(
+            username=fform.username.data,
+            email=fform.email.data,
+            firstname=fform.firstname.data,
+            lastname=fform.lastname.data,
+            user_type='Faculty')
         faculty.set_password(fform.password.data)
         db.session.add(faculty)
         db.session.commit()

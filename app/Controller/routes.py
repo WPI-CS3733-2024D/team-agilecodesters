@@ -14,7 +14,7 @@ routes_blueprint.template_folder = Config.TEMPLATE_FOLDER
 @routes_blueprint.route('/index/student', methods=['GET', 'POST'])
 @login_required
 def index_student():
-    if ('student' != 'student'):
+    if (current_user.user_type != 'Student'):
         return redirect(url_for('routes.index_faculty'))
     # add logic to filter out research positions based on searches.
     # research positions that align with student queried information [search feature] will show on the screen.
@@ -32,7 +32,7 @@ def index_student():
 @routes_blueprint.route('/index/faculty', methods=['GET', 'POST'])
 @login_required
 def index_faculty():
-    if ('student' != 'faculty'):
+    if (current_user.user_type != 'Faculty'):
         return redirect(url_for('routes.index_student'))
     return render_template('index_faculty.html', title='Faculty Home')
 
