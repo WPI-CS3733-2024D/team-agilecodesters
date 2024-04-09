@@ -59,7 +59,7 @@ def unapply_for_position(position_id):
 
 @routes_blueprint.route('/post/<position_id>', methods=['GET', 'POST'])
 @login_required
-def view_profile(position_id):
+def view_post(position_id):
     return render_template('view_post.html', title='Profile', position_id=position_id)
 
 @routes_blueprint.route('/profile', methods=['GET'])
