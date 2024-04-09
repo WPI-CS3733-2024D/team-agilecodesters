@@ -39,6 +39,10 @@ class User(db.Model):
         "polymorphic_identity": UserType.User,
     }
 
+    # TODO implement
+    def is_faculty(self):
+        return False
+
 
 # A sub-class of User, representing a student user
 class Student(User):

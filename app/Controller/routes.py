@@ -10,6 +10,14 @@ routes_blueprint = Blueprint('routes', __name__)
 routes_blueprint.template_folder = Config.TEMPLATE_FOLDER
 
 @routes_blueprint.route('/', methods=['GET', 'POST'])
+@routes_blueprint.route('/index', methods=['GET', 'POST'])
+@login_required
+def index():
+    if current_user.is_faculty:
+        return redirect(url_for('routes.index_faculty'))
+    else:
+        return redirect(url_for('routes.index_student'))
+
 @routes_blueprint.route('/index/student', methods=['GET', 'POST'])
 @login_required
 def index_student():
@@ -34,7 +42,7 @@ def create_position():
         #position.faculty_email = current_user.data.
         db.session.add(position)
         db.session.commit()
-        return redirect(url_for('routes.index'))
+        return redirect(url_for('routes.index_student'))
     return render_template('_create-position.html', title='Create Position')
 
 @routes_blueprint.route('/apply/<position_id>', methods=['POST'])
