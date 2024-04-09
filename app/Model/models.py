@@ -184,7 +184,9 @@ class Applications(db.Model):
     # statement of interest
     statement_of_interest = db.Column(db.String(1200))
 
-    # TODO (listed by Myrrh): reference fields
+    #reference Info
+    referenceEmail = db.Column(db.String(20))
+    referenceName = db.Column(db.String(20))
 
     def __repr__(self):
         return "<studentID: {} --- position: {}>".format(self.studentID, self.position)
