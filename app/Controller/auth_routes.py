@@ -5,7 +5,7 @@ from app.Controller.auth_forms import (
     LoginForm,
     StudentRegistrationForm,
 )
-from app.Model.models import Faculty, Student
+from app.Model.models import Faculty, Student, User
 from config import Config
 from app import db
 
@@ -34,7 +34,7 @@ def register_student():
             GPA=sform.gpa.data,
             graduationdate=sform.graduation_date.data,
             topics_of_interest=sform.topics_of_interest.data, 
-            user_type='student')
+            user_type="Student")
         student.set_password(sform.password.data)
         db.session.add(student)
         db.session.commit()

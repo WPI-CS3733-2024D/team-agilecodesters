@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, PasswordField, FloatField, DateTimeField
+from wtforms import SelectField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, DateTimeField
 from wtforms.validators import  ValidationError, Length, DataRequired, Email, EqualTo
 from app.Model.models import Student
 from wtforms_sqlalchemy.fields import QuerySelectField
@@ -28,5 +28,7 @@ class postPositionForm(FlaskForm):
 
 # SEARCH FEATURE on index page
 class searchForm(FlaskForm):
-    search_query = StringField('Search', validators=[DataRequired()])
+    sortOrder = SelectField('Sort by:', choices = ['Start Date', 'Highest Required GPA', 'Research Fields'], default='Date')
     submit = SubmitField('Search')
+    def get_choices(self):
+        return self.sortOrder.choices
