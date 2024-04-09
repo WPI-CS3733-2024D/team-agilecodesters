@@ -13,6 +13,7 @@ studentFields = db.Table(
 )
 
 
+# TODO: cite sources for inheritance
 # for consistency
 class UserType(Enum):
     User = "user"
@@ -22,6 +23,8 @@ class UserType(Enum):
 
 # A super class representing a generic user
 class User(db.Model):
+
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     wpi_id = db.Column(db.Integer, unique=True)
     username = db.Column(db.String(20), unique=True)
@@ -39,14 +42,17 @@ class User(db.Model):
 
 # A sub-class of User, representing a student user
 class Student(User):
-    id = db.Column(db.Integer, ForeignKey("user.id"), primary_key=True)
+
+    __tablename__ = "student"
+    id = db.Column(None, ForeignKey("user.id"), primary_key=True)
+
     major = db.Column(db.String(20))
     GPA = db.Column(db.Float)
     graduationdate = db.Column(db.String(20))
     user_type = db.Column(db.String(20))
     # Topics of interest coincides with research Areas in faculty
     topics_of_interest = db.relationship(
-        "research_field",
+        "ResearchField",
         secondary=studentFields,
         primaryjoin=(studentFields.c.student_id == id),
         backref=db.backref("studentFields", lazy="dynamic"),
@@ -71,8 +77,10 @@ class Student(User):
 
 # A sub-class of User, representing the faculty users
 class Faculty(User):
+
+    __tablename__ = "faculty"
     # Research Areas coincide with Topics of Interest in the Student model
-    id = db.Column(db.Integer, ForeignKey("user.id"), primary_key=True)
+    id = db.Column(None, ForeignKey("user.id"), primary_key=True)
     researchAreas = db.Column(db.String(150))
     department = db.Column(db.String(20), db.ForeignKey("department.name"))
     user_type = db.Column(db.String(20))
@@ -138,7 +146,7 @@ class ResearchPosition(db.Model):
     faculty = db.Column(db.Integer, db.ForeignKey("faculty.id"))
 
     students_application = db.relationship(
-        "Student_App", back_populates="enrolled_position"
+        "Applications", back_populates="enrolled_position"
     )
     researchFields = db.relationship("PositionField", back_populates="position")
 
@@ -164,13 +172,13 @@ class PositionField(db.Model):
 
 # A relationship table relating students to positions they have applied to
 class Applications(db.Model):
-    studentID = db.Column(db.Integer, db.ForeignKey("student.wpi_id"), primary_key=True)
+    studentID = db.Column(db.Integer, db.ForeignKey("student.id"), primary_key=True)
     position = db.Column(
         db.Integer, db.ForeignKey("research_position.id"), primary_key=True
     )
 
     # Represent relationships to student and ResearchPosition respectively
-    student_erolled = db.relationship("Student")
+    student_enrolled = db.relationship("Student")
     enrolled_position = db.relationship("ResearchPosition")
 
     # statement of interest
