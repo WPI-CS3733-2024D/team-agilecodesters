@@ -5,15 +5,15 @@ from app.Model.models import Student
 
 class StudentRegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    firstname = StringField('First Name', validators=[DataRequired()])
-    lastname = StringField('Last Name', validators=[DataRequired()])
+    #email = StringField('Email', validators=[DataRequired(), Email()])
+    #firstname = StringField('First Name', validators=[DataRequired()])
+    #lastname = StringField('Last Name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    major = StringField('Major', validators=[DataRequired()])
-    gpa = FloatField('GPA', validators=[DataRequired()])
-    graduation_date = StringField('Graduation Date', validators=[DataRequired()])
-    topics_of_interest = TextAreaField('Topics of Interest', validators=[Length(max=200)])
+    #major = StringField('Major', validators=[DataRequired()])
+    #gpa = FloatField('GPA', validators=[DataRequired()])
+    #graduation_date = StringField('Graduation Date', validators=[DataRequired()])
+    #topics_of_interest = TextAreaField('Topics of Interest', validators=[Length(max=200)])
     submit = SubmitField('Register')
 
 class FacultyRegistrationForm(FlaskForm):

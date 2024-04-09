@@ -22,18 +22,18 @@ class UserType(Enum):
 
 
 # A super class representing a generic user
-class User(db.Model):
+class User(db.Model, UserMixin):
 
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
-    wpi_id = db.Column(db.Integer, unique=True)
+    #wpi_id = db.Column(db.Integer, unique=True)
     username = db.Column(db.String(20), unique=True)
     # A hash of the password, kept as a hash for security
     password_hash = db.Column(db.String(20))
-    firstname = db.Column(db.String(20))
-    lastname = db.Column(db.String(20))
-    email = db.Column(db.String(20), unique=True)
-    phone = db.Column(db.String(10))
+    # firstname = db.Column(db.String(20))
+    # lastname = db.Column(db.String(20))
+    # email = db.Column(db.String(20), unique=True)
+    # phone = db.Column(db.String(10))
 
     __mapper_args__ = {
         "polymorphic_identity": UserType.User,
@@ -46,10 +46,10 @@ class Student(User):
     __tablename__ = "student"
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
 
-    major = db.Column(db.String(20))
-    GPA = db.Column(db.Float)
-    graduationdate = db.Column(db.String(20))
-    user_type = db.Column(db.String(20))
+    # major = db.Column(db.String(20))
+    # GPA = db.Column(db.Float)
+    # graduationdate = db.Column(db.String(20))
+    # user_type = db.Column(db.String(20))
     # Topics of interest coincides with research Areas in faculty
     topics_of_interest = db.relationship(
         "ResearchField",
@@ -81,9 +81,9 @@ class Faculty(User):
     __tablename__ = "faculty"
     # Research Areas coincide with Topics of Interest in the Student model
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
-    researchAreas = db.Column(db.String(150))
+    #researchAreas = db.Column(db.String(150))
     department = db.Column(db.String(20), db.ForeignKey("department.name"))
-    user_type = db.Column(db.String(20))
+    #user_type = db.Column(db.String(20))
 
     __mapper_args__ = {"polymorphic_identity": UserType.Faculty}
 

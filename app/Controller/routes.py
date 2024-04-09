@@ -14,16 +14,16 @@ routes_blueprint.template_folder = Config.TEMPLATE_FOLDER
 @routes_blueprint.route('/index/student', methods=['GET', 'POST'])
 @login_required
 def index_student():
-    if (current_user.user_type != 'student'):
+    if ('student' != 'student'):
         return redirect(url_for('routes.index_faculty'))
     # add logic to filter out research positions based on searches.
     # research positions that align with student queried information [search feature] will show on the screen.
     search_form = searchForm()
-    if search_form.get_choices()[3] == search_form.sortOrder.data: #Research Fields
+    if search_form.get_choices()[2] == search_form.sortOrder.data: #Research Fields
         # Query the ResearchPosition objects that share at least one field with the student
         shared_positions = ResearchPosition.query.join(PositionField).join(ResearchField).filter(PositionField.field_ID.in_([field.id for field in current_user.topics_of_interest])).all()
         posts = shared_positions
-    elif search_form.get_choices()[2] == search_form.sortOrder.data: #Highest Required GPA
+    elif search_form.get_choices()[1] == search_form.sortOrder.data: #Highest Required GPA
         posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
     else: #Start date by default
         posts = ResearchPosition.query.order_by(ResearchPosition.startDate.desc())
@@ -32,7 +32,7 @@ def index_student():
 @routes_blueprint.route('/index/faculty', methods=['GET', 'POST'])
 @login_required
 def index_faculty():
-    if (current_user.user_type != 'faculty'):
+    if ('student' != 'faculty'):
         return redirect(url_for('routes.index_student'))
     return render_template('index_faculty.html', title='Faculty Home')
 
