@@ -19,15 +19,14 @@ def index_student():
     # add logic to filter out research positions based on searches.
     # research positions that align with student queried information [search feature] will show on the screen.
     search_form = searchForm()
-    if search_form.sortOrder.data:
-        if search_form.get_choices()[3] == search_form.sortOrder.data: #Research Fields
-            # Query the ResearchPosition objects that share at least one field with the student
-            shared_positions = ResearchPosition.query.join(PositionField).join(ResearchField).filter(PositionField.field_ID.in_([field.id for field in current_user.topics_of_interest])).all()
-            posts = shared_positions
-        elif search_form.get_choices()[2] == search_form.sortOrder.data: #Highest Required GPA
-            posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
-        else: #Start date by default
-            posts = ResearchPosition.query.order_by(ResearchPosition.startDate.desc())
+    if search_form.get_choices()[3] == search_form.sortOrder.data: #Research Fields
+        # Query the ResearchPosition objects that share at least one field with the student
+        shared_positions = ResearchPosition.query.join(PositionField).join(ResearchField).filter(PositionField.field_ID.in_([field.id for field in current_user.topics_of_interest])).all()
+        posts = shared_positions
+    elif search_form.get_choices()[2] == search_form.sortOrder.data: #Highest Required GPA
+        posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
+    else: #Start date by default
+        posts = ResearchPosition.query.order_by(ResearchPosition.startDate.desc())
     return render_template('index_student.html', title='Student Home', posts=posts, search_form = search_form)
 
 @routes_blueprint.route('/index/faculty', methods=['GET', 'POST'])
