@@ -43,8 +43,7 @@ def create_position():
     form = postPositionForm()
     if form.validate_on_submit():
         position = ResearchPosition(title=form.title.data, wantedGPA=form.wantedGPA.data, description=form.description.data, researchGoals=form.researchGoals.data, startDate=form.startDate.data, endDate=form.endDate.data)
-        #TODO: Add faculty information, not sure what current_user is capable of? Could be because db hasn't been restarted
-        #position.faculty_email = current_user.data.
+        position.faculty = current_user
         db.session.add(position)
         db.session.commit()
         return redirect(url_for('routes.index_student'))
