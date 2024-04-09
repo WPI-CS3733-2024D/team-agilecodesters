@@ -39,7 +39,7 @@ def create_position():
         #position.faculty_email = current_user.data.
         db.session.add(position)
         db.session.commit()
-        return redirect(url_for('routes.index'))
+        return redirect(url_for('routes.index_student'))
     return render_template('_create-position.html', title='Create Position')
 
 @routes_blueprint.route('/apply/<position_id>', methods=['POST'])
