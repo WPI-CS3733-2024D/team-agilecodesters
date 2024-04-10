@@ -57,8 +57,9 @@ def apply_for_position(position_id):
         application = Applications(studentID=id, position=position_id,statement_of_interest=form.statement_of_interest.data, referenceName=form.reference_faculty_firstname + " " + form.reference_faculty_lastname, referenceEmail = form.reference_faculty_email)
         db.session.add(application)
         db.session.commit()
-    flash('Application submitted successfully!')
-    return redirect(url_for('routes.index_student'))
+        flash('Application submitted successfully!')
+        return redirect(url_for('routes.index_student'))
+    return render_template('_apply.html', title='Apply', form = form)
 
 @routes_blueprint.route('/unapply/<position_id>', methods=['POST'])
 @login_required
