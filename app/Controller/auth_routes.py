@@ -82,7 +82,7 @@ def login():
             return redirect(url_for("routes.index_faculty"))
         else:
             # TODO return some error
-            return redirect(url_for("login.html"))
+            return redirect(url_for("auth.login"))
     lform = LoginForm()
     if lform.validate_on_submit():
         # check if user is a student, faculty, or if login fails
@@ -93,6 +93,7 @@ def login():
         elif Student.query.filter_by(username=lform.username.data).first() is not None:
             student = Student.query.filter_by(username=lform.username.data).first()
             login_user(student, remember=lform.remember_me.data)
+            return redirect(url_for("routes.index_student"))
         else:
             # login failed
             flash("Invalid username or password")
