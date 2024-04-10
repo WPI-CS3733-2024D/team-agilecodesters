@@ -31,7 +31,7 @@ class UserType(Enum):
     Faculty = "faculty"
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 
     """
     Superclass for all users. Each user is either a student or faculty
@@ -63,7 +63,7 @@ class User(db.Model):
 
 
 # A sub-class of User, representing a student user
-class Student(User, UserMixin):
+class Student(User):
 
     """
     Represents a student user, inheriting from User
@@ -122,7 +122,7 @@ class Student(User, UserMixin):
 
 
 # A sub-class of User, representing the faculty users
-class Faculty(User, UserMixin):
+class Faculty(User):
 
     """
     Represents a faculty user, inheriting from User
@@ -302,5 +302,6 @@ class Applications(db.Model):
 
 
 @login.user_loader
-def load_user(wpi_id):
-    return Student.query.get(int(wpi_id))
+def load_user(id):
+    #if model.user_type
+    return User.query.get(int(id))
