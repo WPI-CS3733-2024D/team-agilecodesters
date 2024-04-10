@@ -17,6 +17,7 @@
 
                     {% else %}
                     <!-- Change to route for (Applied Postions Page?) -->
+                        <li><a href="{{ url_for('routes.create_position')}}"> Create Position </a></li>
                         <li><a href="{{ url_for('routes.view_created')}}"> View Created Positions </a></li>
                     {% endif %}
                     {% if not current_user.is_anonymous %}

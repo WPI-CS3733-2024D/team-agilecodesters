@@ -19,11 +19,15 @@ def index():
     # research positions that align with student queried information [search feature] will show on the screen.
     search_form = SearchForm()
     posts = ResearchPosition.query.order_by(ResearchPosition.startDate.desc())
+    
     if search_form.validate_on_submit():
-        if (
-            search_form.get_choices()[2] == search_form.sortOrder.data
-        ):  # Research Fields
-            # Query the ResearchPosition objects that share at least one field with the student
+        sort_option = search_form.sortOrder.data
+        
+        if sort_option == 'Date':
+            posts = ResearchPosition.query.order_by(ResearchPosition.startDate.asc())
+        elif sort_option == 'GPA':
+            posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
+        elif sort_option == 'Fields':
             shared_positions = (
                 ResearchPosition.query.join(PositionField)
                 .join(ResearchField)
@@ -35,16 +39,11 @@ def index():
                 .all()
             )
             posts = shared_positions
-        elif (
-            search_form.get_choices()[1] == search_form.sortOrder.data
-        ):  # Highest Required GPA
-            posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
-        else:  # Start date by default
-            posts = ResearchPosition.query.order_by(ResearchPosition.startDate.desc())
+
     return render_template(
         "index.html",
         title="Home",
-        posts=posts.all(),
+        posts=posts,
         search_form=search_form,
         get_faculty_name= lambda id: User.query.get(id)
     )
