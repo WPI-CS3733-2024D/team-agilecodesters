@@ -2,6 +2,33 @@
 
 {% block content %}
 
-    <h1>Profile Page</h1>
-    
+    {% if current_user.user_type == 'Student' %}
+        <h1>Student Profile</h1>
+    {% elif current_user.user_type == 'Faculty' %}
+        <h1>Faculty Profile</h1>
+    {% endif %}
+        <li>Username: {{ current_user.username }}</li>
+        <li>First Name: {{ current_user.firstname }}</li>
+        <li>Last Name: {{ current_user.lastname }}</li>
+        <li>Email: {{ current_user.email }}</li>
+        {% if current_user.user_type == 'Student' %}
+            <li>Major: {{ current_user.major }}</li>
+            <li>GPA: {{ current_user.GPA }}</li>
+            <li>Graduation Date: {{ current_user.graduationdate }}</li>
+            <li>Topics of Interest:
+                <ul>
+                    {% for topic in current_user.topics_of_interest %}
+                        <li>{{ topic.title }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% elif current_user.user_type == 'Faculty' %}
+            <li>Department: {{ current_user.department }}</li>
+            <li>Research Areas: </li>
+        {% endif %}
+    </ul>
+    {% if current_user.user_type == 'Student' %}
+        <p><a href="{{ url_for('routes.edit_profile') }}">Edit Profile</a></p>
+    {% endif %}
+
 {% endblock %}

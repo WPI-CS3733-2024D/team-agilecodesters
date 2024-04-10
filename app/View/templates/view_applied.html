@@ -2,6 +2,25 @@
 
 {% block content %}
 
-    <h1>View Applied Page</h1>
+    <h1>Applied Positions</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Department</th>
+                <th>Applied Date</th>
+                <th>Application Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+                <tr>
+                    <td>{{ application.position }}</td>
+                    <td>{{ application.department }}</td>
+                    <td>{{ application.applied_date }}</td>
+                    <td>{{ application.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
     
 {% endblock %}

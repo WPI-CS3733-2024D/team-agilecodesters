@@ -2,14 +2,16 @@
 
 {% block content %}
 
-    <h1>Apply Page</h1>
+    <h1>Apply For {{position_title}}</h1>
     
-    {% if aform %}
-    <div class="row">
-        <div class="col-md-4">
-            {{wtf.quick_form(aform, action = url_for('routes.apply'))}}
+    {% if form %}
+
+        <div class="row">
+            <div class="col-md-4">
+                {{ wtf.quick_form(form, action = url_for('routes.apply_for_position', position_id = position_id) ) }}
+            </div>
         </div>
-    </div>
+
     {% endif %}
 
 {% endblock %}

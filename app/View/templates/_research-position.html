@@ -2,7 +2,7 @@
     <tr> 
         <td colspan="3">
             <div class="">
-                <a href="{{ url_for('position'), position_id = post.id }}">
+                <a href="{{ url_for('routes.view_position', position_id = post.id) }}">
                      {{post.title}} 
                 </a>
             </div>
@@ -27,16 +27,16 @@
            
             <!-- Time/Date that the research position was posted by the faculty member -->
                 <div class="post">
-                    <p>Posted on: <span>{{ moment(post.timestamp).format('LLL') }}</span></p>
+                    <!-- TODO add when it was posted -->
                 </div>
            </div> 
         </td> 
 
         <td width = "5%"> 
             <div>
-                <a href="{{ url_for('apply'), position_id = post.id }}">
-                    Apply! 
-                </a>
+                <form action="{{ url_for('routes.apply_for_position', position_id=post.id) }}" method="post">
+                    <button type="submit" class="btn btn-primary">Apply!</button>
+                </form>
             </div>  
         </td>
     </tr>

@@ -12,7 +12,9 @@
                     <li><a href="{{ url_for('routes.index_student')}}"> Home </a></li>
                     <!-- Change to route for Applied Postions Page -->
                     {% if current_user.user_type == 'Student' %}
+
                         <li><a href="{{ url_for('routes.index_student')}}"> View Applied Positions </a></li>
+
                     {% else %}
                     <!-- Change to route for (Applied Postions Page?) -->
                         <li><a href="{{ url_for('routes.index_faculty')}}"> View Created Positions </a></li>
@@ -31,5 +33,15 @@
             </div>
         </div>
     </nav>
+
+    <div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info"> {{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
 {% endblock %}
 
