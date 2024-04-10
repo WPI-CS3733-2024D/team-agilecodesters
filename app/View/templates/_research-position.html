@@ -34,9 +34,15 @@
 
         <td width = "5%"> 
             <div>
-                <form action="{{ url_for('routes.apply_for_position', position_id=post.id) }}" method="post">
-                    <button type="submit" class="btn btn-primary">Apply!</button>
-                </form>
+                {% if current_user.user_type == "student" %}
+                    <form action="{{ url_for('routes.apply_for_position', position_id=post.id) }}" method="post">
+                        <button type="submit" class="btn btn-primary">Apply!</button>
+                    </form>
+                {% else %}
+                    <form action="{{ url_for('routes.edit_profile', position_id=post.id) }}" method="post">
+                        <button type="submit" class="btn btn-primary">Edit!</button>
+                    </form>
+                {% endif %}
             </div>  
         </td>
     </tr>

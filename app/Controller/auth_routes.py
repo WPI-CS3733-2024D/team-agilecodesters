@@ -1,7 +1,7 @@
 from flask import flash, redirect, render_template, Blueprint, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from app.Controller.auth_forms import (FacultyRegistrationForm, LoginForm, StudentRegistrationForm,)
-from app.Model.models import Faculty, ResearchField, Student
+from app.Model.models import Faculty, ResearchField, Student, User
 from config import Config
 from app import db
 
@@ -22,14 +22,14 @@ def register_student():
             flash("Username or email is taken! Please try again.")
             return redirect(url_for("auth.register_student"))
         student = Student(
-            username=sform.username.data,
-            email=sform.email.data,
-            firstname=sform.firstname.data,
-            lastname=sform.lastname.data,
-            major=sform.major.data,
-            GPA=sform.gpa.data,
-            graduationdate=sform.graduation_date.data,
-            user_type="Student"
+            username = sform.username.data,
+            email = sform.email.data,
+            firstname = sform.firstname.data,
+            lastname = sform.lastname.data,
+            major = sform.major.data,
+            GPA = sform.gpa.data,
+            graduationdate = sform.graduation_date.data,
+            user_type = "Student",
         )
         for topic in sform.topics_of_interest.data:
             student.topics_of_interest.append(topic)
@@ -54,13 +54,13 @@ def register_faculty():
     fform = FacultyRegistrationForm()
     if fform.validate_on_submit():
         # Check if the username or email already exists in Student table
-        existing_student = Student.query.filter(
-            (Student.username == fform.username.data)
-            | (Student.email == fform.email.data)
+        existing_user = User.query.filter(
+            (User.username == fform.username.data)
+            | (User.email == fform.email.data)
         ).first()
-        if existing_student:
-            flash("Username or email is already registered as student.")
-            return redirect(url_for("auth.register_faculty"))
+        if existing_user:
+            flash("Username or email is already registered.")
+            return redirect(url_for("auth.register_faculty", form=fform))
         faculty = Faculty(username=fform.username.data)
         faculty = Faculty(
             username=fform.username.data,
