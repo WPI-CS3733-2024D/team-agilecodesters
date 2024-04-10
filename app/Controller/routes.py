@@ -20,7 +20,10 @@ def index_student():
     # add logic to filter out research positions based on searches.
     # research positions that align with student queried information [search feature] will show on the screen.
     search_form = SearchForm()
+    posts = ResearchPosition.query.all()
+    
     if search_form.validate_on_submit():
+        
         if search_form.get_choices()[2] == search_form.sortOrder.data: #Research Fields
             # Query the ResearchPosition objects that share at least one field with the student
             shared_positions = ResearchPosition.query.join(PositionField).join(ResearchField).filter(PositionField.field_ID.in_([field.id for field in current_user.topics_of_interest])).all()
@@ -29,7 +32,7 @@ def index_student():
             posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
         else: #Start date by default
             posts = ResearchPosition.query.order_by(ResearchPosition.startDate.desc())
-    return render_template('index_student.html', title='Student Home', posts=posts, search_form = search_form)
+    return render_template('index_student.html', title='Student Home', posts = posts, search_form = search_form)
 
 @routes_blueprint.route('/index/faculty', methods=['GET', 'POST'])
 @login_required
