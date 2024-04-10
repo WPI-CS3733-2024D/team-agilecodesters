@@ -1,11 +1,12 @@
 from flask import flash, redirect, render_template, Blueprint, url_for
 from flask_login import current_user, login_required, login_user, logout_user
+from sqlalchemy.sql.functions import count
 from app.Controller.auth_forms import (
     FacultyRegistrationForm,
     LoginForm,
     StudentRegistrationForm,
 )
-from app.Model.models import Faculty, Student, User
+from app.Model.models import Faculty, ResearchField, Student, User
 from config import Config
 from app import db
 
@@ -33,9 +34,18 @@ def register_student():
             major=sform.major.data,
             GPA=sform.gpa.data,
             graduationdate=sform.graduation_date.data,
-            user_type="Student")
+            user_type="Student",
+        )
         for topic in sform.topics_of_interest.data:
             student.topics_of_interest.append(topic)
+        if sform.other_topics.data:
+            other_topics = sform.other_topics.data.split(",")
+            for topic in other_topics:
+                newtopic = ResearchField(
+                    id=ResearchField.query.count() + 1, title=topic
+                )
+                db.session.add(newtopic)
+                student.topics_of_interest.append(newtopic)
         student.set_password(sform.password.data)
         db.session.add(student)
         db.session.commit()
@@ -62,7 +72,18 @@ def register_faculty():
             email=fform.email.data,
             firstname=fform.firstname.data,
             lastname=fform.lastname.data,
-            user_type='Faculty')
+            user_type="Faculty",
+        )
+        for topic in fform.research_areas.data:
+            faculty.research_areas.append(topic)
+        if fform.other_topics.data:
+            other_topics = fform.other_topics.data.split(", ")
+            for topic in other_topics:
+                newtopic = ResearchField(
+                    id=ResearchField.query.count() + 1, title=topic
+                )
+                db.session.add(newtopic)
+                faculty.research_areas.append(newtopic)
         faculty.set_password(fform.password.data)
         db.session.add(faculty)
         db.session.commit()
@@ -75,15 +96,24 @@ def register_faculty():
 def login():
     if current_user.is_authenticated:
         # check if user is a student
+        route = "auth.login"
         if Student.query.filter_by(id=current_user.id).first():
-            return redirect(url_for("routes.index_student"))
-        # else check if user is a faculty
+            flash("Welcome, Student!")
+            route = "routes.index_student"
+            # return redirect(url_for("routes.index_student"))
+            # else check if user is a faculty
         elif Faculty.query.filter_by(id=current_user.id).first():
-            return redirect(url_for("routes.index_faculty"))
+            flash("Faculty detected!")
+            route = "routes.index_faculty"
+            # return redirect(url_for("routes.index_faculty"))
         else:
             flash("Unknown user type")
-            return redirect(url_for("auth.login"))
-        
+            # return redirect(url_for("auth.login"))
+        print(f"Route is {route}")
+        return redirect(url_for(route))
+
+
+
     lform = LoginForm()
     if lform.validate_on_submit():
         # check if user is a student, faculty, or if login fails
