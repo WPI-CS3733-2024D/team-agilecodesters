@@ -54,10 +54,10 @@ def create_position():
 @routes_blueprint.route('/apply/<position_id>', methods=['POST'])
 @login_required
 def apply_for_position(position_id):
+    position = ResearchPosition.query.get(position_id)
     aform = ApplicationForm()
     if aform.validate_on_submit():
-        id = current_user.id
-        application = Applications(studentID=id, position=position_id,statement_of_interest=aform.statement_of_interest.data, 
+        application = Applications(studentID=current_user.id, position=position_id,statement_of_interest=aform.statement_of_interest.data, 
                                    referenceName=aform.reference_faculty_firstname + " " + aform.reference_faculty_lastname, 
                                    referenceEmail = aform.reference_faculty_email)
 
@@ -65,7 +65,10 @@ def apply_for_position(position_id):
         db.session.commit()
         flash('Application submitted successfully!')
         return redirect(url_for('routes.index_student'))
-    return render_template('apply.html', form = aform)
+    else:
+        aform.firstname.data = current_user.firstname
+        aform.lastname.data = current_user.lastname
+    return render_template('_apply.html', form = aform, position_id = position_id, position_title=position.title)
 
 @routes_blueprint.route('/unapply/<position_id>', methods=['POST'])
 @login_required
@@ -121,4 +124,6 @@ def edit_profile():
 @routes_blueprint.route('/profile/positions', methods=['GET', 'POST'])
 @login_required
 def view_applied():
-    return render_template('view_applied.html', title='Applied Positions')
+    if current_user.user_type == 'Student':
+        applications = Applications.query.filter_by(studentID=current_user.id).all()
+    return render_template('view_applied.html', title='Applied Positions', applications=applications)

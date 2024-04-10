@@ -34,9 +34,9 @@
 
         <td width = "5%"> 
             <div>
-                <a href="{{ url_for('routes.apply_for_position', position_id = post.id) }}">
-                    Apply! 
-                </a>
+                <form action="{{ url_for('routes.apply_for_position', position_id=post.id) }}" method="post">
+                    <button type="submit" class="btn btn-primary">Apply!</button>
+                </form>
             </div>  
         </td>
     </tr>
