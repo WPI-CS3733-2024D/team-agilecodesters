@@ -170,6 +170,11 @@ def edit_profile():
 def view_applied():
     if current_user.user_type == "Student":
         applications = Applications.query.filter_by(studentID=current_user.id).all()
-    return render_template(
-        "view_applied.html", title="Applied Positions", applications=applications
-    )
+    return render_template("view_applied.html", title="Applied Positions", applications=applications)
+
+@routes_blueprint.route("/profile/created", methods=["GET", "POST"])
+@login_required
+def view_created():
+    if current_user.user_type == "Faculty":
+        positions = ResearchPosition.query.filter_by(faculty=current_user.id).all()
+    return render_template("view_created.html", title="Created Positions", positions=positions)

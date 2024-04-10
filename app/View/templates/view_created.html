@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Your Research Positions</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Wanted GPA</th>
+                <th>Languages</th>
+                <th>Description</th>
+                <th>Research Goals</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for position in positions %}
+            <tr>
+                <td>{{ position.title }}</td>
+                <td>{{ position.wantedGPA }}</td>
+                <td>{{ position.languages }}</td>
+                <td>{{ position.description }}</td>
+                <td>{{ position.researchGoals }}</td>
+                <td>{{ position.startDate }}</td>
+                <td>{{ position.endDate }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
