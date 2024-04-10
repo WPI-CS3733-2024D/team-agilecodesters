@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 
-from app.Controller.forms import ApplicationForm, PostPositionForm, SearchForm
+from app.Controller.forms import ApplicationForm, EditFacultyProfileForm, EditStudentProfileForm, PostPositionForm, SearchForm
 from app.Model.models import Applications, PositionField, ResearchField, ResearchPosition
 from config import Config
 from app import db
@@ -91,7 +91,32 @@ def view_profile():
 @routes_blueprint.route('/profile/edit', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    return render_template('edit_profile.html', title='Edit Profile')
+    if current_user.user_type == 'Student':
+        form = EditStudentProfileForm()
+    else:
+        form = EditFacultyProfileForm()
+    if request.method == 'POST':
+        current_user.firstname = form.firstname.data
+        current_user.lastname = form.lastname.data
+        current_user.email = form.email.data
+        current_user.set_password(form.password.data)
+        current_user.major = form.major.data
+        current_user.GPA = form.GPA.data
+        current_user.graduationdate = form.graduationdate.data
+        #current_user.topics_of_interest = form.topics_of_interest.data
+        db.session.add(current_user)
+        db.session.commit()
+        flash('Your profile has been updated!')
+        return redirect(url_for('routes.view_profile'))
+    elif request.method == 'GET':
+        form.firstname.data = current_user.firstname
+        form.lastname.data = current_user.lastname
+        form.email.data = current_user.email
+        form.major.data = current_user.major
+        form.GPA.data = current_user.GPA
+        #form.graduationdate.data = current_user.graduationdate
+        #form.topics_of_interest.data = [topic.id for topic in current_user.topics_of_interest]
+    return render_template('edit_profile.html', title='Edit Profile', form=form)
 
 @routes_blueprint.route('/profile/positions', methods=['GET', 'POST'])
 @login_required
