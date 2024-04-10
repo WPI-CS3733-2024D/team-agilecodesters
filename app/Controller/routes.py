@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user, login_user
@@ -153,7 +154,16 @@ def edit_profile():
         current_user.major = form.major.data
         current_user.GPA = form.GPA.data
         current_user.graduationdate = form.graduationdate.data
-        # current_user.topics_of_interest = form.topics_of_interest.data
+        for topic in form.topics_of_interest.data:
+            current_user.topics_of_interest.append(topic)
+        if form.other_topics.data:
+            other_topics = form.other_topics.data.split(",")
+            for topic in other_topics:
+                newtopic = ResearchField(
+                    id=ResearchField.query.count() + 1, title=topic
+                )
+                db.session.add(newtopic)
+                current_user.topics_of_interest.append(newtopic)
         db.session.add(current_user)
         db.session.commit()
         flash("Your profile has been updated!")
@@ -164,8 +174,8 @@ def edit_profile():
         form.email.data = current_user.email
         form.major.data = current_user.major
         form.GPA.data = current_user.GPA
-        # form.graduationdate.data = current_user.graduationdate
-        # form.topics_of_interest.data = [topic.id for topic in current_user.topics_of_interest]
+        form.graduationdate.data = datetime.strptime(current_user.graduationdate, '%Y-%m-%d').date()
+        form.topics_of_interest.data = [topic.id for topic in current_user.topics_of_interest]
     return render_template("edit_profile.html", title="Edit Profile", form=form)
 
 

@@ -1,8 +1,10 @@
 from flask_wtf import FlaskForm
+from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms import DateField, SelectField, SelectMultipleField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, DateTimeField
 from wtforms.validators import  ValidationError, Length, DataRequired, Email, EqualTo
-from app.Model.models import Student
+from app.Model.models import ResearchField, Student
 from wtforms_sqlalchemy.fields import QuerySelectField
+from wtforms.widgets import ListWidget, CheckboxInput
 from flask_login import current_user
 
 
@@ -41,7 +43,14 @@ class EditStudentProfileForm(FlaskForm):
     major = StringField('Major', validators=[DataRequired()])
     GPA = FloatField('GPA', validators=[DataRequired()])
     graduationdate = DateField('Graduation Date', validators=[DataRequired()])
-    topics_of_interest = SelectMultipleField('Topics of Interest', validators=[DataRequired()], coerce=int)
+    topics_of_interest = QuerySelectMultipleField(
+        "Topics of Interest",
+        query_factory=lambda: ResearchField.query.all(),
+        get_label=lambda x: x.title,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
+    other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
     submit = SubmitField('Save Changes')
 
 class EditFacultyProfileForm(FlaskForm):

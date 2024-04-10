@@ -1,12 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import (
-    FloatField,
-    StringField,
-    SubmitField,
-    TextAreaField,
-    PasswordField,
-    BooleanField,
-)
+from wtforms import (DateField, FloatField, StringField, SubmitField, PasswordField, BooleanField,)
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.validators import ValidationError, Length, DataRequired, Email, EqualTo
 from app.Model.models import Student, ResearchField
@@ -24,7 +17,7 @@ class StudentRegistrationForm(FlaskForm):
     )
     major = StringField("Major", validators=[DataRequired()])
     gpa = FloatField("GPA", validators=[DataRequired()])
-    graduation_date = StringField("Graduation Date", validators=[DataRequired()])
+    graduation_date = DateField("Graduation Date", validators=[DataRequired()])
     topics_of_interest = QuerySelectMultipleField(
         "Topics of Interest",
         query_factory=lambda: ResearchField.query.all(),
