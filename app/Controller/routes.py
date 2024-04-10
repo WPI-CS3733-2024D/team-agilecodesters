@@ -6,7 +6,7 @@ from app.Controller.forms import (ApplicationForm, EditFacultyProfileForm, EditS
 from app.Model.models import (Applications, PositionField, ResearchField, ResearchPosition)
 from config import Config
 from app import db
-
+from app.Model.models import User
 routes_blueprint = Blueprint("routes", __name__)
 routes_blueprint.template_folder = Config.TEMPLATE_FOLDER
 
@@ -46,6 +46,7 @@ def index():
         title="Home",
         posts=posts.all(),
         search_form=search_form,
+        get_faculty_name= lambda id: User.query.get(id)
     )
 
 @routes_blueprint.route("/create_position", methods=["GET", "POST"])
@@ -61,11 +62,11 @@ def create_position():
             startDate=form.startDate.data,
             endDate=form.endDate.data,
         )
-        position.faculty = current_user
+        position.faculty = current_user.id
         db.session.add(position)
         db.session.commit()
         return redirect(url_for("routes.index"))
-    return render_template("_create-position.html", title="Create Position")
+    return render_template("_create-position.html", title="Create Position", form=form)
 
 @routes_blueprint.route("/apply/<position_id>", methods=["POST"])
 @login_required

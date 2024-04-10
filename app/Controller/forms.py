@@ -24,8 +24,8 @@ class PostPositionForm(FlaskForm):
     wantedGPA = FloatField('Lowest Desired GPA', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired(), Length(max=1500)])
     researchGoals = StringField('Research Goals', validators=[DataRequired()])
-    startDate = DateTimeField('Start Date', validators=[DataRequired()])
-    endDate = DateTimeField('End Date', validators=[DataRequired()])
+    startDate = DateField('Start Date', validators=[DataRequired()])
+    endDate = DateField('End Date', validators=[DataRequired()])
     submit = SubmitField('Post')
 
 # SEARCH FEATURE on index page

@@ -38,10 +38,10 @@
     display: flex;
     vertical-align: middle;
     background-color: aliceblue;
-    border: 1px solid #000;
+    border: 2px solid black;
     width: 31%;
-    margin: 5px;
     padding: 10px;
+    margin-bottom: 10px;
 }
 
 @media screen and (min-width: 800px) and (max-width: 1200px) {

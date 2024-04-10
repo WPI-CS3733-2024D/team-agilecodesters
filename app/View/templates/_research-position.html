@@ -34,7 +34,7 @@
 
         <td width = "5%"> 
             <div>
-                {% if current_user.user_type == "student" %}
+                {% if current_user.user_type == "Student" %}
                     <form action="{{ url_for('routes.apply_for_position', position_id=post.id) }}" method="post">
                         <button type="submit" class="btn btn-primary">Apply!</button>
                     </form>
@@ -51,7 +51,7 @@
         <td colspan="3" style = "text-align:center" valign="bottom">  
             <br>
               <!-- include username/faculty member who posted the post [Research Position]-->
-              Posted By: {{current_user.username}}
+              Posted By: {{ get_faculty_name(post.faculty).firstname }} {{ get_faculty_name(post.faculty).lastname }}
           </td>
         </tr>
     </tr>

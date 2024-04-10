@@ -2,6 +2,14 @@
 
 {% block content %}
 
+<style>
+  .post-box {
+      border: 2px solid black;
+      padding: 10px;
+      margin-bottom: 10px;
+  }
+</style>
+
 <h1>All Available Positions</h1>
 
 <form method="POST" action="{{ url_for('routes.index') }}">
@@ -14,11 +22,11 @@
     
 <!-- List out all the research positions available (or to his/her recommendations) on the student's end-->
 <div class="postlist">
-    {% for post in posts %}
-        <div class="post-box">
-            {% include '_research-position.html' %} 
-        </div>
-    {% endfor %}
+  {% for post in posts %}
+      <div class="post-box">
+          {% include '_research-position.html' %} 
+      </div>
+  {% endfor %}
 </div>
 
 {% endblock %}
