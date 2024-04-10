@@ -80,7 +80,8 @@ def unapply_for_position(position_id):
 @routes_blueprint.route('/position/<position_id>', methods=['GET', 'POST'])
 @login_required
 def view_position(position_id):
-    return render_template('view_position.html', title='Profile', position_id=position_id)
+    position = ResearchPosition.query.get(position_id)
+    return render_template('view_position.html', title='Profile', position=position)
 
 @routes_blueprint.route('/profile', methods=['GET'])
 @login_required
