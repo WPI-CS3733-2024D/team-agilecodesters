@@ -1,7 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    <h1>Profile Page</h1>
-    
+    <h1>User Profile</h1>
+        <li>Username: {{ current_user.username }}</li>
+        <li>First Name: {{ current_user.firstname }}</li>
+        <li>Last Name: {{ current_user.lastname }}</li>
+        <li>Email: {{ current_user.email }}</li>
+        <li>Phone: {{ current_user.phone }}</li>
+        {% if current_user.user_type == 'Student' %}
+            <li>Major: {{ current_user.major }}</li>
+            <li>GPA: {{ current_user.GPA }}</li>
+            <li>Graduation Date: {{ current_user.graduationdate }}</li>
+            <li>Topics of Interest:
+                <ul>
+                    {% for topic in current_user.topics_of_interest %}
+                        <li>{{ topic.title }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% elif current_user.user_type == 'Faculty' %}
+            <li>Department: {{ current_user.department }}</li>
+            <li>Research Areas: </li>
+        {% endif %}
+    </ul>
 {% endblock %}

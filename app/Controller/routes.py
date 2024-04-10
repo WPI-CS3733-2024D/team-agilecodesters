@@ -92,3 +92,8 @@ def view_profile():
 @login_required
 def edit_profile():
     return render_template('edit_profile.html', title='Edit Profile')
+
+@routes_blueprint.route('/profile/positions', methods=['GET', 'POST'])
+@login_required
+def view_applied():
+    return render_template('view_applied.html', title='Applied Positions')
