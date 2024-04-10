@@ -67,7 +67,6 @@ def create_position():
         return redirect(url_for("routes.index"))
     return render_template("_create-position.html", title="Create Position")
 
-
 @routes_blueprint.route("/apply/<position_id>", methods=["POST"])
 @login_required
 def apply_for_position(position_id):
