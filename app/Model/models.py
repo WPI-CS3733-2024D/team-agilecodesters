@@ -22,7 +22,7 @@ class UserType(Enum):
 
 
 # A super class representing a generic user
-class User(db.Model, UserMixin):
+class User(db.Model):
 
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
@@ -41,7 +41,7 @@ class User(db.Model, UserMixin):
 
 
 # A sub-class of User, representing a student user
-class Student(User):
+class Student(User, UserMixin):
 
     __tablename__ = "student"
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
@@ -76,7 +76,7 @@ class Student(User):
 
 
 # A sub-class of User, representing the faculty users
-class Faculty(User):
+class Faculty(User, UserMixin):
 
     __tablename__ = "faculty"
     # Research Areas coincide with Topics of Interest in the Student model

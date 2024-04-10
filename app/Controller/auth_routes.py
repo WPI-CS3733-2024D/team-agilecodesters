@@ -81,18 +81,20 @@ def login():
         elif Faculty.query.filter_by(id=current_user.id).first():
             return redirect(url_for("routes.index_faculty"))
         else:
-            # TODO return some error
+            flash("Unknown user type")
             return redirect(url_for("login.html"))
+        
     lform = LoginForm()
     if lform.validate_on_submit():
         # check if user is a student, faculty, or if login fails
-        if Faculty.query.filter_by(username=lform.username.data).first() is not None:
-            faculty = Faculty.query.filter_by(username=lform.username.data).first()
+        faculty = Faculty.query.filter_by(username=lform.username.data).first()
+        student = Student.query.filter_by(username=lform.username.data).first()
+        if faculty and faculty.check_password(lform.password.data):
             login_user(faculty, remember=lform.remember_me.data)
             return redirect(url_for("routes.index_faculty"))
-        elif Student.query.filter_by(username=lform.username.data).first() is not None:
-            student = Student.query.filter_by(username=lform.username.data).first()
+        elif student and student.check_password(lform.password.data):
             login_user(student, remember=lform.remember_me.data)
+            return redirect(url_for("routes.index_student"))
         else:
             # login failed
             flash("Invalid username or password")
