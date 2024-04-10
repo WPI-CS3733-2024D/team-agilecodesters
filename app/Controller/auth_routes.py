@@ -82,7 +82,7 @@ def login():
             return redirect(url_for("routes.index_faculty"))
         else:
             flash("Unknown user type")
-            return redirect(url_for("login.html"))
+            return redirect(url_for("auth.login"))
         
     lform = LoginForm()
     if lform.validate_on_submit():
