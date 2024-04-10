@@ -6,24 +6,46 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 
+# Table linking students to research fields
 studentFields = db.Table(
     "studentFields",
     db.Column("student_id", db.Integer, db.ForeignKey("student.id")),
     db.Column("field_id", db.Integer, db.ForeignKey("research_field.id")),
 )
+facultyInterests = db.Table(
+        "facultyInterests",
+        db.Column("faculty_id", db.Integer, db.ForeignKey("faculty.id")),
+        db.Column("field_id", db.Integer, db.ForeignKey("research_field.id")),
+        )
 
 
 # TODO: cite sources for inheritance
-# for consistency
+# Sources for inheritance:
+# - https://github.com/briangreunke/sqlalchemy-inheritance/blob/master/inherit.py
+# - https://stackoverflow.com/questions/1337095/sqlalchemy-inheritance
+
+# Enum repreenting type of user, for consistency
 class UserType(Enum):
     User = "user"
     Student = "student"
     Faculty = "faculty"
 
 
-# A super class representing a generic user
 class User(db.Model):
 
+    """
+    Superclass for all users. Each user is either a student or faculty
+    Attributes: 
+        __tablename__: String for inheritance
+        id: Integer, primary key
+        username: String, unique, max 20 characters
+        password_hash: String, max 20 characters
+        firstname: String, max 20 characters
+        lastname: String, max 20 characters 
+        email: String, unique, max 20 characters 
+        phone: String, max 10 characters
+        __mapper_args__: Polymorphic identity for inheritance
+    """
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     #wpi_id = db.Column(db.Integer, unique=True)
@@ -43,6 +65,20 @@ class User(db.Model):
 # A sub-class of User, representing a student user
 class Student(User, UserMixin):
 
+    """
+    Represents a student user, inheriting from User
+    Attributes: 
+        __tablename__: String for inheritance
+        id: Foreign key to User, primary key
+        major: String, max 20 characters
+        GPA: Float
+        graduationdate: String, max 20 characters
+        user_type: String, max 20 characters
+        topics_of_interest: Many-to-many relationship with ResearchField
+        appliedPositions: One-to-many relationship with Applications 
+        __mapper_args__: Polymorphic identity for inheritance
+
+    """
     __tablename__ = "student"
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
 
@@ -65,10 +101,20 @@ class Student(User, UserMixin):
     __mapper_args__ = {"polymorphic_identity": UserType.Student}
 
     def __repr__(self):
+        """
+        Converts the student object to a string
+        Returns:
+           String representation of the student object 
+        """
         return "<Student {} - {} - {}>".format(self.id, self.firstname, self.lastname)
 
     # By using set_password, we don't store the user's password, increasing security
     def set_password(self, password):
+        """
+        Sets the password of the student, hashing it for security
+        Args:
+            password: String, the password to be hashed
+        """
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
@@ -78,12 +124,30 @@ class Student(User, UserMixin):
 # A sub-class of User, representing the faculty users
 class Faculty(User, UserMixin):
 
+    """
+    Represents a faculty user, inheriting from User
+    Attributes: 
+        __tablename__: String for inheritance
+        id: Foreign key to User, primary key 
+        department: String, max 20 characters, department that faculty works in
+        user_type: String, max 20 characters
+        __mapper_args__: Polymorphic identity for inheritance
+        password_hash: String, max 20 characters, password hash for security
+    """
     __tablename__ = "faculty"
     # Research Areas coincide with Topics of Interest in the Student model
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
     #researchAreas = db.Column(db.String(150))
     department = db.Column(db.String(20), db.ForeignKey("department.name"))
     user_type = db.Column(db.String(20))
+
+    research_areas = db.relationship(
+            "ResearchField",
+            secondary=facultyInterests,
+            primaryjoin=(facultyInterests.c.faculty_id == id),
+            backref=(db.backref("facultyInterests", lazy="dynamic")),
+            lazy="dynamic"
+    )
 
     __mapper_args__ = {"polymorphic_identity": UserType.Faculty}
 
@@ -117,6 +181,14 @@ class Department(db.Model):
 
 # Represents the research fields that the website can handle
 class ResearchField(db.Model):
+    """
+    Represents the research fields that one may be interested in, and that some positions may pertain to
+    Attributes: 
+        id: Integer, primary key 
+        title: String, max 30 characters 
+        attachedPosition: Many-to-many relationship with PositionField 
+        student_interested: Many-to-many relationship with Student 
+    """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30))
     attachedPosition = db.relationship("PositionField", back_populates="fields")
@@ -135,6 +207,21 @@ class ResearchField(db.Model):
 
 # Represents the posted research positions
 class ResearchPosition(db.Model):
+    """
+    Represents the research positions that are available for students to apply to
+    Attributes: 
+        id: Integer, primary key 
+        title: String, max 30 characters 
+        wantedGPA: Float, the minimum GPA desired for the position 
+        languages: String, max 150 characters, the programming languages desired for the position 
+        description: String, max 1500 characters, the description of the position 
+        researchGoals: String, max 1500 characters, the goals of the research 
+        startDate: DateTime, the start date of the position 
+        endDate: DateTime, the end date of the position 
+        faculty: Integer, foreign key to Faculty
+        students_application: One-to-many relationship with Applications 
+        researchFields: Many-to-many relationship with PositionField 
+    """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30), unique=True)
     # Specifies the lowest desired GPA
@@ -161,6 +248,14 @@ class ResearchPosition(db.Model):
 
 # A relationship table relation research positions and the fields they pertain to
 class PositionField(db.Model):
+    """
+    Represents the relationship between research positions and the fields they pertain to
+    Attributes: 
+        pos_ID: Integer, foreign key to ResearchPosition 
+        field_ID: Integer, foreign key to ResearchField 
+        position: Relationship to ResearchPosition 
+        fields: Relationship to ResearchField 
+    """
     pos_ID = db.Column(
         db.Integer, db.ForeignKey("research_position.id"), primary_key=True
     )
@@ -175,6 +270,17 @@ class PositionField(db.Model):
 
 # A relationship table relating students to positions they have applied to
 class Applications(db.Model):
+    """
+    Represents the applications that students have submitted to positions
+    Attributes: 
+        studentID: Integer, foreign key to Student, primary key 
+        position: Integer, foreign key to ResearchPosition, primary key 
+        student_enrolled: Relationship to Student 
+        enrolled_position: Relationship to ResearchPosition 
+        statement_of_interest: String, max 1200 characters, the student's statement of interest 
+        referenceEmail: String, max 20 characters, the email of the reference 
+        referenceName: String, max 20 characters, the name of the reference 
+    """
     studentID = db.Column(db.Integer, db.ForeignKey("student.id"), primary_key=True)
     position = db.Column(
         db.Integer, db.ForeignKey("research_position.id"), primary_key=True

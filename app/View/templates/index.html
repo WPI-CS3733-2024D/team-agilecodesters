@@ -1,0 +1,11 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container">
+  {% if user_type == "Student" %}
+  <div>{% include "index_student.html" %}</div>
+  {% elif user_type == "Faculty" %}
+  <div>{% include "index_teacher.html" %}</div>
+  {% endif %}
+</div>
+
+{% endblock %}
