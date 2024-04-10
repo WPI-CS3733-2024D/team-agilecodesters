@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
-from app.Controller.forms import postPositionForm, searchForm
+from app.Controller.forms import postPositionForm, searchForm, applicationForm
 from app.Model.models import Applications, ResearchPosition
 from config import Config
 from app import db
@@ -45,12 +45,15 @@ def create_position():
 @routes_blueprint.route('/apply/<position_id>', methods=['POST'])
 @login_required
 def apply_for_position(position_id):
-    wpi_id = current_user.wpi_id
-    application = Applications(studentID=wpi_id, position=position_id)
-    db.session.add(application)
-    db.session.commit()
-    flash('Application submitted successfully!')
-    return redirect(url_for('routes.index_student'))
+    aform = applicationForm()
+    if aform.validate_on_submit:
+        wpi_id = current_user.wpi_id
+        application = Applications(studentID = wpi_id, position=position_id)
+        db.session.add(application)
+        db.session.commit()
+        flash('Application submitted successfully!')
+        return redirect(url_for('routes.index_student'))
+    return render_template('apply.html', form = aform)
 
 @routes_blueprint.route('/unapply/<position_id>', methods=['POST'])
 @login_required
