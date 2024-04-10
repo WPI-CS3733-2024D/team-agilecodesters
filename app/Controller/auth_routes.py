@@ -99,20 +99,14 @@ def login():
         route = "auth.login"
         if Student.query.filter_by(id=current_user.id).first():
             flash("Welcome, Student!")
-            route = "routes.index_student"
-            # return redirect(url_for("routes.index_student"))
+            return redirect(url_for("routes.index"))
             # else check if user is a faculty
         elif Faculty.query.filter_by(id=current_user.id).first():
-            flash("Faculty detected!")
-            route = "routes.index_faculty"
-            # return redirect(url_for("routes.index_faculty"))
+            flash("Welcome, Faculty!")
+            return redirect(url_for("routes.index_faculty"))
         else:
             flash("Unknown user type")
-            # return redirect(url_for("auth.login"))
-        print(f"Route is {route}")
-        return redirect(url_for(route))
-
-
+            return redirect(url_for("auth.login"))
 
     lform = LoginForm()
     if lform.validate_on_submit():
@@ -121,10 +115,10 @@ def login():
         student = Student.query.filter_by(username=lform.username.data).first()
         if faculty and faculty.check_password(lform.password.data):
             login_user(faculty, remember=lform.remember_me.data)
-            return redirect(url_for("routes.index_faculty"))
+            return redirect(url_for("routes.index"))
         elif student and student.check_password(lform.password.data):
             login_user(student, remember=lform.remember_me.data)
-            return redirect(url_for("routes.index_student"))
+            return redirect(url_for("routes.index"))
         else:
             # login failed
             flash("Invalid username or password")

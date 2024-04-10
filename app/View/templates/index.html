@@ -1,11 +1,14 @@
 {% extends "base.html" %} {% block content %}
 
-<div class="container">
-  {% if user_type == "Student" %}
-  <div>{% include "index_student.html" %}</div>
-  {% elif user_type == "Faculty" %}
-  <div>{% include "index_teacher.html" %}</div>
-  {% endif %}
+<h1>All Available Positions</h1>
+    
+<!-- List out all the research positions available (or to his/her recommendations) on the student's end-->
+<div class="postlist">
+    {% for post in posts %}
+        <div class="post-box">
+            {% include '_research-position.html' %} 
+        </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

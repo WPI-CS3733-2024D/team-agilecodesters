@@ -26,20 +26,8 @@ routes_blueprint.template_folder = Config.TEMPLATE_FOLDER
 
 @routes_blueprint.route("/", methods=["GET", "POST"])
 @routes_blueprint.route("/index", methods=["GET", "POST"])
-# def index():
-#     user_type = "Student"
-#     if not current_user.is_authenticated:
-#         return redirect(url_for('auth.login'))
-#     if Faculty.query.get(current_user.id):
-#         user_type = "Faculty"
-#     return render_template('index.html', title='Home', user_type=user_type)
-#
-@routes_blueprint.route("/index/student", methods=["GET", "POST"])
 @login_required
-def index_student():
-    # # if (current_user.user_type != 'Student'):
-    if not (Student.query.get(current_user.id)):
-        return redirect(url_for("routes.index_faculty"))
+def index():
     # add logic to filter out research positions based on searches.
     # research positions that align with student queried information [search feature] will show on the screen.
     search_form = SearchForm()
@@ -67,21 +55,11 @@ def index_student():
         else:  # Start date by default
             posts = ResearchPosition.query.order_by(ResearchPosition.startDate.desc())
     return render_template(
-        "index_student.html",
-        title="Student Home",
+        "index.html",
+        title="Home",
         posts=posts.all(),
         search_form=search_form,
     )
-
-
-@routes_blueprint.route('/index/faculty', methods=['GET', 'POST'])
-@login_required
-def index_faculty():
-    if (current_user.user_type != 'Faculty'):
-        return redirect(url_for('routes.index_student'))
-    posts = ResearchPosition.query.all() # get all positions the faculty created
-    return render_template('index_faculty.html', title='Faculty Home', post=posts)
-
 
 @routes_blueprint.route("/create_position", methods=["GET", "POST"])
 @login_required
@@ -99,7 +77,7 @@ def create_position():
         position.faculty = current_user
         db.session.add(position)
         db.session.commit()
-        return redirect(url_for("routes.index_student"))
+        return redirect(url_for("routes.index"))
     return render_template("_create-position.html", title="Create Position")
 
 
@@ -122,7 +100,7 @@ def apply_for_position(position_id):
         db.session.add(application)
         db.session.commit()
         flash("Application submitted successfully!")
-        return redirect(url_for("routes.index_student"))
+        return redirect(url_for("routes.index"))
     else:
         aform.firstname.data = current_user.firstname
         aform.lastname.data = current_user.lastname
@@ -144,7 +122,7 @@ def unapply_for_position(position_id):
         db.session.delete(application)
         db.session.commit()
         flash("Successfully unapplied for the position.")
-    return redirect(url_for("routes.index_student"))
+    return redirect(url_for("routes.index"))
 
 
 @routes_blueprint.route("/position/<position_id>", methods=["GET", "POST"])
