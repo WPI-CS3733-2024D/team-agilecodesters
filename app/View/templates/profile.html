@@ -2,18 +2,6 @@
 
 {% block content %}
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-    <div class="alert alert-info">
-        <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-    </div>
-{% endif %}
-{% endwith %}
-
     {% if current_user.user_type == 'Student' %}
         <h1>Student Profile</h1>
     {% elif current_user.user_type == 'Faculty' %}
