@@ -1,12 +1,7 @@
 from flask import flash, redirect, render_template, Blueprint, url_for
 from flask_login import current_user, login_required, login_user, logout_user
-from sqlalchemy.sql.functions import count
-from app.Controller.auth_forms import (
-    FacultyRegistrationForm,
-    LoginForm,
-    StudentRegistrationForm,
-)
-from app.Model.models import Faculty, ResearchField, Student, User
+from app.Controller.auth_forms import (FacultyRegistrationForm, LoginForm, StudentRegistrationForm,)
+from app.Model.models import Faculty, ResearchField, Student
 from config import Config
 from app import db
 

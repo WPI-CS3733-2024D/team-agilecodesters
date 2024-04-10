@@ -1,23 +1,9 @@
 from datetime import datetime
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
-from flask_login import login_required, current_user, login_user
-
-from app.Controller.forms import (
-    ApplicationForm,
-    EditFacultyProfileForm,
-    EditStudentProfileForm,
-    PostPositionForm,
-    SearchForm,
-)
-from app.Model.models import (
-    Applications,
-    Faculty,
-    PositionField,
-    ResearchField,
-    ResearchPosition,
-    Student,
-)
+from flask_login import login_required, current_user
+from app.Controller.forms import (ApplicationForm, EditFacultyProfileForm, EditStudentProfileForm, PostPositionForm, SearchForm)
+from app.Model.models import (Applications, PositionField, ResearchField, ResearchPosition)
 from config import Config
 from app import db
 
