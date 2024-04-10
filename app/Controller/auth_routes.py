@@ -29,7 +29,7 @@ def register_student():
             major=sform.major.data,
             GPA=sform.gpa.data,
             graduationdate=sform.graduation_date.data,
-            user_type="Student",
+            user_type="Student"
         )
         for topic in sform.topics_of_interest.data:
             student.topics_of_interest.append(topic)

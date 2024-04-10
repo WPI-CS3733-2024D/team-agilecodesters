@@ -55,7 +55,6 @@ class User(db.Model, UserMixin):
     firstname = db.Column(db.String(20))
     lastname = db.Column(db.String(20))
     email = db.Column(db.String(20), unique=True)
-    phone = db.Column(db.String(10))
 
     __mapper_args__ = {
         "polymorphic_identity": UserType.User,
@@ -85,7 +84,7 @@ class Student(User):
     major = db.Column(db.String(20))
     GPA = db.Column(db.Float)
     graduationdate = db.Column(db.String(20))
-    user_type = db.Column(db.String(20))
+    user_type = db.Column(db.String(20), default="Student")
     # Topics of interest coincides with research Areas in faculty
     topics_of_interest = db.relationship(
         "ResearchField",
@@ -139,7 +138,7 @@ class Faculty(User):
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
     #researchAreas = db.Column(db.String(150))
     department = db.Column(db.String(20), db.ForeignKey("department.name"))
-    user_type = db.Column(db.String(20))
+    user_type = db.Column(db.String(20), default="Faculty")
 
     research_areas = db.relationship(
             "ResearchField",
@@ -303,5 +302,12 @@ class Applications(db.Model):
 
 @login.user_loader
 def load_user(id):
-    #if model.user_type
-    return User.query.get(int(id))
+    student = Student.query.filter_by(id=id).first()
+    if student:
+        return student
+
+    faculty = Faculty.query.filter_by(id=id).first()
+    if faculty:
+        return faculty
+
+    return None
