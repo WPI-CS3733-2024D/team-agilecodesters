@@ -74,13 +74,13 @@ def index_student():
     )
 
 
-@routes_blueprint.route("/index/faculty", methods=["GET", "POST"])
+@routes_blueprint.route('/index/faculty', methods=['GET', 'POST'])
 @login_required
 def index_faculty():
-    # if not (Faculty.query.get(current_user.id)):
-    #     flash("Faculty not found, please try logging in again.")
-    #     return redirect(url_for('auth.login'))
-    return render_template("index_faculty.html", title="Faculty Home")
+    if (current_user.user_type != 'Faculty'):
+        return redirect(url_for('routes.index_student'))
+    posts = ResearchPosition.query.all() # get all positions the faculty created
+    return render_template('index_faculty.html', title='Faculty Home', post=posts)
 
 
 @routes_blueprint.route("/create_position", methods=["GET", "POST"])
