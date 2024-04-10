@@ -5,7 +5,7 @@ from app.Controller.auth_forms import (
     LoginForm,
     StudentRegistrationForm,
 )
-from app.Model.models import Faculty, Student
+from app.Model.models import Faculty, Student, User
 from config import Config
 from app import db
 
@@ -18,11 +18,11 @@ def register_student():
     sform = StudentRegistrationForm()
     if sform.validate_on_submit():
         # Check if the username or email already exists in Faculty table
-        existing_faculty = Faculty.query.filter(
-            (Faculty.username == sform.username.data)
-            | (Faculty.email == sform.email.data)
+        existing_student = Student.query.filter(
+            (Student.username == sform.username.data)
+            | (Student.email == sform.email.data)
         ).first()
-        if existing_faculty:
+        if existing_student:
             flash("Username or email is taken! Please try again.")
             return redirect(url_for("auth.register_student"))
         student = Student(
@@ -33,8 +33,9 @@ def register_student():
             major=sform.major.data,
             GPA=sform.gpa.data,
             graduationdate=sform.graduation_date.data,
-            topics_of_interest=sform.topics_of_interest.data, 
-            user_type='student')
+            user_type="Student")
+        for topic in sform.topics_of_interest.data:
+            student.topics_of_interest.append(topic)
         student.set_password(sform.password.data)
         db.session.add(student)
         db.session.commit()
@@ -55,13 +56,13 @@ def register_faculty():
         if existing_student:
             flash("Username or email is already registered as student.")
             return redirect(url_for("auth.register_faculty"))
+        faculty = Faculty(username=fform.username.data)
         faculty = Faculty(
             username=fform.username.data,
             email=fform.email.data,
             firstname=fform.firstname.data,
-            astname=fform.lastname.data,
-            research_areas=fform.research_areas.data,
-            user_type='faculty')
+            lastname=fform.lastname.data,
+            user_type='Faculty')
         faculty.set_password(fform.password.data)
         db.session.add(faculty)
         db.session.commit()
@@ -80,18 +81,20 @@ def login():
         elif Faculty.query.filter_by(id=current_user.id).first():
             return redirect(url_for("routes.index_faculty"))
         else:
-            # TODO return some error
-            return redirect(url_for("login.html"))
+            flash("Unknown user type")
+            return redirect(url_for("auth.login"))
+        
     lform = LoginForm()
     if lform.validate_on_submit():
         # check if user is a student, faculty, or if login fails
-        if Faculty.query.filter_by(username=lform.username.data).first() is not None:
-            faculty = Faculty.query.filter_by(username=lform.username.data).first()
+        faculty = Faculty.query.filter_by(username=lform.username.data).first()
+        student = Student.query.filter_by(username=lform.username.data).first()
+        if faculty and faculty.check_password(lform.password.data):
             login_user(faculty, remember=lform.remember_me.data)
             return redirect(url_for("routes.index_faculty"))
-        elif Student.query.filter_by(username=lform.username.data).first() is not None:
-            student = Student.query.filter_by(username=lform.username.data).first()
+        elif student and student.check_password(lform.password.data):
             login_user(student, remember=lform.remember_me.data)
+            return redirect(url_for("routes.index_student"))
         else:
             # login failed
             flash("Invalid username or password")

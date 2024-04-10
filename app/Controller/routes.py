@@ -1,8 +1,9 @@
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
-from app.Controller.forms import postPositionForm, searchForm, applicationForm
-from app.Model.models import Applications, ResearchPosition
+
+from app.Controller.forms import ApplicationForm, PostPositionForm, SearchForm
+from app.Model.models import Applications, PositionField, ResearchField, ResearchPosition
 from config import Config
 from app import db
 
@@ -14,29 +15,36 @@ routes_blueprint.template_folder = Config.TEMPLATE_FOLDER
 @routes_blueprint.route('/index/student', methods=['GET', 'POST'])
 @login_required
 def index_student():
-    if (current_user.user_type != 'student'):
+    if (current_user.user_type != 'Student'):
         return redirect(url_for('routes.index_faculty'))
     # add logic to filter out research positions based on searches.
     # research positions that align with student queried information [search feature] will show on the screen.
-    search_form = searchForm()
-    posts = ResearchPosition.query.all()
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        if search_form.get_choices()[2] == search_form.sortOrder.data: #Research Fields
+            # Query the ResearchPosition objects that share at least one field with the student
+            shared_positions = ResearchPosition.query.join(PositionField).join(ResearchField).filter(PositionField.field_ID.in_([field.id for field in current_user.topics_of_interest])).all()
+            posts = shared_positions
+        elif search_form.get_choices()[1] == search_form.sortOrder.data: #Highest Required GPA
+            posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
+        else: #Start date by default
+            posts = ResearchPosition.query.order_by(ResearchPosition.startDate.desc())
     return render_template('index_student.html', title='Student Home', posts=posts, search_form = search_form)
 
 @routes_blueprint.route('/index/faculty', methods=['GET', 'POST'])
 @login_required
 def index_faculty():
-    if (current_user.user_type != 'faculty'):
+    if (current_user.user_type != 'Faculty'):
         return redirect(url_for('routes.index_student'))
     return render_template('index_faculty.html', title='Faculty Home')
 
 @routes_blueprint.route('/create_position', methods=['GET', 'POST'])
 @login_required
 def create_position():
-    form = postPositionForm()
+    form = PostPositionForm()
     if form.validate_on_submit():
         position = ResearchPosition(title=form.title.data, wantedGPA=form.wantedGPA.data, description=form.description.data, researchGoals=form.researchGoals.data, startDate=form.startDate.data, endDate=form.endDate.data)
-        #TODO: Add faculty information, not sure what current_user is capable of? Could be because db hasn't been restarted
-        #position.faculty_email = current_user.data.
+        position.faculty = current_user
         db.session.add(position)
         db.session.commit()
         return redirect(url_for('routes.index_student'))
@@ -45,10 +53,13 @@ def create_position():
 @routes_blueprint.route('/apply/<position_id>', methods=['POST'])
 @login_required
 def apply_for_position(position_id):
-    aform = applicationForm()
-    if aform.validate_on_submit:
-        wpi_id = current_user.wpi_id
-        application = Applications(studentID = wpi_id, position=position_id)
+    aform = ApplicationForm()
+    if aform.validate_on_submit():
+        id = current_user.id
+        application = Applications(studentID=id, position=position_id,statement_of_interest=aform.statement_of_interest.data, 
+                                   referenceName=aform.reference_faculty_firstname + " " + aform.reference_faculty_lastname, 
+                                   referenceEmail = aform.reference_faculty_email)
+
         db.session.add(application)
         db.session.commit()
         flash('Application submitted successfully!')

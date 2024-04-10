@@ -7,11 +7,9 @@
     <form method="post" action="">
         {{ search_form.hidden_tag() }}
         <div class="search-box">
-            {{search_form.search_query}}
+            {{search_form.sortOrder}}
             <!-- Form to implement a search field section to search for particular research positions-->
-        </div>
-        
-        <div>
+
             {{search_form.submit(class="button")}}
             <!-- THIS EXAMPLE is to add a button we can submit the search for.-->
         </div>

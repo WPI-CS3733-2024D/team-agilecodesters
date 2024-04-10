@@ -26,7 +26,7 @@ class User(db.Model):
 
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
-    wpi_id = db.Column(db.Integer, unique=True)
+    #wpi_id = db.Column(db.Integer, unique=True)
     username = db.Column(db.String(20), unique=True)
     # A hash of the password, kept as a hash for security
     password_hash = db.Column(db.String(20))
@@ -41,7 +41,7 @@ class User(db.Model):
 
 
 # A sub-class of User, representing a student user
-class Student(User):
+class Student(User, UserMixin):
 
     __tablename__ = "student"
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
@@ -56,7 +56,7 @@ class Student(User):
         secondary=studentFields,
         primaryjoin=(studentFields.c.student_id == id),
         backref=db.backref("studentFields", lazy="dynamic"),
-        lazy="dynamic",
+        lazy="dynamic"
     )
     appliedPositions = db.relationship(
         "Applications", back_populates="student_enrolled"
@@ -76,12 +76,12 @@ class Student(User):
 
 
 # A sub-class of User, representing the faculty users
-class Faculty(User):
+class Faculty(User, UserMixin):
 
     __tablename__ = "faculty"
     # Research Areas coincide with Topics of Interest in the Student model
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
-    researchAreas = db.Column(db.String(150))
+    #researchAreas = db.Column(db.String(150))
     department = db.Column(db.String(20), db.ForeignKey("department.name"))
     user_type = db.Column(db.String(20))
 
@@ -126,8 +126,11 @@ class ResearchField(db.Model):
         secondary=studentFields,
         primaryjoin=(studentFields.c.field_id == id),
         backref=db.backref("studentFields", lazy="dynamic"),
-        lazy="dynamic",
+        lazy="dynamic"
     )
+
+    def get_fields(self):
+        return self.query.all()
 
 
 # Represents the posted research positions
@@ -184,7 +187,9 @@ class Applications(db.Model):
     # statement of interest
     statement_of_interest = db.Column(db.String(1200))
 
-    # TODO (listed by Myrrh): reference fields
+    #reference Info
+    referenceEmail = db.Column(db.String(20))
+    referenceName = db.Column(db.String(20))
 
     def __repr__(self):
         return "<studentID: {} --- position: {}>".format(self.studentID, self.position)

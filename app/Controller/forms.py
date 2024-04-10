@@ -1,12 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, PasswordField, FloatField, DateTimeField
+from wtforms import SelectField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, DateTimeField
 from wtforms.validators import  ValidationError, Length, DataRequired, Email, EqualTo
 from app.Model.models import Student
 from wtforms_sqlalchemy.fields import QuerySelectField
 from flask_login import current_user
 
 
-class applicationForm(FlaskForm):
+class ApplicationForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired()])
     lastname = StringField('Last Name', validators=[DataRequired()])
     statement_of_interest = TextAreaField("Body",  validators=[DataRequired(), Length(max=1500)])
@@ -17,7 +17,7 @@ class applicationForm(FlaskForm):
 
     # TODO Jonathan(self): Write code logic for getting a professor to send a letter of recommendation
 
-class postPositionForm(FlaskForm):
+class PostPositionForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     wantedGPA = FloatField('Lowest Desired GPA', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired(), Length(max=1500)])
@@ -27,6 +27,8 @@ class postPositionForm(FlaskForm):
     submit = SubmitField('Post')
 
 # SEARCH FEATURE on index page
-class searchForm(FlaskForm):
-    search_query = StringField('Search', validators=[DataRequired()])
+class SearchForm(FlaskForm):
+    sortOrder = SelectField('Sort by:', choices=[('Date', 'Start Date'), ('GPA', 'Highest Required GPA'), ('Fields', 'Research Fields')], default='Date')
     submit = SubmitField('Search')
+    def get_choices(self):
+        return self.sortOrder.choices
