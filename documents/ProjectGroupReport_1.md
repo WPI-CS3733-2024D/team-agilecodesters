@@ -19,6 +19,27 @@ List team members and their GitHub usernames
 ## 1. Schedule
 
  * What is your team's weekly schedule of meetings outside of regular class times? 
+ Team Meetings Thursday 5pm 
+
+### Scrum Schedule Databases: (~1hr) 
+
+- Sunday: 5pm 
+- Monday: 5pm (Myrrh unavailable) 
+- Tuesday: 6pm 
+- Wednesday: 12pm 
+- Thursday: 5pm  
+- Friday: NO (like seriously y’all go touch grass) 
+- Saturday: 1pm 
+
+### Scrum Schedule UI: (~1hr) 
+
+- Sunday: 5pm 
+- Monday: 12pm 
+- Tuesday: 5pm 
+- Wednesday: 11am 
+- Thursday: 5pm 
+- Friday: NO (like seriously y’all go touch grass) 
+- Saturday: 5pm 
 
 ----
 ## 2. Iteration 1 - Summary
