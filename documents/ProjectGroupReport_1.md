@@ -56,18 +56,18 @@ List team members and their GitHub usernames
     - The ability to view and edit your profile for Student and Faculty users
 
  * List the user stories completed in `Iteration-1`. Mention who worked on those user stories. 
-    - As a student, I can share a brief statement of interest with the professors.
-    - As a student, I should submit a brief statement describing why I am interested in this research topic and what I hope to gain by participating in that project.
     - As a student, I can see the project’s goals and objectives to see if the project fits my interests. 
+        - Connor, 
     - As a faculty member, I can share the project’s goals and objectives to persuade any interested users to join my project.
-        - Amber
+        - Amber, Connor
     - As a faculty member, I can share my project’s title to give students a very basic understanding of my project.
-        - Amber
+        - Amber, Connor
     - As a student, I can view a research project’s title so that I can get a quick first impression of the research project.
+        - Connor, 
     - As a faculty member, I can share the start and end dates to ensure that all students interested in the project immediately know if the project can fit their schedules or not.
-        - Amber
+        - Amber, Connor, 
     - As a student, I can view the start and end dates to see if the project fits my schedule.
-
+        - Connor, 
 
 1. 
 
