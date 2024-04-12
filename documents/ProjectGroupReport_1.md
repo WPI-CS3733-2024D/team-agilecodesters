@@ -85,17 +85,25 @@ Include a draft of your `Iteration-2 spring backlog`.
  * Make sure to update the "issues" on your GitHub repo accordingly.  
 
 As a student, I can see the time commitment to further see if the project fits my schedule.
+- Connor, 
 
 As a student, I can see the different research fields that match this research opportunity in order to make a holistic decision whether I want to apply. 
+- 
 
 As a faculty member, I can share the time commitment so that interested students know what they are getting into.
+- Connor, 
 
 As a student, I want to see the programming language experience required for this research role.
+- Connor, 
 
 As a student, I can see the name and contact information of the faculty who posted this position clearly.
+- Connor, 
 
 As a student, I can see the department this faculty member works in.
+- Connor, 
 
 As a student, I should submit a brief statement describing why I am interested in this research topic and what I hope to gain by participating in that project. 
+- 
 
 As a student, I can share another professor as a reference so that they can share their recommendations on my behalf.
+- 
