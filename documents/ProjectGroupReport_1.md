@@ -56,17 +56,25 @@ List team members and their GitHub usernames
     - The ability to view and edit your profile for Student and Faculty users
 
  * List the user stories completed in `Iteration-1`. Mention who worked on those user stories. 
+    - As a student, I can share a brief statement of interest with the professors.
+    - As a student, I should submit a brief statement describing why I am interested in this research topic and what I hope to gain by participating in that project.
+    - As a student, I can see the project’s goals and objectives to see if the project fits my interests. 
+    - As a faculty member, I can share the project’s goals and objectives to persuade any interested users to join my project.
+        - Amber
+    - As a faculty member, I can share my project’s title to give students a very basic understanding of my project.
+        - Amber
+    - As a student, I can view a research project’s title so that I can get a quick first impression of the research project.
+    - As a faculty member, I can share the start and end dates to ensure that all students interested in the project immediately know if the project can fit their schedules or not.
+        - Amber
+    - As a student, I can view the start and end dates to see if the project fits my schedule.
+
 
 1. 
 
 ----
 ## 3. Iteration 1 - Sprint Retrospective
 
- * Include the outcome of your `Iteration-1 Scrum retrospective meetings`. 
-
 Our meetings generally consisted of just check-ins discussing what we accomplished, what we are struggling with, and what we will work on next. In our Iteration-1 Scrum retrospective meeting, we discussed some of the hiccups we ran into and how we will ensure they will not appear again in iterations 2 and 3.
-
- * Mention the changes the team will be doing to improve itself as a result of the Scrum reflections.
 
 - distribute boilerplate code more efficiently
 - internal due dates
@@ -75,8 +83,7 @@ Our meetings generally consisted of just check-ins discussing what we accomplish
 ----
 ## 4. Product Backlog refinement
 
- * Have you made any changes to your `product backlog` after `Iteration-1`? If so, please explain the changes here. 
-
+ We have not made any serious changes, we have split up some user stories between front-end and back-end tasks; beyond that we have done nothing. 
 ----
 ## 5. Iteration 2 - Sprint Backlog
 
@@ -85,13 +92,13 @@ Include a draft of your `Iteration-2 spring backlog`.
  * Make sure to update the "issues" on your GitHub repo accordingly.  
 
 As a student, I can see the time commitment to further see if the project fits my schedule.
-- Connor, 
+- Connor, Amber
 
 As a student, I can see the different research fields that match this research opportunity in order to make a holistic decision whether I want to apply. 
 - 
 
 As a faculty member, I can share the time commitment so that interested students know what they are getting into.
-- Connor, 
+- Connor, Amber
 
 As a student, I want to see the programming language experience required for this research role.
 - Connor, 
@@ -102,8 +109,8 @@ As a student, I can see the name and contact information of the faculty who post
 As a student, I can see the department this faculty member works in.
 - Connor, 
 
-As a student, I should submit a brief statement describing why I am interested in this research topic and what I hope to gain by participating in that project. 
-- 
+As a student, I should submit a brief statement describing why I am interested in this research topic and what I hope to gain by participating in that project.
+- Amber
 
 As a student, I can share another professor as a reference so that they can share their recommendations on my behalf.
 - 
