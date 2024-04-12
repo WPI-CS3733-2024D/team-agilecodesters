@@ -53,11 +53,16 @@ With the completion of the scope of the project, it is pertinent to discuss how 
 
 **Provide a list of your tables (i.e., SQL Alchemy classes) in your database model and briefly explain the role of each table.**
 
-- Student: stores information about students.
-- Faculty: stores information about professors.
+- User: A superclass that defines all information that any user would have (username, email...)
+- Student: stores information about students, subclass of User.
+- Faculty: stores information about professors, subclass of User.
 - ResearchPosition: stores information about research projects.
-- Enrolled/Accepted Position: links students to a research position they have applied to
+- Applications: links students to a research position they have applied to
 - studentFields/facultyIntersts: link students and faculty to research topics respectively.
+- Department: Represents the various departments faculty could be a part of
+- ResearchField: Represents different topics that students and faculty could be interested in
+- PositionField: Relates ResearchPosition to ResearchFields
+
 
 Provide a UML diagram of your database model showing the associations and relationships among tables.
 
@@ -69,14 +74,19 @@ Include a detailed description of the routes your application will implement.
 - For each route specify its “methods”, “URL path”, and “a description of the operation it implements”.  
   You can use the following table template to list your route specifications.
 
-|     | Methods | URL Path          | Description                                |
-| :-- | :------ | :---------------- | :----------------------------------------- |
-| 1.  |         | /index            | Homepage                                   |
-| 2.  |         | /register         | Allow students and professor's to register |
-| 3.  |         | /apply            | Application for students                   |
-| 4.  |         | /edit-application | Place for students to edit application     |
-| 5.  |         | /post-opportunity | Professor post opportunity                 |
-| 6.  |         |                   |                                            |
+|     | Methods | URL Path                | Description                                 |
+| :-- | :------ | :---------------------- | :------------------------------------------ |
+| 1.  | GET POST| /index                  | Homepage                                    |
+| 2.  | GET POST| /register/student       | Allow students to register 				    |
+| 3.  | POST    | /apply/<position_id>    | Where students can create an application    |
+| 4.  | GET POST| /position/<position_id> | Displays a research opportunity             |
+| 5.  | GET POST| /register/faculty       | Allow faculty to register					|
+| 6.  | GET POST| /login			      | Allow all users to log in					|
+| 7.  | GET     | /logout			      | Allow all users to log out				    |
+| 8.  | GET POST| /create_position        | Allow professors to create new opportunities|
+| 9.  | POST    | /unapply/<position_id>  | Where students can unapply			        |
+| 10. | GET     | /profile 			      | Displays user profile						|
+| 11. | GET POST| /profile/edit           | Allows users to edit their profile          |
 
 ### 2.3 View and User Interface Design
 
