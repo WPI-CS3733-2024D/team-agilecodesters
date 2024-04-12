@@ -83,3 +83,19 @@ Our meetings generally consisted of just check-ins discussing what we accomplish
 Include a draft of your `Iteration-2 spring backlog`. 
  * List the user stories you plan to complete in `Iteration-2`. Make sure to break down the larger user stories into smaller size stories. Mention the team member(s) who will work on each user story. 
  * Make sure to update the "issues" on your GitHub repo accordingly.  
+
+As a student, I can see the time commitment to further see if the project fits my schedule.
+
+As a student, I can see the different research fields that match this research opportunity in order to make a holistic decision whether I want to apply. 
+
+As a faculty member, I can share the time commitment so that interested students know what they are getting into.
+
+As a student, I want to see the programming language experience required for this research role.
+
+As a student, I can see the name and contact information of the faculty who posted this position clearly.
+
+As a student, I can see the department this faculty member works in.
+
+As a student, I should submit a brief statement describing why I am interested in this research topic and what I hope to gain by participating in that project. 
+
+As a student, I can share another professor as a reference so that they can share their recommendations on my behalf.
