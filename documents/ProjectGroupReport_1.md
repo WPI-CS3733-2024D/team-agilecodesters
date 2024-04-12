@@ -63,7 +63,14 @@ List team members and their GitHub usernames
 ## 3. Iteration 1 - Sprint Retrospective
 
  * Include the outcome of your `Iteration-1 Scrum retrospective meetings`. 
+
+Our meetings generally consisted of just check-ins discussing what we accomplished, what we are struggling with, and what we will work on next. In our Iteration-1 Scrum retrospective meeting, we discussed some of the hiccups we ran into and how we will ensure they will not appear again in iterations 2 and 3.
+
  * Mention the changes the team will be doing to improve itself as a result of the Scrum reflections.
+
+- distribute boilerplate code more efficiently
+- internal due dates
+- assign based on when people are free instead of who wants what
 
 ----
 ## 4. Product Backlog refinement
