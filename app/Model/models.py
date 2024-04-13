@@ -55,6 +55,7 @@ class User(db.Model, UserMixin):
     firstname = db.Column(db.String(20))
     lastname = db.Column(db.String(20))
     email = db.Column(db.String(20), unique=True)
+    phone_number = db.Column(db.String(10))
 
     __mapper_args__ = {
         "polymorphic_identity": UserType.User,
@@ -97,6 +98,9 @@ class Student(User):
         "Applications", back_populates="student_enrolled"
     )
 
+    def has_applied_to_position(self, position):
+        return bool(Applications.query.filter_by(studentID=self.id, position=position).first())
+
     __mapper_args__ = {"polymorphic_identity": UserType.Student}
 
     def __repr__(self):
@@ -136,7 +140,7 @@ class Faculty(User):
     __tablename__ = "faculty"
     # Research Areas coincide with Topics of Interest in the Student model
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
-    #researchAreas = db.Column(db.String(150))
+    researchAreas = db.Column(db.String(150))
     department = db.Column(db.String(20), db.ForeignKey("department.name"))
     user_type = db.Column(db.String(20), default="Faculty")
 

@@ -13,7 +13,7 @@
             <div>
                 <!-- INFO about a research position-->
                 <p> Desired GPA: {{post.wantedGPA}}</p>
-                <p> Desired Languages: {{post.languages}}</p>
+                <p> Desired Programming Languages: {{post.languages}}</p>
                 <p> Start Date: {{post.startDate}}</p>
                 <p> End Date: {{post.endDate}}</p>
             </div>
@@ -32,7 +32,7 @@
                 <form action="{{ url_for('routes.apply_for_position', position_id=post.id) }}" method="post">
                     <button type="submit" class="btn btn-primary">Apply!</button>
                 </form>
-            {% else %}
+            {% elif current_user == get_faculty(post.faculty)%}
                 <form action="{{ url_for('routes.edit_profile', position_id=post.id) }}" method="post">
                     <button type="submit" class="btn btn-primary">Edit Position</button>
                 </form>
@@ -44,8 +44,7 @@
     <tr>
         <td colspan="3" style="text-align: center;">
             <br>
-              <!-- include username/faculty member who posted the post [Research Position]-->
-              Posted By: {{ get_faculty_name(post.faculty).firstname }} {{ get_faculty_name(post.faculty).lastname }}
+              Posted By: {{ get_faculty(post.faculty).firstname }} {{ get_faculty(post.faculty).lastname }}
           </td>
         </tr>
     </tr>

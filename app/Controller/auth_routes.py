@@ -29,6 +29,7 @@ def register_student():
             major = sform.major.data,
             GPA = sform.gpa.data,
             graduationdate = sform.graduation_date.data,
+            phone_number = sform.phone_number.data,
             user_type = "Student",
         )
         for topic in sform.topics_of_interest.data:
@@ -67,6 +68,8 @@ def register_faculty():
             email=fform.email.data,
             firstname=fform.firstname.data,
             lastname=fform.lastname.data,
+            department=fform.department.data,
+            phone_number = fform.phone_number.data,
             user_type="Faculty",
         )
         for topic in fform.research_areas.data:

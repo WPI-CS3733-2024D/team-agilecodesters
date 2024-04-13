@@ -13,14 +13,20 @@
             {{ form.lastname.label }} {{ form.lastname(class="form-control") }}
         </div>
         <div class="form-group">
-            {{ form.email.label }} {{ form.email(class="form-control") }}
+            {{ form.phone_number.label }} {{ form.phone_number(class="form-control") }}
         </div>
         <div class="form-group">
-            {{ form.password.label }} {{ form.password(class="form-control") }}
+            {{ form.email.label }} {{ form.email(class="form-control") }}
         </div>
         {% if current_user.user_type == 'Faculty' %}
         <div class="form-group">
             {{ form.department.label }} {{ form.department(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.research_areas.label }} {{ form.research_areas(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.other_areas.label }} {{ form.other_areas(class="form-control") }}
         </div>
         {% elif current_user.user_type == 'Student' %}
         <div class="form-group">
@@ -39,6 +45,12 @@
             {{ form.other_topics.label }} {{ form.other_topics(class="form-control") }}
         </div>
         {% endif %}
+        <div class="form-group">
+            {{ form.password.label }} {{ form.password(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.password_2.label }} {{ form.password_2(class="form-control") }}
+        </div>
         <div class="form-group">
             {{ form.submit(class="btn btn-primary") }}
         </div>

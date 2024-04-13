@@ -1,12 +1,17 @@
 from flask_wtf import FlaskForm
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
-from wtforms import DateField, SelectField, SelectMultipleField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, DateTimeField
+from wtforms import DateField, SelectField, SelectMultipleField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, DateTimeField, validators
 from wtforms.validators import  ValidationError, Length, DataRequired, Email, EqualTo
 from app.Model.models import ResearchField, Student
 from wtforms_sqlalchemy.fields import QuerySelectField
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_login import current_user
 
+def validate_phone_number(form, field):
+    if not field.data.isdigit():
+        raise validators.ValidationError('Phone number must contain only numbers!')
+    if not len(field.data) == 10:
+        raise validators.ValidationError('Phone number must be 10 digits long!')
 
 class ApplicationForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired()])
@@ -38,8 +43,8 @@ class SearchForm(FlaskForm):
 class EditStudentProfileForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired()])
     lastname = StringField('Last Name', validators=[DataRequired()])
+    phone_number = StringField("Phone Number", validators=[DataRequired(), validate_phone_number])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
     major = StringField('Major', validators=[DataRequired()])
     GPA = FloatField('GPA', validators=[DataRequired()])
     graduationdate = DateField('Graduation Date', validators=[DataRequired()])
@@ -51,13 +56,24 @@ class EditStudentProfileForm(FlaskForm):
         option_widget=CheckboxInput(),
     )
     other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
+    password = PasswordField('Password', validators=[DataRequired()])
+    password_2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Save Changes')
 
 class EditFacultyProfileForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired()])
     lastname = StringField('Last Name', validators=[DataRequired()])
+    phone_number = StringField("Phone Number", validators=[DataRequired(), validate_phone_number])
     email = StringField('Email', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    phone = StringField('Phone')
     department = StringField('Department', validators=[DataRequired()])
+    research_areas = QuerySelectMultipleField(
+        "Research Areas",
+        query_factory=lambda: ResearchField.query.all(),
+        get_label=lambda x: x.title,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
+    other_areas = StringField("Research Areas Not Listed Above, Please Separate with Commas")
+    password = PasswordField('Password', validators=[DataRequired()])
+    password_2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Save Changes')

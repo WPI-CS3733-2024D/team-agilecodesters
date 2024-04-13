@@ -1,16 +1,22 @@
 from flask_wtf import FlaskForm
-from wtforms import (DateField, FloatField, StringField, SubmitField, PasswordField, BooleanField,)
+from wtforms import (DateField, FloatField, StringField, SubmitField, PasswordField, BooleanField, validators)
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.validators import ValidationError, Length, DataRequired, Email, EqualTo
 from app.Model.models import Student, ResearchField
 from wtforms.widgets import ListWidget, CheckboxInput
 
+def validate_phone_number(form, field):
+    if not field.data.isdigit():
+        raise validators.ValidationError('Phone number must contain only numbers!')
+    if not len(field.data) == 10:
+        raise validators.ValidationError('Phone number must be 10 digits long!')
 
 class StudentRegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired(), Email()])
     firstname = StringField("First Name", validators=[DataRequired()])
     lastname = StringField("Last Name", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    phone_number = StringField("Phone Number", validators=[DataRequired(), validate_phone_number])
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]
@@ -31,13 +37,15 @@ class StudentRegistrationForm(FlaskForm):
 
 class FacultyRegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired(), Email()])
     firstname = StringField("First Name", validators=[DataRequired()])
     lastname = StringField("Last Name", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    phone_number = StringField("Phone Number", validators=[DataRequired(), validate_phone_number])
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]
     )
+    department = StringField("Department", validators=[DataRequired()])
     research_areas = QuerySelectMultipleField(
         "Research Areas",
         query_factory=lambda: ResearchField.query.all(),

@@ -45,7 +45,7 @@ def index():
         title="Home",
         posts=posts,
         search_form=search_form,
-        get_faculty_name= lambda id: User.query.get(id)
+        get_faculty= lambda id: User.query.get(id)
     )
 
 @routes_blueprint.route("/create_position", methods=["GET", "POST"])
@@ -115,7 +115,7 @@ def unapply_for_position(position_id):
 @login_required
 def view_position(position_id):
     position = ResearchPosition.query.get(position_id)
-    return render_template("view_position.html", title="Profile", position=position)
+    return render_template("view_position.html", title="Profile", position=position, get_faculty= lambda id: User.query.get(id))
 
 
 @routes_blueprint.route("/profile", methods=["GET"])
@@ -134,21 +134,35 @@ def edit_profile():
     if request.method == "POST":
         current_user.firstname = form.firstname.data
         current_user.lastname = form.lastname.data
+        current_user.phone_number = form.phone_number.data
         current_user.email = form.email.data
         current_user.set_password(form.password.data)
-        current_user.major = form.major.data
-        current_user.GPA = form.GPA.data
-        current_user.graduationdate = form.graduationdate.data
-        for topic in form.topics_of_interest.data:
-            current_user.topics_of_interest.append(topic)
-        if form.other_topics.data:
-            other_topics = form.other_topics.data.split(",")
-            for topic in other_topics:
-                newtopic = ResearchField(
-                    id=ResearchField.query.count() + 1, title=topic
-                )
-                db.session.add(newtopic)
-                current_user.topics_of_interest.append(newtopic)
+        if current_user.user_type == "Faculty":
+            current_user.department = form.department.data
+            for topic in form.research_areas.data:
+                current_user.research_areas.append(topic)
+            if form.other_areas.data:
+                other_areas = form.other_areas.data.split(",")
+                for area in other_areas:
+                    newArea = ResearchField(
+                        id=ResearchField.query.count() + 1, title=area
+                    )
+                    db.session.add(newArea)
+                    current_user.research_areas.append(newArea)
+        if current_user.user_type == "Student":
+            current_user.major = form.major.data
+            current_user.GPA = form.GPA.data
+            current_user.graduationdate = form.graduationdate.data
+            for topic in form.topics_of_interest.data:
+                current_user.topics_of_interest.append(topic)
+            if form.other_topics.data:
+                other_topics = form.other_topics.data.split(",")
+                for topic in other_topics:
+                    newtopic = ResearchField(
+                        id=ResearchField.query.count() + 1, title=topic
+                    )
+                    db.session.add(newtopic)
+                    current_user.topics_of_interest.append(newtopic)
         db.session.add(current_user)
         db.session.commit()
         flash("Your profile has been updated!")
@@ -156,11 +170,16 @@ def edit_profile():
     elif request.method == "GET":
         form.firstname.data = current_user.firstname
         form.lastname.data = current_user.lastname
+        form.phone_number.data = current_user.phone_number
         form.email.data = current_user.email
-        form.major.data = current_user.major
-        form.GPA.data = current_user.GPA
-        form.graduationdate.data = datetime.strptime(current_user.graduationdate, '%Y-%m-%d').date()
-        form.topics_of_interest.data = [topic.id for topic in current_user.topics_of_interest]
+        if current_user.user_type == "Faculty":
+            form.department.data = current_user.department
+            form.research_areas.data = [topic.id for topic in current_user.research_areas]
+        if current_user.user_type == "Student":
+            form.major.data = current_user.major
+            form.GPA.data = current_user.GPA
+            form.graduationdate.data = datetime.strptime(current_user.graduationdate, '%Y-%m-%d').date()
+            form.topics_of_interest.data = [topic.id for topic in current_user.topics_of_interest]
     return render_template("edit_profile.html", title="Edit Profile", form=form)
 
 
