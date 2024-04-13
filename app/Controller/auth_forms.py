@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import (DateField, FloatField, StringField, SubmitField, PasswordField, BooleanField, validators)
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
-from wtforms.validators import ValidationError, Length, DataRequired, Email, EqualTo
-from app.Model.models import Student, ResearchField
+from wtforms.validators import DataRequired, Email, EqualTo
+from app.Model.models import ResearchField
 from wtforms.widgets import ListWidget, CheckboxInput
 
 def validate_phone_number(form, field):

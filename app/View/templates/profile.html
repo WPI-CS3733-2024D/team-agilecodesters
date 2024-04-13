@@ -15,7 +15,7 @@
         {% if current_user.user_type == 'Student' %}
             <li>Major: {{ current_user.major }}</li>
             <li>GPA: {{ current_user.GPA }}</li>
-            <li>Graduation Date: {{ current_user.graduationdate }}</li>
+            <li>Graduation Date: {{ current_user.graduationdate.strftime('%B %d, %Y') }}</li>
             <li>Topics of Interest:
                 <ul>
                     {% for topic in current_user.topics_of_interest %}

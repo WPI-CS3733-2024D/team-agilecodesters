@@ -7,9 +7,25 @@
     <p>Languages: {{ position.languages }}</p>
     <p>Description: {{ position.description }}</p>
     <p>Research Goals: {{ position.researchGoals }}</p>
-    <p>Start Date: {{ position.startDate }}</p>
-    <p>End Date: {{ position.endDate }}</p>
-    <p>Posted By: {{ get_faculty(position.faculty).firstname }} {{ get_faculty(position.faculty).lastname }}</p>
+    <p>Start Date: {{ position.startDate.strftime('%B %d, %Y') }}</p>
+    <p>End Date: {{ position.endDate.strftime('%B %d, %Y') }}</p>    
+
+    <div class="faculty-details">
+        <h4>Posted By:</h4>
+        <p>Name: {{ get_faculty(position.faculty).firstname }} {{ get_faculty(position.faculty).lastname }}</p>
+        <p>Phone Number: {{ get_faculty(position.faculty).phone_number }}</p>
+        <p>Email: {{ get_faculty(position.faculty).email }}</p>
+        <p>Department: {{ get_faculty(position.faculty).department }}</p>
+        <p>Research Areas:</p>
+        <li>
+            <ul>
+                {% for area in get_faculty(position.faculty).research_areas %}
+                    <li>{{ area.title }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+
+    </div>
 
     {% if current_user.is_authenticated %}
         {% if current_user.user_type == 'Student' %}

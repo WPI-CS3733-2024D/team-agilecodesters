@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
-from app.Controller.forms import (ApplicationForm, EditFacultyProfileForm, EditStudentProfileForm, PostPositionForm, SearchForm)
+from app.Controller.forms import (ApplicationForm, EditFacultyProfileForm, EditStudentProfileForm, CreatePositionForm, SearchForm)
 from app.Model.models import (Applications, PositionField, ResearchField, ResearchPosition)
 from config import Config
 from app import db
@@ -51,7 +51,7 @@ def index():
 @routes_blueprint.route("/create_position", methods=["GET", "POST"])
 @login_required
 def create_position():
-    form = PostPositionForm()
+    form = CreatePositionForm()
     if form.validate_on_submit():
         position = ResearchPosition(
             title=form.title.data,

@@ -1,9 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
-from wtforms import DateField, SelectField, SelectMultipleField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, DateTimeField, validators
-from wtforms.validators import  ValidationError, Length, DataRequired, Email, EqualTo
-from app.Model.models import ResearchField, Student
-from wtforms_sqlalchemy.fields import QuerySelectField
+from wtforms import DateField, SelectField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, validators
+from wtforms.validators import Length, DataRequired, Email, EqualTo
+from app.Model.models import ResearchField
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_login import current_user
 
@@ -24,7 +23,7 @@ class ApplicationForm(FlaskForm):
 
     # TODO Jonathan(self): Write code logic for getting a professor to send a letter of recommendation
 
-class PostPositionForm(FlaskForm):
+class CreatePositionForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     wantedGPA = FloatField('Lowest Desired GPA', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired(), Length(max=1500)])

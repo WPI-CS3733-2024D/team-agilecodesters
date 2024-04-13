@@ -84,7 +84,7 @@ class Student(User):
 
     major = db.Column(db.String(20))
     GPA = db.Column(db.Float)
-    graduationdate = db.Column(db.String(20))
+    graduationdate = db.Column(db.DateTime)
     user_type = db.Column(db.String(20), default="Student")
     # Topics of interest coincides with research Areas in faculty
     topics_of_interest = db.relationship(
@@ -141,7 +141,7 @@ class Faculty(User):
     # Research Areas coincide with Topics of Interest in the Student model
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
     researchAreas = db.Column(db.String(150))
-    department = db.Column(db.String(20), db.ForeignKey("department.name"))
+    department = db.Column(db.String(20), db.ForeignKey("department.id"))
     user_type = db.Column(db.String(20), default="Faculty")
 
     research_areas = db.relationship(
