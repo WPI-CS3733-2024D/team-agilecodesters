@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
-from wtforms import DateField, SelectField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, validators
+from wtforms import DateField, IntegerField, SelectField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, validators
 from wtforms.validators import Length, DataRequired, Email, EqualTo
 from app.Model.models import ResearchField
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -25,9 +25,11 @@ class ApplicationForm(FlaskForm):
 
 class CreatePositionForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    wantedGPA = FloatField('Lowest Desired GPA', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired(), Length(max=1500)])
     researchGoals = StringField('Research Goals', validators=[DataRequired()])
+    wantedGPA = FloatField('Lowest Desired GPA', validators=[DataRequired()])
+    #langauges = StringField('Required Programming Languages', validators=[DataRequired()])
+    timeCommitment = IntegerField('Time Commitment (Hours / Week)', validators=[DataRequired()])
     startDate = DateField('Start Date', validators=[DataRequired()])
     endDate = DateField('End Date', validators=[DataRequired()])
     submit = SubmitField('Post')

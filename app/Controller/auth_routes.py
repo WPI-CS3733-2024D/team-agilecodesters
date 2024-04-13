@@ -101,7 +101,7 @@ def login():
             # else check if user is a faculty
         elif Faculty.query.filter_by(id=current_user.id).first():
             flash("Welcome, Faculty!")
-            return redirect(url_for("routes.index_faculty"))
+            return redirect(url_for("routes.index"))
         else:
             flash("Unknown user type")
             return redirect(url_for("auth.login"))

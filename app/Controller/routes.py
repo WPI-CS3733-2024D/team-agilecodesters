@@ -60,6 +60,7 @@ def create_position():
             researchGoals=form.researchGoals.data,
             startDate=form.startDate.data,
             endDate=form.endDate.data,
+            timeCommitment=form.timeCommitment.data,
         )
         position.faculty = current_user.id
         db.session.add(position)

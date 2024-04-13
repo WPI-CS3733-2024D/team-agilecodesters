@@ -17,10 +17,6 @@ class StudentRegistrationForm(FlaskForm):
     lastname = StringField("Last Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
     phone_number = StringField("Phone Number", validators=[DataRequired(), validate_phone_number])
-    password = PasswordField("Password", validators=[DataRequired()])
-    password2 = PasswordField(
-        "Confirm Password", validators=[DataRequired(), EqualTo("password")]
-    )
     major = StringField("Major", validators=[DataRequired()])
     gpa = FloatField("GPA", validators=[DataRequired()])
     graduation_date = DateField("Graduation Date", validators=[DataRequired()])
@@ -32,6 +28,10 @@ class StudentRegistrationForm(FlaskForm):
         option_widget=CheckboxInput(),
     )
     other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
+    password = PasswordField("Password", validators=[DataRequired()])
+    password2 = PasswordField(
+        "Confirm Password", validators=[DataRequired(), EqualTo("password")]
+    )
     submit = SubmitField("Register")
 
 
@@ -41,10 +41,6 @@ class FacultyRegistrationForm(FlaskForm):
     lastname = StringField("Last Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
     phone_number = StringField("Phone Number", validators=[DataRequired(), validate_phone_number])
-    password = PasswordField("Password", validators=[DataRequired()])
-    password2 = PasswordField(
-        "Confirm Password", validators=[DataRequired(), EqualTo("password")]
-    )
     department = StringField("Department", validators=[DataRequired()])
     research_areas = QuerySelectMultipleField(
         "Research Areas",
@@ -54,6 +50,10 @@ class FacultyRegistrationForm(FlaskForm):
         option_widget=CheckboxInput(),
     )
     other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
+    password = PasswordField("Password", validators=[DataRequired()])
+    password2 = PasswordField(
+        "Confirm Password", validators=[DataRequired(), EqualTo("password")]
+    )
     submit = SubmitField("Register")
 
 

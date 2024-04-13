@@ -234,8 +234,7 @@ class ResearchPosition(db.Model):
     researchGoals = db.Column(db.String(1500))
     startDate = db.Column(db.DateTime)
     endDate = db.Column(db.DateTime)
-    # faculty_name = db.Column(db.String(20))
-    # faculty_email = db.Column(db.String(20), db.ForeignKey("faculty.email"))
+    timeCommitment = db.Column(db.Integer)
     faculty = db.Column(db.Integer, db.ForeignKey("faculty.id"))
 
     students_application = db.relationship(

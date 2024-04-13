@@ -7,8 +7,11 @@
     <p>Languages: {{ position.languages }}</p>
     <p>Description: {{ position.description }}</p>
     <p>Research Goals: {{ position.researchGoals }}</p>
+    <p>Desired GPA: {{ position.wantedGPA }}</p>
+    <p>Required Programming Languages: {{ position.languages }}</p>
+    <p>Time Commitment: {{ position.timeCommitment }} hours/week</p> 
     <p>Start Date: {{ position.startDate.strftime('%B %d, %Y') }}</p>
-    <p>End Date: {{ position.endDate.strftime('%B %d, %Y') }}</p>    
+    <p>End Date: {{ position.endDate.strftime('%B %d, %Y') }}</p>   
 
     <div class="faculty-details">
         <h4>Posted By:</h4>
@@ -17,13 +20,9 @@
         <p>Email: {{ get_faculty(position.faculty).email }}</p>
         <p>Department: {{ get_faculty(position.faculty).department }}</p>
         <p>Research Areas:</p>
-        <li>
-            <ul>
-                {% for area in get_faculty(position.faculty).research_areas %}
-                    <li>{{ area.title }}</li>
-                {% endfor %}
-            </ul>
-        </li>
+            {% for area in get_faculty(position.faculty).research_areas %}
+                <li>{{ area.title }}</li>
+            {% endfor %}
 
     </div>
 
