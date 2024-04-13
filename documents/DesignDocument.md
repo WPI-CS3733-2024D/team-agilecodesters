@@ -70,7 +70,7 @@ With the completion of the scope of the project, it is pertinent to discuss how 
 
 Provide a UML diagram of your database model showing the associations and relationships among tables.
 
-[UML Diagram](DB_UML.png)
+[UML Diagram](../static/DB_UML.png)
 
 ### 2.2 Controller
 
