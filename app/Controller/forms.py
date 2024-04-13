@@ -28,7 +28,7 @@ class CreatePositionForm(FlaskForm):
     description = StringField('Description', validators=[DataRequired(), Length(max=1500)])
     researchGoals = StringField('Research Goals', validators=[DataRequired()])
     wantedGPA = FloatField('Lowest Desired GPA', validators=[DataRequired()])
-    #langauges = StringField('Required Programming Languages', validators=[DataRequired()])
+    langauges = StringField('Required Programming Languages', validators=[DataRequired()])
     timeCommitment = IntegerField('Time Commitment (Hours / Week)', validators=[DataRequired()])
     startDate = DateField('Start Date', validators=[DataRequired()])
     endDate = DateField('End Date', validators=[DataRequired()])
