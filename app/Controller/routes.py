@@ -180,7 +180,7 @@ def edit_profile():
         if current_user.user_type == "Student":
             form.major.data = current_user.major
             form.GPA.data = current_user.GPA
-            form.graduationdate.data = datetime.strptime(current_user.graduationdate, '%Y-%m-%d').date()
+            form.graduationdate.data = datetime.strptime(current_user.graduationdate.strftime('%Y-%m-%d'), '%Y-%m-%d').date()
             form.topics_of_interest.data = [topic.id for topic in current_user.topics_of_interest]
     return render_template("edit_profile.html", title="Edit Profile", form=form)
 
