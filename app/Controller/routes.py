@@ -82,7 +82,7 @@ def apply_for_position(position_id):
             referenceName=aform.reference_faculty_firstname.data
             + " "
             + aform.reference_faculty_lastname.data,
-            referenceEmail=aform.reference_faculty_email,
+            referenceEmail=aform.reference_faculty_email.data,
         )
 
         db.session.add(application)
@@ -104,7 +104,7 @@ def apply_for_position(position_id):
 @login_required
 def unapply_for_position(position_id):
     application = Applications.query.filter_by(
-        studentID=current_user.wpi_id, position=position_id
+        studentID=current_user.id, position=position_id
     ).first()
     if application:
         db.session.delete(application)
@@ -190,7 +190,7 @@ def edit_profile():
 def view_applied():
     if current_user.user_type == "Student":
         applications = Applications.query.filter_by(studentID=current_user.id).all()
-    return render_template("view_applied.html", title="Applied Positions", applications=applications)
+    return render_template("view_applied.html", title="Applied Positions", applications=applications, get_faculty= lambda id: User.query.get(id))
 
 @routes_blueprint.route("/profile/created", methods=["GET", "POST"])
 @login_required

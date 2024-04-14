@@ -292,8 +292,14 @@ class Applications(db.Model):
     student_enrolled = db.relationship("Student")
     enrolled_position = db.relationship("ResearchPosition")
 
+    #status
+    status = db.Column(db.String(10), default="Pending")
+
+    # applied date
+    applied_date = db.Column(db.DateTime, default=datetime.now())
+
     # statement of interest
-    statement_of_interest = db.Column(db.String(1200))
+    statement_of_interest = db.Column(db.String(1500))
 
     #reference Info
     referenceEmail = db.Column(db.String(20))
