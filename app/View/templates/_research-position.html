@@ -44,6 +44,7 @@
                 <div class="post">
                     <!-- TODO add when it was posted -->
                 </div>
+            <!-- Decide which buttons to show based on who is looking at the post -->
            </div> 
            {% if current_user.user_type == "Student" %}
                 {% if current_user.has_applied_to_position(post.id) %}

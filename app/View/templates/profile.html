@@ -21,6 +21,8 @@
         <li>Last Name: {{ current_user.lastname }}</li>
         <li>Email: {{ current_user.email }}</li>
         <li>Phone Number: {{ current_user.phone_number[:3] }}-{{ current_user.phone_number[3:6] }}-{{ current_user.phone_number[6:] }}</li>
+        
+        <!-- Student specific fields -->
         {% if current_user.user_type == 'Student' %}
             <li>Major: {{ current_user.major }}</li>
             <li>GPA: {{ current_user.GPA }}</li>
@@ -32,6 +34,8 @@
                     {% endfor %}
                 </ul>
             </li>
+        
+            <!-- Faculty specific fields -->
         {% elif current_user.user_type == 'Faculty' %}
             <li>Department: {{ current_user.department }}</li>
             <li>Research Areas:

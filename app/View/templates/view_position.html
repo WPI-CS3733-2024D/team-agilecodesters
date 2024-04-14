@@ -11,7 +11,7 @@
         background-color: #961f2a;
     }
 </style>
-
+    <!-- info abotu the research position -->
     <h1>{{ position.title }}</h1>
     <p>Wanted GPA: {{ position.wantedGPA }}</p>
     <p>Languages: {{ position.languages }}</p>
@@ -23,6 +23,7 @@
     <p>Start Date: {{ position.startDate.strftime('%B %d, %Y') }}</p>
     <p>End Date: {{ position.endDate.strftime('%B %d, %Y') }}</p>   
 
+    <!-- Info about the faculty member who posted the research position -->
     <div class="faculty-details">
         <h4>Posted By:</h4>
         <p>Name: {{ get_faculty(position.faculty).firstname }} {{ get_faculty(position.faculty).lastname }}</p>
@@ -36,6 +37,7 @@
 
     </div>
 
+    <!-- Decide which buttons to show based on who is looking at the post -->
     {% if current_user.is_authenticated %}
         {% if current_user.user_type == 'Student' %}
             {% if current_user.has_applied_to_position(position.id) %}
