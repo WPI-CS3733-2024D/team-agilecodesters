@@ -2,6 +2,16 @@
 
 {% block content %}
 
+<style>
+    .btn-custom {
+        background-color: #ac2b37;
+        border: 1px solid #000000;
+    }
+    .btn-custom:hover {
+        background-color: #961f2a;
+    }
+</style>
+
     <h1>{{ position.title }}</h1>
     <p>Wanted GPA: {{ position.wantedGPA }}</p>
     <p>Languages: {{ position.languages }}</p>
@@ -34,7 +44,7 @@
                 </form>
             {% else %}
                 <form action="{{ url_for('routes.apply_for_position', position_id=position.id) }}" method="post">
-                    <button type="submit" class="btn btn-primary">Apply</button>
+                    <button type="submit" class="btn btn-primary btn-custom">Apply</button>
                 </form>
             {% endif %}
         {% endif %}

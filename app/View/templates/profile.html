@@ -2,6 +2,15 @@
 
 {% block content %}
 
+<style>
+    .link-custom {
+        color: #ac2b37;
+    }
+    .link-custom:hover {
+        color: #751c25;
+    }
+</style>
+
     {% if current_user.user_type == 'Student' %}
         <h1>Student Profile</h1>
     {% elif current_user.user_type == 'Faculty' %}
@@ -34,7 +43,7 @@
             </li>
         {% endif %}
     </ul>
-        <p><a href="{{ url_for('routes.edit_profile') }}">Edit Profile</a></p>
+        <p><a href="{{ url_for('routes.edit_profile') }}" class="link-custom">Edit Profile</a></p>
 
 
 {% endblock %}

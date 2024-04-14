@@ -1,8 +1,30 @@
+<style>
+    .btn-custom {
+        background-color: #ac2b37;
+        border: 1px solid #000000;
+    }
+    .btn-custom:hover {
+        background-color: #961f2a;
+    }
+    .btn-custom-apply {
+        background-color: #2b974a;
+    }
+    .btn-custom-apply:hover {
+        background-color: #1a6d31;
+    }
+    .link-custom {
+        color: #ac2b37;
+    }
+    .link-custom:hover {
+        color: #751c25;
+    }
+</style>
+
 <table class="posttable" style="width: 100%;" valign="top">
     <tr> 
         <td colspan="3">
             <div style="text-align: center;">
-                <a href="{{ url_for('routes.view_position', position_id=post.id) }}">
+                <a href="{{ url_for('routes.view_position', position_id=post.id) }}" class="link-custom">
                      {{post.title}} 
                 </a>
             </div>
@@ -14,8 +36,8 @@
                 <!-- INFO about a research position-->
                 <p> Description: {{post.description}}</p>
                 <p> Research Goals: {{ post.researchGoals }}</p>
-                <p> Start Date: {{post.startDate}}</p>
-                <p> End Date: {{post.endDate}}</p>
+                <p> Start Date: {{ post.startDate.strftime('%B %d, %Y') }}</p>
+                <p> End Date: {{ post.endDate.strftime('%B %d, %Y') }}</p>                
             </div>
            <div class="posttimestamp" style="text-align: left;">
             <!-- Time/Date that the research position was posted by the faculty member -->
@@ -23,17 +45,22 @@
                     <!-- TODO add when it was posted -->
                 </div>
            </div> 
-           <div>
-            {% if current_user.user_type == "Student" %}
-                <form action="{{ url_for('routes.apply_for_position', position_id=post.id) }}" method="post">
-                    <button type="submit" class="btn btn-primary">Apply!</button>
-                </form>
+           {% if current_user.user_type == "Student" %}
+                {% if current_user.has_applied_to_position(post.id) %}
+                    <form action="{{ url_for('routes.unapply_for_position', position_id=post.id) }}" method="post">
+                        <button type="submit" class="btn btn-primary btn-custom">Unapply</button>
+                    </form>
+                {% else %}
+                    <form action="{{ url_for('routes.apply_for_position', position_id=post.id) }}" method="post">
+                        <button type="submit" class="btn btn-primary btn-custom-apply">Apply!</button>
+                    </form>
+                {% endif %}
             {% elif current_user == get_faculty(post.faculty)%}
                 <form action="{{ url_for('routes.edit_profile', position_id=post.id) }}" method="post">
-                    <button type="submit" class="btn btn-primary">Edit Position</button>
+                    <button type="submit" class="btn btn-primary btn-custom">Edit Position</button>
                 </form>
             {% endif %}
-        </div>  
+
         </td> 
     </tr>
     

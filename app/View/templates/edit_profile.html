@@ -2,6 +2,16 @@
 
 {% block content %}
 
+<style>
+    .btn-custom {
+        background-color: #ac2b37;
+        border: 1px solid #000000;
+    }
+    .btn-custom:hover {
+        background-color: #961f2a;
+    }
+</style>
+
     <h1>Edit Profile</h1>
 
     <form method="post">
@@ -52,7 +62,7 @@
             {{ form.password_2.label }} {{ form.password_2(class="form-control") }}
         </div>
         <div class="form-group">
-            {{ form.submit(class="btn btn-primary") }}
+            {{ form.submit(class="btn btn-primary btn-custom") }}
         </div>
     </form>
 {% endblock %}

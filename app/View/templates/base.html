@@ -2,6 +2,15 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block navbar %}
+
+<style>
+    .link-custom {
+        color: #ac2b37;
+    }
+    .link-custom:hover {
+        color: #751c25;
+    }
+</style>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -28,7 +37,7 @@
                     {% if current_user.is_anonymous %}
                         <li><a href="{{ url_for('auth.login')}}"> Login </a></li>
                     {% else %}
-                        <li><a href="{{ url_for('auth.logout')}}"> Logout </a></li>
+                        <li><a href="{{ url_for('auth.logout')}}" class="link-custom"> Logout </a></li>
                     {% endif %}
                 </ul>
             </div>

@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+.link-custom {
+    color: #ac2b37;
+}
+.link-custom:hover {
+    color: #751c25;
+}
+</style>
 
     <h1> Sign in</h1>
 
@@ -14,7 +22,7 @@
 
     {% endif %}
     <br>
-    <p>New Student? <a href="{{ url_for('auth.register_student') }}">Click to Register!</a></p>
-    <p>New Faculty? <a href="{{ url_for('auth.register_faculty') }}">Click to Register!</a></p>
+    <p>New Student? <a href="{{ url_for('auth.register_student') }}" class="link-custom">Click to Register!</a></p>
+    <p>New Faculty? <a href="{{ url_for('auth.register_faculty') }}" class="link-custom">Click to Register!</a></p>
     
 {% endblock %}

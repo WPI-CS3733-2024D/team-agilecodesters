@@ -1,4 +1,5 @@
 from datetime import datetime
+from sqlite3 import IntegrityError
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
@@ -75,7 +76,12 @@ def apply_for_position(position_id):
     position = ResearchPosition.query.get(position_id)
     aform = ApplicationForm()
     if aform.validate_on_submit():
-        application = Applications(
+        existing_application = Applications.query.filter_by(studentID=current_user.id, position=position_id).first()
+        if existing_application:
+            flash("You have already applied to this position!")
+            return redirect(url_for("routes.index"))
+        else:
+            application = Applications(
             studentID=current_user.id,
             position=position_id,
             statement_of_interest=aform.statement_of_interest.data,
@@ -84,11 +90,10 @@ def apply_for_position(position_id):
             + aform.reference_faculty_lastname.data,
             referenceEmail=aform.reference_faculty_email.data,
         )
-
-        db.session.add(application)
-        db.session.commit()
-        flash("Application submitted successfully!")
-        return redirect(url_for("routes.index"))
+            db.session.add(application)
+            db.session.commit()
+            flash("Application submitted successfully!")
+            return redirect(url_for("routes.index"))
     else:
         aform.firstname.data = current_user.firstname
         aform.lastname.data = current_user.lastname
