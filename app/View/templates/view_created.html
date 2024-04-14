@@ -2,6 +2,16 @@
 
 {% block content %}
 
+<style>
+    .btn-custom {
+        background-color: #ac2b37;
+        border: 1px solid #000000;
+    }
+    .btn-custom:hover {
+        background-color: #961f2a;
+    }
+</style>
+
     <h1>Your Research Positions</h1>
     <table class="table table-striped">
         <thead>
@@ -13,6 +23,7 @@
                 <th>Research Goals</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th>Review Applications</th>
             </tr>
         </thead>
         <tbody>
@@ -23,8 +34,11 @@
                 <td>{{ position.languages }}</td>
                 <td>{{ position.description }}</td>
                 <td>{{ position.researchGoals }}</td>
-                <td>{{ position.startDate }}</td>
-                <td>{{ position.endDate }}</td>
+                <td>{{ position.startDate.strftime('%B %d, %Y') }}</td>
+                <td>{{ position.endDate.strftime('%B %d, %Y') }}</td>
+                <td>
+                    <a href="{{ url_for('routes.review_applications', position_id=position.id) }}" class="btn btn-primary btn-custom">Review</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

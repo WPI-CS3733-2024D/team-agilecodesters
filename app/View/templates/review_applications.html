@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Review Applications for "{{ position.title }}"</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>GPA</th>
+                <th>Statement of Interest</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr>
+                <td>{{ application.student_enrolled.firstname }} {{ application.student_enrolled.lastname }}</td>
+                <td>{{ application.student_enrolled.GPA }}</td>
+                <td>{{ application.statement_of_interest }}</td>
+                <td>{{ application.status }}</td>
+                <td>
+                    {% if application.status == 'Pending' %}
+                        <form action="{{ url_for('routes.accept_application', position_id=application.position) }}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-success">Accept</button>
+                        </form>
+                        <form action="{{ url_for('routes.reject_application', position_id=application.position) }}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+                    {% else %}
+                        <!-- Display a message indicating the application has been processed -->
+                        Application Processed
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

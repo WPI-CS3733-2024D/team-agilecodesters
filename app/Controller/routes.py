@@ -203,3 +203,28 @@ def view_created():
     if current_user.user_type == "Faculty":
         positions = ResearchPosition.query.filter_by(faculty=current_user.id).all()
     return render_template("view_created.html", title="Created Positions", positions=positions)
+
+@routes_blueprint.route("/review_applications/<position_id>")
+@login_required
+def review_applications(position_id):
+    position = ResearchPosition.query.get(position_id)
+    applications = Applications.query.filter_by(position=position_id).all()
+    return render_template("review_applications.html", position=position, applications=applications)
+
+@routes_blueprint.route("/accept_application/<position_id>", methods=["POST"])
+@login_required
+def accept_application(position_id):
+    application = Applications.query.filter_by(position=position_id).first()
+    application.status = "Approved for Interview"
+    db.session.commit()
+    flash("Application accepted successfully!")
+    return redirect(url_for("routes.review_applications", position_id=position_id))
+
+@routes_blueprint.route("/reject_application/<position_id>", methods=["POST"])
+@login_required
+def reject_application(position_id):
+    application = Applications.query.filter_by(position=position_id).first()
+    application.status = "Rejected"
+    db.session.commit()
+    flash("Application rejected successfully!")
+    return redirect(url_for("routes.review_applications", position_id=position_id))
