@@ -70,7 +70,7 @@ class Student(User):
     Attributes: 
         __tablename__: String for inheritance
         id: Foreign key to User, primary key
-        major: String, max 20 characters
+        major: foreign key to Major
         GPA: Float
         graduationdate: String, max 20 characters
         user_type: String, max 20 characters
@@ -82,7 +82,7 @@ class Student(User):
     __tablename__ = "student"
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
 
-    major = db.Column(db.String(20))
+    major = db.Column(db.Integer, db.ForeignKey("major.id"))
     GPA = db.Column(db.Float)
     graduationdate = db.Column(db.DateTime)
     user_type = db.Column(db.String(20), default="Student")
@@ -310,6 +310,18 @@ class Applications(db.Model):
 
     def __repr__(self):
         return "<studentID: {} --- position: {}>".format(self.studentID, self.position)
+
+
+class Major(db.Model):
+    """
+    A Student's major
+    Attributes: 
+        id: Integer, primary key
+        name: String, unique
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), unique=True)
+    department = db.Column(db.Integer, db.ForeignKey("department.id"))    
 
 
 @login.user_loader

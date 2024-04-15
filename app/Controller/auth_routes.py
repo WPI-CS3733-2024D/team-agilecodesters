@@ -1,7 +1,12 @@
-from flask import flash, redirect, render_template, Blueprint, url_for
+from flask import flash, redirect, render_template, Blueprint, session, url_for
 from flask_login import current_user, login_required, login_user, logout_user
-from app.Controller.auth_forms import (FacultyRegistrationForm, LoginForm, StudentRegistrationForm,)
+from app.Controller.auth_forms import (
+    FacultyRegistrationForm,
+    LoginForm,
+    StudentRegistrationForm,
+)
 from app.Model.models import Faculty, ResearchField, Student, User
+from sqlalchemy import func
 from config import Config
 from app import db
 
@@ -22,15 +27,15 @@ def register_student():
             flash("Username or email is taken! Please try again.")
             return redirect(url_for("auth.register_student"))
         student = Student(
-            username = sform.username.data,
-            email = sform.email.data,
-            firstname = sform.firstname.data,
-            lastname = sform.lastname.data,
-            major = sform.major.data,
-            GPA = sform.gpa.data,
-            graduationdate = sform.graduation_date.data,
-            phone_number = sform.phone_number.data,
-            user_type = "Student",
+            username=sform.username.data,
+            email=sform.email.data,
+            firstname=sform.firstname.data,
+            lastname=sform.lastname.data,
+            major=sform.major.data.id,
+            GPA=sform.gpa.data,
+            graduationdate=sform.graduation_date.data,
+            phone_number=sform.phone_number.data,
+            user_type="Student",
         )
         for topic in sform.topics_of_interest.data:
             student.topics_of_interest.append(topic)
@@ -38,7 +43,7 @@ def register_student():
             other_topics = sform.other_topics.data.split(",")
             for topic in other_topics:
                 newtopic = ResearchField(
-                    id=ResearchField.query.count() + 1, title=topic
+                    title=topic,
                 )
                 db.session.add(newtopic)
                 student.topics_of_interest.append(newtopic)
@@ -56,8 +61,7 @@ def register_faculty():
     if fform.validate_on_submit():
         # Check if the username or email already exists in Student table
         existing_user = User.query.filter(
-            (User.username == fform.username.data)
-            | (User.email == fform.email.data)
+            (User.username == fform.username.data) | (User.email == fform.email.data)
         ).first()
         if existing_user:
             flash("Username or email is already registered.")
@@ -68,8 +72,8 @@ def register_faculty():
             email=fform.email.data,
             firstname=fform.firstname.data,
             lastname=fform.lastname.data,
-            department=fform.department.data,
-            phone_number = fform.phone_number.data,
+            department=fform.department.data.id,
+            phone_number=fform.phone_number.data,
             user_type="Faculty",
         )
         for topic in fform.research_areas.data:
