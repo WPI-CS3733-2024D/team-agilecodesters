@@ -14,55 +14,74 @@
 
     <h1>Edit Profile</h1>
 
-    <form method="post">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.firstname.label }} {{ form.firstname(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.lastname.label }} {{ form.lastname(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.phone_number.label }} {{ form.phone_number(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.email.label }} {{ form.email(class="form-control") }}
-        </div>
-        {% if current_user.user_type == 'Faculty' %}
-        <div class="form-group">
-            {{ form.department.label }} {{ form.department(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.research_areas.label }} {{ form.research_areas(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.other_areas.label }} {{ form.other_areas(class="form-control") }}
-        </div>
-        {% elif current_user.user_type == 'Student' %}
-        <div class="form-group">
-            {{ form.major.label }} {{ form.major(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.GPA.label }} {{ form.GPA(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.graduationdate.label }} {{ form.graduationdate(class="form-control") }}
-        </div>
-        <div class="form-group" style="max-height: 600px; overflow: scroll;">
-            {{ form.topics_of_interest.label }} {{ form.topics_of_interest(class="form-control", multiple="multiple") }}
-        </div>
-        <div class="form-group" style="max-height: 600px; overflow: scroll;">
-            {{ form.other_topics.label }} {{ form.other_topics(class="form-control") }}
-        </div>
-        {% endif %}
-        <div class="form-group">
-            {{ form.password.label }} {{ form.password(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.password_2.label }} {{ form.password_2(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-primary btn-custom") }}
-        </div>
-    </form>
+    {% if form %}
+
+        <form method="post" class="form-group">
+            {{ form.hidden_tag() }}
+            <div>
+                <!-- <div class="form-group"> -->
+                    {{ form.firstname.label }}<br>
+                    {{ form.firstname(class="formselect") }} <br>
+                <!-- </div>
+                <div class="form-group"> -->
+                    {{ form.lastname.label }}<br>
+                    {{ form.lastname(class="formselect") }} <br>
+                <!-- </div>
+                <div class="form-group"> -->
+                    {{ form.phone_number.label }}<br>
+                    {{ form.phone_number(class="formselect") }} <br>
+                <!-- </div>
+                <div class="form-group"> -->
+                    {{ form.email.label }}<br>
+                    {{ form.email(class="formselect") }} <br>
+                <!-- </div> -->
+                {% if current_user.user_type == 'Faculty' %} 
+                <!-- <div class="form-group"> -->
+                    {{ form.department.label }}<br>
+                    {{ form.department(class="formselect") }} <br>
+                <!-- </div>
+                <div class="form-group"> -->
+                    {{ form.research_areas.label }}<br>
+                    {{ form.research_areas(class="formselect") }} <br>
+                <!-- </div>
+                <div class="form-group"> -->
+                    {{ form.other_areas.label }}<br>
+                    {{ form.other_areas(class="formselect") }} <br>
+                <!-- </div> -->
+                {% elif current_user.user_type == 'Student' %} 
+                <!-- <div class="form-group"> -->
+                    {{ form.major.label }}<br>
+                    {{ form.major(class="formselect") }} <br>
+                <!-- </div>
+                <div class="form-group"> -->
+                    {{ form.GPA.label }}<br>
+                    {{ form.GPA(class="formselect") }} <br>
+                <!-- </div>
+                <div class="form-group"> -->
+                    {{ form.graduationdate.label }}<br>
+                    {{ form.graduationdate(class="formselect") }} <br>
+                <!-- </div>
+                <div class="form-group" style="max-height: 600px; overflow: scroll;"> -->
+                    {{ form.topics_of_interest.label }}<br>
+                    {{ form.topics_of_interest(class="formselect", multiple="multiple") }} <br>
+                <!-- </div>
+                <div class="form-group" style="max-height: 600px; overflow: scroll;"> -->
+                    {{ form.other_topics.label }}<br>
+                    {{ form.other_topics(class="formselect") }} <br>
+                <!-- </div> -->
+                {% endif %} <br>
+                <!-- <div class="form-group"> -->
+                    {{ form.password.label }}<br>
+                    {{ form.password(class="formselect") }} <br>
+                <!-- </div>
+                <div class="form-group"> -->
+                    {{ form.password_2.label }} <br>
+                    {{ form.password_2(class="formselect") }} <br>
+                <!-- </div>
+                <div class="form-group"> -->
+                    {{ form.submit(class="btn btn-primary btn-custom") }} <br>
+            </div>
+        </form>
+
+    {% endif %}
 {% endblock %}
