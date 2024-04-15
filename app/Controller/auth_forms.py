@@ -1,23 +1,37 @@
 from flask_wtf import FlaskForm
-from wtforms import (DateField, FloatField, StringField, SubmitField, PasswordField, BooleanField, validators)
-from wtforms_sqlalchemy.fields import QuerySelectMultipleField
+from wtforms import (
+    DateField,
+    FloatField,
+    StringField,
+    SubmitField,
+    PasswordField,
+    BooleanField,
+    validators,
+)
+from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.validators import DataRequired, Email, EqualTo
-from app.Model.models import ResearchField
+from app.Model.models import Department, Major, ResearchField
 from wtforms.widgets import ListWidget, CheckboxInput
+
 
 def validate_phone_number(form, field):
     if not field.data.isdigit():
-        raise validators.ValidationError('Phone number must contain only numbers!')
+        raise validators.ValidationError("Phone number must contain only numbers!")
     if not len(field.data) == 10:
-        raise validators.ValidationError('Phone number must be 10 digits long!')
+        raise validators.ValidationError("Phone number must be 10 digits long!")
+
 
 class StudentRegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     firstname = StringField("First Name", validators=[DataRequired()])
     lastname = StringField("Last Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    phone_number = StringField("Phone Number", validators=[DataRequired(), validate_phone_number])
-    major = StringField("Major", validators=[DataRequired()])
+    phone_number = StringField(
+        "Phone Number", validators=[DataRequired(), validate_phone_number]
+    )
+    major = QuerySelectField(
+        "Major", query_factory=lambda: Major.query.all(), get_label=lambda x: x.name
+    )
     gpa = FloatField("GPA", validators=[DataRequired()])
     graduation_date = DateField("Graduation Date", validators=[DataRequired()])
     topics_of_interest = QuerySelectMultipleField(
@@ -40,8 +54,14 @@ class FacultyRegistrationForm(FlaskForm):
     firstname = StringField("First Name", validators=[DataRequired()])
     lastname = StringField("Last Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    phone_number = StringField("Phone Number", validators=[DataRequired(), validate_phone_number])
-    department = StringField("Department", validators=[DataRequired()])
+    phone_number = StringField(
+        "Phone Number", validators=[DataRequired(), validate_phone_number]
+    )
+    department = QuerySelectField(
+        "Department",
+        query_factory=lambda: Department.query.all(),
+        get_label=lambda x: x.name,
+    )
     research_areas = QuerySelectMultipleField(
         "Research Areas",
         query_factory=lambda: ResearchField.query.all(),
