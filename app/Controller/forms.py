@@ -26,7 +26,13 @@ class ApplicationForm(FlaskForm):
 class CreatePositionForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired(), Length(max=1500)])
-    researchGoals = StringField('Research Goals', validators=[DataRequired()])
+    researchGoals = QuerySelectMultipleField(
+        "Topics of Interest",
+        query_factory=lambda: ResearchField.query.all(),
+        get_label=lambda x: x.title,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
     wantedGPA = FloatField('Lowest Desired GPA', validators=[DataRequired()])
     langauges = StringField('Required Programming Languages', validators=[DataRequired()])
     timeCommitment = IntegerField('Time Commitment (Hours / Week)', validators=[DataRequired()])

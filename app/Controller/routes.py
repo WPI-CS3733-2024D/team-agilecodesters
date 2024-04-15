@@ -54,11 +54,15 @@ def index():
 def create_position():
     form = CreatePositionForm()
     if form.validate_on_submit():
+        topics = []
+        for topic in form.researchGoals.data:
+            topics.append(topic)
+        
         position = ResearchPosition(
             title=form.title.data,
             wantedGPA=form.wantedGPA.data,
             description=form.description.data,
-            researchGoals=form.researchGoals.data,
+            researchGoals = topics.__repr__(),
             startDate=form.startDate.data,
             endDate=form.endDate.data,
             timeCommitment=form.timeCommitment.data,
@@ -228,3 +232,4 @@ def reject_application(position_id):
     db.session.commit()
     flash("Application rejected successfully!")
     return redirect(url_for("routes.review_applications", position_id=position_id))
+

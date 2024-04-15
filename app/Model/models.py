@@ -206,6 +206,9 @@ class ResearchField(db.Model):
 
     def get_fields(self):
         return self.query.all()
+    
+    def __repr__(self):
+        return self.title
 
 
 # Represents the posted research positions
