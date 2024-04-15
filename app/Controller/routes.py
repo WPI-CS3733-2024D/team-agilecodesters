@@ -79,7 +79,9 @@ def create_position():
 def apply_for_position(position_id):
     position = ResearchPosition.query.get(position_id)
     aform = ApplicationForm()
-    if aform.validate_on_submit():
+    aform.firstname.data = current_user.firstname
+    aform.lastname.data = current_user.lastname
+    if aform.validate_on_submit() and request.method == "POST":
         existing_application = Applications.query.filter_by(studentID=current_user.id, position=position_id).first()
         if existing_application:
             flash("You have already applied to this position!")
@@ -98,9 +100,7 @@ def apply_for_position(position_id):
             db.session.commit()
             flash("Application submitted successfully!")
             return redirect(url_for("routes.index"))
-    else:
-        aform.firstname.data = current_user.firstname
-        aform.lastname.data = current_user.lastname
+
     return render_template(
         "_apply.html",
         form=aform,
