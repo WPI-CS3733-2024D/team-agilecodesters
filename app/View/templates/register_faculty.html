@@ -2,17 +2,56 @@
 
 {% block content %}
 
-    <h1> Faculty Registration </h1>
+<style>
+    .btn-custom {
+        background-color: #ac2b37;
+        border: 1px solid #000000;
+    }
+    .btn-custom:hover {
+        background-color: #961f2a;
+    }
+</style>
+
+    <h1>Register Faculty</h1>
 
     {% if form %}
 
-        <div class="row">
-            <div class="col-md-4">
-                {{ wtf.quick_form(form, action = url_for('auth.register_faculty') ) }}
+        <form method="post" class="form-group">
+            {{ form.hidden_tag() }}
+            <div>
+                    {{ form.username.label }} <br>
+                    {{ form.username(class="formselect") }} <br>
+
+                    {{ form.firstname.label }}<br>
+                    {{ form.firstname(class="formselect") }} <br>
+
+                    {{ form.lastname.label }}<br>
+                    {{ form.lastname(class="formselect") }} <br>
+
+                    {{ form.phone_number.label }}<br>
+                    {{ form.phone_number(class="formselect") }} <br>
+
+                    {{ form.email.label }}<br>
+                    {{ form.email(class="formselect") }} <br>
+
+                    {{ form.department.label }} <br>
+                    {{ form.department(class="formselect") }} <br>
+
+                    {{ form.research_areas.label }}<br>
+                    {{ form.research_areas(class="formselect") }} <br>
+
+                    {{ form.other_topics.label }}<br>
+                    {{ form.other_topics(class="formselect") }} <br>
+
+                    {{ form.password.label }}<br>
+                    {{ form.password(class="formselect") }} <br>
+
+                    {{ form.password2.label }} <br>
+                    {{ form.password2(class="formselect") }} <br>
+
+                    {{ form.submit(class="btn btn-primary btn-custom") }} <br>
             </div>
-        </div>
+        </form>
 
     {% endif %}
-    <br>
-    
 {% endblock %}

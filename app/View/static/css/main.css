@@ -48,3 +48,11 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.formselect{
+    width: 20%;
+    font-family: Tahoma;
+    font-size: 14px;
+    padding: 5px;
+    margin: 5px 0px 5px 0px;
+}
