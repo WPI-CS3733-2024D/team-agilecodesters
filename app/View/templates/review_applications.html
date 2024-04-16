@@ -7,18 +7,18 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Student Name</th>
-                <th>GPA</th>
-                <th>Statement of Interest</th>
-                <th>Reference</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th style="text-align: center;">Student Name</th>
+                <th style="text-align: center;">GPA</th>
+                <th style="text-align: center;">Statement of Interest</th>
+                <th style="text-align: center;">Reference</th>
+                <th style="text-align: center;">Status</th>
+                <th style="text-align: center;">Action</th>
             </tr>
         </thead>
         <tbody>
             <!-- Get all info for applications -->
             {% for application in applications %}
-            <tr>
+            <tr style="text-align: center;">
                 <td>{{ application.student_enrolled.firstname }} {{ application.student_enrolled.lastname }}</td>
                 <td>{{ application.student_enrolled.GPA }}</td>
                 <td>{{ application.statement_of_interest }}</td>
@@ -28,10 +28,10 @@
                 <td>
                     {% if application.status == 'Pending' %}
                         <form action="{{ url_for('routes.accept_application', position_id=application.position) }}" method="post" style="display: inline;">
-                            <button type="submit" class="btn btn-success">Accept</button>
+                            <button type="submit" class="btn btn-primary btn-custom-apply">Accept</button>
                         </form>
                         <form action="{{ url_for('routes.reject_application', position_id=application.position) }}" method="post" style="display: inline;">
-                            <button type="submit" class="btn btn-danger">Reject</button>
+                            <button type="submit" class="btn btn-primary btn-custom">Reject</button>
                         </form>
                     {% else %}
                         Application Processed
