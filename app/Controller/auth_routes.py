@@ -73,7 +73,7 @@ def register_faculty():
             email=fform.email.data,
             firstname=fform.firstname.data,
             lastname=fform.lastname.data,
-            department=fform.department.data.id,
+            department=fform.department.data.name,
             phone_number=fform.phone_number.data,
             user_type="Faculty",
         )
