@@ -162,7 +162,7 @@ def edit_position(position_id):
         form.endDate.data = position.endDate
     return render_template("edit_position.html", title="Edit Position", form=form, position=position)
 
-@routes_blueprint.route("/position/delete/<position_id>", methods=["POST"])
+@routes_blueprint.route("/position/delete/<position_id>", methods=["GET", "POST"])
 @login_required
 def delete_position(position_id):
     if current_user.user_type != "Faculty" and current_user.id != ResearchPosition.query.get(position_id).faculty:
