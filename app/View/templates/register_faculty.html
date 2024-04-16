@@ -33,9 +33,11 @@
                 {{ form.department.label }}
                 {{ form.department(class="formselect form-control") }}
             </div>
-            <div class="form-group">
+            <div>
                 {{ form.research_areas.label }}
-                {{ form.research_areas(class="formselect form-control") }}
+                <div style="max-height: 600px; overflow: scroll;"> <!-- Uncommented this why was this commented -->
+                    {{ form.research_areas(class="formselect", multiple="multiple") }}
+                </div>
             </div>
             <div class="form-group">
                 <label class="label-no-wrap">{{ form.other_topics.label }}</label>

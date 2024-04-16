@@ -41,9 +41,17 @@
                 {{ form.graduation_date.label }}
                 {{ form.graduation_date(class="formselect form-control") }}
             </div>
-            <div class="form-group">
+            <div>
                 {{ form.topics_of_interest.label }}
-                {{ form.topics_of_interest(class="formselect form-control") }}
+                <div style="max-height: 600px; overflow: scroll;"> <!-- Uncommented this why was this commented -->
+                    {{ form.topics_of_interest(class="formselect", multiple="multiple") }}
+                </div>
+            </div>
+            <div>
+                {{ form.programming_languages.label }}
+                <div style="max-height: 600px; overflow: scroll;"> <!-- Uncommented this why was this commented -->
+                    {{ form.programming_languages(class="formselect", multiple="multiple") }}
+                </div>
             </div>
             <div class="form-group">
                 {{ form.other_topics.label }}

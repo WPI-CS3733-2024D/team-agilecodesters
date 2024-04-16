@@ -30,9 +30,11 @@
                     {{ form.department.label }}
                     {{ form.department(class="formselect form-control") }}
                 </div>
-                <div class="form-group">
+                <div>
                     {{ form.research_areas.label }}
-                    {{ form.research_areas(class="formselect form-control") }}
+                    <div style="max-height: 600px; overflow: scroll;"> <!-- Uncommented this why was this commented -->
+                        {{ form.research_areas(class="formselect", multiple="multiple") }}
+                    </div>
                 </div>
                 <div class="form-group">
                     {{ form.other_areas.label }}
@@ -55,6 +57,12 @@
                     {{ form.topics_of_interest.label }}
                     <div style="max-height: 600px; overflow: scroll;"> <!-- Uncommented this why was this commented -->
                         {{ form.topics_of_interest(class="formselect", multiple="multiple") }}
+                    </div>
+                </div>
+                <div>
+                    {{ form.programming_languages.label }}
+                    <div style="max-height: 600px; overflow: scroll;"> <!-- Uncommented this why was this commented -->
+                        {{ form.programming_languages(class="formselect", multiple="multiple") }}
                     </div>
                 </div>
                 <div class="form-group">

@@ -10,7 +10,7 @@ from wtforms import (
 )
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.validators import DataRequired, Email, EqualTo
-from app.Model.models import Department, Major, ResearchField
+from app.Model.models import Department, Major, ResearchField, ProgrammingLanguage
 from wtforms.widgets import ListWidget, CheckboxInput
 
 
@@ -37,6 +37,13 @@ class StudentRegistrationForm(FlaskForm):
     topics_of_interest = QuerySelectMultipleField(
         "Topics of Interest",
         query_factory=lambda: ResearchField.query.all(),
+        get_label=lambda x: x.title,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
+    programming_languages = QuerySelectMultipleField(
+        "Programming Language",
+        query_factory=lambda: ProgrammingLanguage.query.all(),
         get_label=lambda x: x.title,
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),

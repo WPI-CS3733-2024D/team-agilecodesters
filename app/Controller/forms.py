@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms import DateField, IntegerField, SelectField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, validators
 from wtforms.validators import Length, DataRequired, Email, EqualTo
-from app.Model.models import PositionField, ResearchField
+from app.Model.models import PositionField, ResearchField, ProgrammingLanguage
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_login import current_user
 
@@ -75,6 +75,13 @@ class EditStudentProfileForm(FlaskForm):
     topics_of_interest = QuerySelectMultipleField(
         "Topics of Interest",
         query_factory=lambda: ResearchField.query.all(),
+        get_label=lambda x: x.title,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
+    programming_languages = QuerySelectMultipleField(
+        "Programming Language",
+        query_factory=lambda: ProgrammingLanguage.query.all(),
         get_label=lambda x: x.title,
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),

@@ -25,6 +25,13 @@
                     {% endfor %}
                 </ul>
             </li>
+            <li><span class="label">Proficient Languages:</span>
+                <ul>
+                    {% for language in current_user.proficient_languages %}
+                        <li>{{ language.title }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
         
             <!-- Faculty specific fields -->
         {% elif current_user.user_type == 'Faculty' %}

@@ -18,6 +18,12 @@ facultyInterests = db.Table(
         db.Column("field_id", db.Integer, db.ForeignKey("research_field.id")),
         )
 
+studentLanguages = db.Table(
+    "studentLanguages",
+    db.Column("student_id", db.Integer, db.ForeignKey("student.id")),
+    db.Column("language_id", db.Integer, db.ForeignKey("programming_language.id"))
+)
+
 
 # TODO: cite sources for inheritance
 # Sources for inheritance:
@@ -92,6 +98,13 @@ class Student(User):
         secondary=studentFields,
         primaryjoin=(studentFields.c.student_id == id),
         backref=db.backref("studentFields", lazy="dynamic"),
+        lazy="dynamic"
+    )
+    proficient_languages = db.relationship(
+        "ProgrammingLanguage",
+        secondary=studentLanguages,
+        primaryjoin=(studentLanguages.c.student_id == id),
+        backref=db.backref("studentLanguages", lazy="dynamic"),
         lazy="dynamic"
     )
     appliedPositions = db.relationship(
@@ -210,6 +223,23 @@ class ResearchField(db.Model):
     def __repr__(self):
         return self.title
 
+class ProgrammingLanguage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(30))
+
+    student_proficient = db.relationship(
+        "Student",
+        secondary=studentLanguages,
+        primaryjoin=(studentLanguages.c.language_id == id),
+        backref=db.backref("studentLanguages", lazy="dynamic"),
+        lazy="dynamic"
+    )
+
+    def get_languages(self):
+        return self.query.all()
+    
+    def __repr__(self):
+        return self.title
 
 # Represents the posted research positions
 class ResearchPosition(db.Model):
