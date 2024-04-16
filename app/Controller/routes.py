@@ -165,9 +165,6 @@ def edit_position(position_id):
 @routes_blueprint.route("/position/delete/<position_id>", methods=["GET", "POST"])
 @login_required
 def delete_position(position_id):
-    if current_user.user_type != "Faculty" and current_user.id != ResearchPosition.query.get(position_id).faculty:
-        flash("You must be the faculty member who created this position to delete it!")
-        return redirect(url_for("routes.index"))
     position = ResearchPosition.query.get(position_id)
     db.session.delete(position)
     db.session.commit()
