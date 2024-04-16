@@ -2,76 +2,64 @@
 
 {% block content %}
 
-<style>
-    .btn-custom {
-        background-color: #ac2b37;
-        border: 1px solid #000000;
-    }
-    .btn-custom:hover {
-        background-color: #961f2a;
-    }
-    .form-group {
-        margin-bottom: 40px; /* Adds bottom margin to each form group for spacing */
-        margin-left: 20px;
-        padding-bottom: 40px;
-        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-size: 18px;
-    }
-    .formselect {
-        display: block;
-        padding: 8px; /* Adds padding inside the input and select elements */
-        border: 1px solid #ccc; /* Adds a border around the input and select elements */
-        border-radius: 3.2px; /* Rounds the corners of the input and select elements */
-        width: 760px;
-    }
-
-</style>
-
     <h1>Register Student</h1>
 
     {% if form %}
 
-        <form method="post" class="form-group">
-            {{ form.hidden_tag() }}
+    <form method="post" class="row">
+        {{ form.hidden_tag() }}
+        <div class="col-md-4">
             <div class="form-group">
-                    {{ form.username.label }} <br>
-                    {{ form.username(class="formselect") }} <br>
-
-                    {{ form.firstname.label }}<br>
-                    {{ form.firstname(class="formselect") }} <br>
-
-                    {{ form.lastname.label }}<br>
-                    {{ form.lastname(class="formselect") }} <br>
-
-                    {{ form.phone_number.label }}<br>
-                    {{ form.phone_number(class="formselect") }} <br>
-
-                    {{ form.email.label }}<br>
-                    {{ form.email(class="formselect") }} <br>
-
-                    {{ form.major.label }} <br>
-                    {{ form.major(class="formselect") }} <br>
-
-                    {{ form.gpa.label }} <br>
-                    {{ form.gpa(class="formselect") }} <br>
-
-                    {{ form.graduation_date.label }} <br>
-                    {{ form.graduation_date(class="formselect") }} <br>
-
-                    {{ form.topics_of_interest.label }}<br>
-                    {{ form.topics_of_interest(class="formselect") }} <br>
-
-                    {{ form.other_topics.label }}<br>
-                    {{ form.other_topics(class="formselect") }} <br>
-
-                    {{ form.password.label }}<br>
-                    {{ form.password(class="formselect") }} <br>
-
-                    {{ form.password2.label }} <br>
-                    {{ form.password2(class="formselect") }} <br>
-
-                    {{ form.submit(class="btn btn-primary btn-custom") }} <br>
+                {{ form.username.label }}
+                {{ form.username(class="formselect form-control") }}
             </div>
+            <div class="form-group">
+                {{ form.firstname.label }}
+                {{ form.firstname(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.lastname.label }}
+                {{ form.lastname(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.phone_number.label }}
+                {{ form.phone_number(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.major.label }}
+                {{ form.major(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.gpa.label }}
+                {{ form.gpa(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.graduation_date.label }}
+                {{ form.graduation_date(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.topics_of_interest.label }}
+                {{ form.topics_of_interest(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.other_topics.label }}
+                {{ form.other_topics(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.password2.label }}
+                {{ form.password2(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-custom">Register</button>
+            </div>   
         </form>
 
     {% endif %}

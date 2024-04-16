@@ -1,28 +1,34 @@
+
+body {
+    margin: 1px 1px 1px 15px;
+    padding: 1px;
+}
+
 .btn-custom {
     background-color: #ac2b37;
     border: 1px solid #000000;
 }
+
 .btn-custom:hover {
     background-color: #961f2a;
 }
+
 .btn-custom-apply {
     background-color: #2b974a;
 }
+
 .btn-custom-apply:hover {
     background-color: #1a6d31;
 }
+
 .link-custom {
     color: #ac2b37;
 }
+
 .link-custom:hover {
     color: #751c25;
 }
-.link-custom {
-    color: #ac2b37;
-}
-.link-custom:hover {
-    color: #751c25;
-}
+
 .post-box {
     border: 2px solid black;
     padding: 10px;
@@ -34,25 +40,40 @@
     justify-content: center;
     align-items: center;
 }
+
 @media screen and (min-width: 800px) and (max-width: 1200px) {
     .post-box {
         width: 46%;
     }
 }
+
 @media screen and (max-width: 800px) {
     .post-box {
         width: 95%;
     }
 }
+
 .postlist {
     display: flex;
     flex-wrap: wrap;
 }
 
-.formselect{
-    width: 20%;
-    font-family: Tahoma;
-    font-size: 14px;
-    padding: 5px;
-    margin: 5px 0px 5px 0px;
+.form-group {
+    margin-bottom: 10px;
+    margin-left: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 16px;
 }
+
+.formselect {
+    display: block;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 3.2px;
+    width: 600;
+}
+
+.label-no-wrap {
+    white-space: nowrap;
+}
+

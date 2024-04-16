@@ -2,69 +2,56 @@
 
 {% block content %}
 
-<style>
-    .btn-custom {
-        background-color: #ac2b37;
-        border: 1px solid #000000;
-    }
-    .btn-custom:hover {
-        background-color: #961f2a;
-    }
-    .form-group {
-        margin-bottom: 40px; /* Adds bottom margin to each form group for spacing */
-        margin-left: 20px;
-        padding-bottom: 40px;
-        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-size: 18px;
-    }
-    .formselect {
-        display: block;
-        padding: 8px; /* Adds padding inside the input and select elements */
-        border: 1px solid #ccc; /* Adds a border around the input and select elements */
-        border-radius: 3.2px; /* Rounds the corners of the input and select elements */
-        width: 760px; /*textbox length*/
-    }
-</style>
-
     <h1>Register Faculty</h1>
 
     {% if form %}
 
-        <form method="post" class="form-group">
-            {{ form.hidden_tag() }}
+    <form method="post" class="row">
+        {{ form.hidden_tag() }}
+        <div class="col-md-4">
             <div class="form-group">
-                    {{ form.username.label }} <br>
-                    {{ form.username(class="formselect") }} <br>
-
-                    {{ form.firstname.label }}<br>
-                    {{ form.firstname(class="formselect") }} <br>
-
-                    {{ form.lastname.label }}<br>
-                    {{ form.lastname(class="formselect") }} <br>
-
-                    {{ form.phone_number.label }}<br>
-                    {{ form.phone_number(class="formselect") }} <br>
-
-                    {{ form.email.label }}<br>
-                    {{ form.email(class="formselect") }} <br>
-
-                    {{ form.department.label }} <br>
-                    {{ form.department(class="formselect") }} <br>
-
-                    {{ form.research_areas.label }}<br>
-                    {{ form.research_areas(class="formselect") }} <br>
-
-                    {{ form.other_topics.label }}<br>
-                    {{ form.other_topics(class="formselect") }} <br>
-
-                    {{ form.password.label }}<br>
-                    {{ form.password(class="formselect") }} <br>
-
-                    {{ form.password2.label }} <br>
-                    {{ form.password2(class="formselect") }} <br>
-
-                    {{ form.submit(class="btn btn-primary btn-custom") }} <br>
+                {{ form.username.label }}
+                {{ form.username(class="formselect form-control") }}
             </div>
+            <div class="form-group">
+                {{ form.firstname.label }}
+                {{ form.firstname(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.lastname.label }}
+                {{ form.lastname(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.phone_number.label }}
+                {{ form.phone_number(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.department.label }}
+                {{ form.department(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.research_areas.label }}
+                {{ form.research_areas(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                <label class="label-no-wrap">{{ form.other_topics.label }}</label>
+                {{ form.other_topics(class="formselect form-control") }}
+            </div>            
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(class="formselect form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.password2.label }}
+                {{ form.password2(class="formselect form-control") }}
+            </div>     
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-custom">Register</button>
+            </div>   
         </form>
 
     {% endif %}
