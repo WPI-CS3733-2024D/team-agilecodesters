@@ -12,7 +12,7 @@ def initDB(*args, **kwargs):
             departments = [
                 {"name": "Computer Science"},
                 {"name": "Engineering"},
-                {"name": "Game ing"},
+                {"name": "Gaming"},
                 {"name": "Business"},
                 {"name": "Hard Sciences"},
             ]

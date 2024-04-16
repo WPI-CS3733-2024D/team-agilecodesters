@@ -10,6 +10,21 @@
     .btn-custom:hover {
         background-color: #961f2a;
     }
+    .form-group {
+        margin-bottom: 40px; /* Adds bottom margin to each form group for spacing */
+        margin-left: 20px;
+        padding-bottom: 40px;
+        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size: 18px;
+    }
+    .formselect {
+        display: block;
+        padding: 8px; /* Adds padding inside the input and select elements */
+        border: 1px solid #ccc; /* Adds a border around the input and select elements */
+        border-radius: 3.2px; /* Rounds the corners of the input and select elements */
+        width: 760px;
+    }
+
 </style>
 
     <h1>Register Student</h1>
@@ -18,7 +33,7 @@
 
         <form method="post" class="form-group">
             {{ form.hidden_tag() }}
-            <div>
+            <div class="form-group">
                     {{ form.username.label }} <br>
                     {{ form.username(class="formselect") }} <br>
 
