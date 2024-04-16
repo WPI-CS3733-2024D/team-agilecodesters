@@ -27,7 +27,7 @@ class CreatePositionForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired(), Length(max=1500)])
     researchGoals = QuerySelectMultipleField(
-        "Topics of Interest",
+        "Research Areas",
         query_factory=lambda: ResearchField.query.all(),
         get_label=lambda x: x.title,
         widget=ListWidget(prefix_label=False),
