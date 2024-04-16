@@ -4,7 +4,7 @@ from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from app.Controller.forms import (ApplicationForm, EditFacultyProfileForm, EditStudentProfileForm, CreatePositionForm, SearchForm)
-from app.Model.models import (Applications, PositionField, ResearchField, ResearchPosition)
+from app.Model.models import (Applications, Faculty, PositionField, ResearchField, ResearchPosition)
 from config import Config
 from app import db
 from app.Model.models import User
@@ -138,7 +138,7 @@ def unapply_for_position(position_id):
 @login_required
 def view_position(position_id):
     position = ResearchPosition.query.get(position_id)
-    return render_template("view_position.html", title="Profile", position=position, get_faculty= lambda id: User.query.get(id))
+    return render_template("view_position.html", title="Profile", position=position, get_faculty= lambda id: Faculty.query.get(id))
 
 
 @routes_blueprint.route("/profile", methods=["GET"])
