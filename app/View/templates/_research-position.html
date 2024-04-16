@@ -57,7 +57,7 @@
                     </form>
                 {% endif %}
             {% elif current_user == get_faculty(post.faculty)%}
-                <form action="{{ url_for('routes.edit_profile', position_id=post.id) }}" method="post">
+                <form action="{{ url_for('routes.edit_position', position_id=post.id) }}" method="post">
                     <button type="submit" class="btn btn-primary btn-custom">Edit Position</button>
                 </form>
             {% endif %}

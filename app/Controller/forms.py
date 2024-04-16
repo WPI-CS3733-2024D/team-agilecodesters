@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms import DateField, IntegerField, SelectField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, validators
 from wtforms.validators import Length, DataRequired, Email, EqualTo
-from app.Model.models import ResearchField
+from app.Model.models import PositionField, ResearchField
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_login import current_user
 
@@ -39,6 +39,23 @@ class CreatePositionForm(FlaskForm):
     startDate = DateField('Start Date', validators=[DataRequired()])
     endDate = DateField('End Date', validators=[DataRequired()])
     submit = SubmitField('Post')
+
+class EditPositionForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired(), Length(max=1500)])
+    researchGoals = QuerySelectMultipleField(
+        "Research Areas",
+        query_factory=lambda: ResearchField.query.all(),
+        get_label=lambda x: x.title,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
+    wantedGPA = FloatField('Lowest Desired GPA', validators=[DataRequired()])
+    languages = StringField('Required Programming Languages', validators=[DataRequired()])
+    timeCommitment = IntegerField('Time Commitment (Hours / Week)', validators=[DataRequired()])
+    startDate = DateField('Start Date', validators=[DataRequired()])
+    endDate = DateField('End Date', validators=[DataRequired()])
+    submit = SubmitField('Update Posiiton')
 
 # SEARCH FEATURE on index page
 class SearchForm(FlaskForm):

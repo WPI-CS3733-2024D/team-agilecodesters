@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h1>Create New Position</h1>
+    <h1>Edit Position "{{ position_title }}"</h1>
         {% if form %}
 
         <form method="post" class="row">
@@ -27,8 +27,8 @@
                     {{ form.wantedGPA(class="formselect form-control") }}
                 </div>
                 <div class="form-group">
-                    {{ form.langauges.label }}
-                    {{ form.langauges(class="formselect form-control") }}
+                    {{ form.languages.label }}
+                    {{ form.languages(class="formselect form-control") }}
                 </div>
                 <div class="form-group">
                     {{ form.timeCommitment.label }}

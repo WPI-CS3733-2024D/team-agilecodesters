@@ -4,28 +4,29 @@
 
     <!-- info about the research position -->
     <h1>{{ position.title }}</h1>
-    <p>Wanted GPA: {{ position.wantedGPA }}</p>
-    <p>Languages: {{ position.languages }}</p>
-    <p>Description: {{ position.description }}</p>
-    <p>Research Goals: {{ position.researchGoals }}</p>
-    <p>Desired GPA: {{ position.wantedGPA }}</p>
-    <p>Required Programming Languages: {{ position.languages }}</p>
-    <p>Time Commitment: {{ position.timeCommitment }} hours/week</p> 
-    <p>Start Date: {{ position.startDate.strftime('%B %d, %Y') }}</p>
-    <p>End Date: {{ position.endDate.strftime('%B %d, %Y') }}</p>   
+    <li><span class="label">Wanted GPA:</span> {{ position.wantedGPA }}</li>
+    <li><span class="label">Languages:</span> {{ position.languages }}</li>
+    <li><span class="label">Description:</span> {{ position.description }}</li>
+    <li><span class="label">Research Goals:</span> {{ position.researchGoals }}</li>
+    <li><span class="label">Desired GPA:</span> {{ position.wantedGPA }}</li>
+    <li><span class="label">Required Programming Languages:</span> {{ position.languages }}</li>
+    <li><span class="label">Time Commitment:</span> {{ position.timeCommitment }} hours/week</li> 
+    <li><span class="label">Start Date:</span> {{ position.startDate.strftime('%B %d, %Y') }}</li>
+    <li><span class="label">End Date:</span> {{ position.endDate.strftime('%B %d, %Y') }}</li>   
 
     <!-- Info about the faculty member who posted the research position -->
     <div class="faculty-details">
         <h4>Posted By:</h4>
-        <p>Name: {{ get_faculty(position.faculty).firstname }} {{ get_faculty(position.faculty).lastname }}</p>
-        <p>Phone Number: {{ get_faculty(position.faculty).phone_number }}</p>
-        <p>Email: {{ get_faculty(position.faculty).email }}</p>
-        <p>Department: {{ get_faculty(position.faculty).department }}</p>
-        <p>Research Areas:</p>
-            {% for area in get_faculty(position.faculty).research_areas %}
-                <li>{{ area.title }}</li>
-            {% endfor %}
-
+            <li><span class="label">Name:</span> {{ get_faculty(position.faculty).firstname }} {{ get_faculty(position.faculty).lastname }}</li>
+            <li><span class="label">Phone Number:</span> {{ get_faculty(position.faculty).phone_number }}</li>
+            <li><span class="label">Email:</span> {{ get_faculty(position.faculty).email }}</li>
+            <li><span class="label">Department:</span> {{ get_faculty(position.faculty).department }}</li>
+            <li><span class="label">Research Areas:</span></li>
+            <ul>
+                {% for area in get_faculty(position.faculty).research_areas %}
+                    <li>{{ area.title }}</li>
+                {% endfor %}
+            </ul>
     </div>
 
     <!-- Decide which buttons to show based on who is looking at the post -->
@@ -40,6 +41,10 @@
                     <button type="submit" class="btn btn-primary btn-custom">Apply</button>
                 </form>
             {% endif %}
+        {% elif current_user == get_faculty(position.faculty) %}
+            <form action="{{ url_for('routes.edit_position', position_id=position.id) }}" method="post">
+                <button type="submit" class="btn btn-primary btn-custom">Edit Position</button>
+            </form>
         {% endif %}
     {% endif %}
     

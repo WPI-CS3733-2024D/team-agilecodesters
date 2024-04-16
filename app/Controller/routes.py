@@ -1,9 +1,8 @@
 from datetime import datetime
-from sqlite3 import IntegrityError
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
-from app.Controller.forms import (ApplicationForm, EditFacultyProfileForm, EditStudentProfileForm, CreatePositionForm, SearchForm)
+from app.Controller.forms import (ApplicationForm, EditFacultyProfileForm, EditStudentProfileForm, CreatePositionForm, SearchForm, EditPositionForm)
 from app.Model.models import (Applications, Faculty, PositionField, ResearchField, ResearchPosition)
 from config import Config
 from app import db
@@ -83,6 +82,7 @@ def create_position():
         position.faculty = current_user.id
         db.session.add(position)
         db.session.commit()
+        flash("Position created successfully!")
         return redirect(url_for("routes.index"))
     return render_template("_create-position.html", title="Create Position", form=form)
 
@@ -131,7 +131,7 @@ def unapply_for_position(position_id):
         db.session.delete(application)
         db.session.commit()
         flash("Successfully unapplied for the position.")
-    return redirect(url_for("routes.index"))
+    return redirect(url_for("routes.view_applied"))
 
 
 @routes_blueprint.route("/position/<position_id>", methods=["GET", "POST"])
@@ -140,6 +140,40 @@ def view_position(position_id):
     position = ResearchPosition.query.get(position_id)
     return render_template("view_position.html", title="Profile", position=position, get_faculty= lambda id: Faculty.query.get(id))
 
+@routes_blueprint.route("/position/edit/<position_id>", methods=["GET", "POST"])
+@login_required
+def edit_position(position_id):
+    position = ResearchPosition.query.get(position_id)
+    form = EditPositionForm()
+    if form.validate_on_submit():
+        position.title = form.title.data
+        position.description = form.description.data
+        if form.researchGoals.data:
+                researchGoals = form.researchGoals.data.split(",")
+                for goal in researchGoals:
+                    newGoal = PositionField(
+                        id=PositionField.query.count() + 1, title=goal
+                    )
+                    db.session.add(newGoal)
+                    position.fields.append(newGoal)
+        position.wantedGPA = form.wantedGPA.data
+        position.languages = form.languages.data
+        position.timeCommitment = form.timeCommitment.data
+        position.startDate = form.startDate.data
+        position.endDate = form.endDate.data
+        db.session.add(position)
+        db.session.commit()
+        flash("Position updated successfully!")
+        return redirect(url_for("routes.view_position", position_id=position_id))
+    else:
+        form.title.data = position.title
+        form.description.data = position.description
+        form.wantedGPA.data = position.wantedGPA
+        form.languages.data = position.languages
+        form.timeCommitment.data = position.timeCommitment
+        form.startDate.data = position.startDate
+        form.endDate.data = position.endDate
+    return render_template("edit_position.html", title="Edit Position", form=form, position_title=position.title)
 
 @routes_blueprint.route("/profile", methods=["GET"])
 @login_required
@@ -218,7 +252,7 @@ def view_applied():
 def view_created():
     if current_user.user_type == "Faculty":
         positions = ResearchPosition.query.filter_by(faculty=current_user.id).all()
-    return render_template("view_created.html", title="Created Positions", positions=positions)
+    return render_template("view_created.html", title="Your Positions", positions=positions)
 
 @routes_blueprint.route("/review_applications/<position_id>")
 @login_required
