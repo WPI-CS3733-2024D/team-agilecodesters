@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h1>Edit Position "{{ position_title }}"</h1>
+    <h1>Edit Position "{{ position.title }}"</h1>
         {% if form %}
 
         <form method="post" class="row">
@@ -45,9 +45,11 @@
                 <br>
                 <div class="form-group">
                     {{ form.submit(class="btn btn-primary btn-custom") }}
+                    <a href="{{ url_for('routes.delete_position', position_id=position.id) }}" class="btn btn-primary btn-custom"  style="margin-left: 40px;">Delete Position</a>
                 </div>
             </div>
         </form>
+        <br>
 
         {% endif %}
 {% endblock %}

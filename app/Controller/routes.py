@@ -160,7 +160,20 @@ def edit_position(position_id):
         form.timeCommitment.data = position.timeCommitment
         form.startDate.data = position.startDate
         form.endDate.data = position.endDate
-    return render_template("edit_position.html", title="Edit Position", form=form, position_title=position.title)
+    return render_template("edit_position.html", title="Edit Position", form=form, position=position)
+
+@routes_blueprint.route("/position/delete/<position_id>", methods=["POST"])
+@login_required
+def delete_position(position_id):
+    if current_user.user_type != "Faculty" and current_user.id != ResearchPosition.query.get(position_id).faculty:
+        flash("You must be the faculty member who created this position to delete it!")
+        return redirect(url_for("routes.index"))
+    position = ResearchPosition.query.get(position_id)
+    db.session.delete(position)
+    db.session.commit()
+    flash("Position deleted successfully!")
+    return redirect(url_for("routes.view_created"))
+
 
 @routes_blueprint.route("/profile", methods=["GET"])
 @login_required
