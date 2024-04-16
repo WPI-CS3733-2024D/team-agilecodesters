@@ -37,8 +37,10 @@ def initDB(*args, **kwargs):
             ]
             for major in majors:
                 with db.session.no_autoflush:
-                    new_major = Major(name=major["name"], department=Department.query.filter_by(name=major["dname"]).first().id)
-                    db.session.add(new_major)
+                    department = Department.query.filter_by(name=major["dname"]).first()
+                    if department:
+                        new_major = Major(name=major["name"], department=department.id)
+                        db.session.add(new_major)
             db.session.commit()
 
 
