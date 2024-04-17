@@ -92,16 +92,16 @@
         <div style="max-height: 600px; overflow: scroll">
           {{ form.topics_of_interest(class="formselect", multiple="multiple") }}
         </div>
-      </div>
-      <div class="form-group">
+    </div>
+    <div class="form-group">
           {{ form.other_topics.label }} {{ form.other_topics(class="formselect") }}
-        </div>
-      <div class="form-group">
+    </div>
+    <div class="form-group">
         {{ form.languages.label }}
         <div style="max-height: 600px; overflow: scroll">
           {{ form.languages(class="formselect", multiple="multiple") }}
         </div>
-      </div>
+    </div>
     <div class="form-group">
         {{ form.other_languages.label }} {{ form.other_languages(class="formselect") }}
     </div>
@@ -114,9 +114,7 @@
     <div class="form-group">
       <button type="submit" class="btn btn-primary btn-custom">Register</button>
     </div>
-  </div>
-=======
->>>>>>> 3ca9d1df37eaecc9b1878fb1109323fe9639a6a0
+</div>
 </form>
 
 {% endif %} {% endblock %}
