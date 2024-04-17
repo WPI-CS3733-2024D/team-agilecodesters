@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h1>Edit Position "{{ position_title }}"</h1>
+    <h1>Edit Position "{{ position.title }}"</h1>
         {% if form %}
 
         <form method="post" class="row">
@@ -10,44 +10,46 @@
             <div class="col-md-4">
                 <div class="form-group">
                     {{ form.title.label }}
-                    {{ form.title(class="formselect form-control") }}
+                    {{ form.title(class="formselect") }}
                 </div>
                 <div class="form-group">
                     {{ form.description.label }}
-                    {{ form.description(class="formselect form-control") }}
+                    {{ form.description(class="formselect") }}
                 </div>
                 <div class="form-group">
                     {{ form.researchGoals.label }}
                         <div style="max-height: 600px; overflow: scroll;">  <!-- Stolen from edit profile -->
-                    {{ form.researchGoals(class="formselect form-control") }}
+                    {{ form.researchGoals(class="formselect") }}
                     </div>
                 </div>
                 <div class="form-group">
                     {{ form.wantedGPA.label }}
-                    {{ form.wantedGPA(class="formselect form-control") }}
+                    {{ form.wantedGPA(class="formselect") }}
                 </div>
                 <div class="form-group">
                     {{ form.languages.label }}
-                    {{ form.languages(class="formselect form-control") }}
+                    {{ form.languages(class="formselect") }}
                 </div>
                 <div class="form-group">
                     {{ form.timeCommitment.label }}
-                    {{ form.timeCommitment(class="formselect form-control") }}
+                    {{ form.timeCommitment(class="formselect") }}
                 </div>
                 <div class="form-group">
                     {{ form.startDate.label }}
-                    {{ form.startDate(class="formselect form-control") }}
+                    {{ form.startDate(class="formselect") }}
                 </div>
                 <div class="form-group">
                     {{ form.endDate.label }}
-                    {{ form.endDate(class="formselect form-control") }}
+                    {{ form.endDate(class="formselect") }}
                 </div>
                 <br>
                 <div class="form-group">
                     {{ form.submit(class="btn btn-primary btn-custom") }}
+                    <a href="{{ url_for('routes.delete_position', position_id=position.id) }}" class="btn btn-primary btn-custom"  style="margin-left: 40px;">Delete Position</a>
                 </div>
             </div>
         </form>
+        <br>
 
         {% endif %}
 {% endblock %}

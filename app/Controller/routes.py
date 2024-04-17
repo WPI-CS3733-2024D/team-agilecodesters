@@ -28,30 +28,7 @@ def index():
         elif sort_option == 'GPA':
             posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
         elif sort_option == 'Fields':
-            if current_user.user_type == "Student":
-                shared_positions = (
-                    ResearchPosition.query.join(PositionField)
-                    .join(ResearchField)
-                    .filter(
-                        PositionField.field_ID.in_(
-                            [field.id for field in current_user.topics_of_interest]
-                        )
-                    )
-                    .all()
-                )
-            else:
-                shared_positions = (
-                    ResearchPosition.query.join(PositionField)
-                    .join(ResearchField)
-                    .filter(
-                        PositionField.field_ID.in_(
-                            [field.id for field in current_user.research_areas]
-                        )
-                    )
-                    .all()
-                )
-            posts = shared_positions
-
+            posts = ResearchPosition.query.order_by(ResearchPosition.researchGoals.desc())
     return render_template(
         "index.html",
         title="Home",
@@ -63,6 +40,9 @@ def index():
 @routes_blueprint.route("/create_position", methods=["GET", "POST"])
 @login_required
 def create_position():
+    if current_user.user_type != "Faculty":
+        flash("You must be a faculty member to create a position!")
+        return redirect(url_for("routes.index"))
     form = CreatePositionForm()
     if form.validate_on_submit():
         topics = []
@@ -89,6 +69,9 @@ def create_position():
 @routes_blueprint.route("/apply/<position_id>", methods=["POST"])
 @login_required
 def apply_for_position(position_id):
+    if current_user.user_type != "Student":
+        flash("You must be a student to apply for a position!")
+        return redirect(url_for("routes.index"))
     position = ResearchPosition.query.get(position_id)
     aform = ApplicationForm()
     aform.firstname.data = current_user.firstname
@@ -143,6 +126,9 @@ def view_position(position_id):
 @routes_blueprint.route("/position/edit/<position_id>", methods=["GET", "POST"])
 @login_required
 def edit_position(position_id):
+    if current_user.user_type != "Faculty" and current_user.id != ResearchPosition.query.get(position_id).faculty:
+        flash("You must be the faculty member who created this position to edit it!")
+        return redirect(url_for("routes.index"))
     position = ResearchPosition.query.get(position_id)
     form = EditPositionForm()
     if form.validate_on_submit():
@@ -155,6 +141,7 @@ def edit_position(position_id):
                         id=PositionField.query.count() + 1, title=goal
                     )
                     db.session.add(newGoal)
+                    db.session.commit()
                     position.fields.append(newGoal)
         position.wantedGPA = form.wantedGPA.data
         position.languages = form.languages.data
@@ -173,7 +160,17 @@ def edit_position(position_id):
         form.timeCommitment.data = position.timeCommitment
         form.startDate.data = position.startDate
         form.endDate.data = position.endDate
-    return render_template("edit_position.html", title="Edit Position", form=form, position_title=position.title)
+    return render_template("edit_position.html", title="Edit Position", form=form, position=position)
+
+@routes_blueprint.route("/position/delete/<position_id>", methods=["GET", "POST"])
+@login_required
+def delete_position(position_id):
+    position = ResearchPosition.query.get(position_id)
+    db.session.delete(position)
+    db.session.commit()
+    flash("Position deleted successfully!")
+    return redirect(url_for("routes.view_created"))
+
 
 @routes_blueprint.route("/profile", methods=["GET"])
 @login_required
@@ -205,6 +202,7 @@ def edit_profile():
                         id=ResearchField.query.count() + 1, title=area
                     )
                     db.session.add(newArea)
+                    db.session.commit()
                     current_user.research_areas.append(newArea)
         if current_user.user_type == "Student":
             current_user.major = form.major.data
@@ -221,6 +219,7 @@ def edit_profile():
                         id=ResearchField.query.count() + 1, title=topic
                     )
                     db.session.add(newtopic)
+                    db.session.commit()
                     current_user.topics_of_interest.append(newtopic)
         db.session.add(current_user)
         db.session.commit()
@@ -245,20 +244,27 @@ def edit_profile():
 @routes_blueprint.route("/profile/positions", methods=["GET", "POST"])
 @login_required
 def view_applied():
-    if current_user.user_type == "Student":
-        applications = Applications.query.filter_by(studentID=current_user.id).all()
+    if current_user.user_type != "Student":
+        flash("Only students can view their applied positions!")
+        return redirect(url_for("routes.index"))
+    applications = Applications.query.filter_by(studentID=current_user.id).all()
     return render_template("view_applied.html", title="Applied Positions", applications=applications, get_faculty= lambda id: User.query.get(id))
 
 @routes_blueprint.route("/profile/created", methods=["GET", "POST"])
 @login_required
 def view_created():
-    if current_user.user_type == "Faculty":
-        positions = ResearchPosition.query.filter_by(faculty=current_user.id).all()
+    if current_user.user_type != "Faculty":
+        flash("Only faculty can view their created positions!")
+        return redirect(url_for("routes.index"))
+    positions = ResearchPosition.query.filter_by(faculty=current_user.id).all()
     return render_template("view_created.html", title="Your Positions", positions=positions)
 
 @routes_blueprint.route("/review_applications/<position_id>")
 @login_required
 def review_applications(position_id):
+    if current_user.user_type != "Faculty":
+        flash("Only faculty can review applications!")
+        return redirect(url_for("routes.index"))
     position = ResearchPosition.query.get(position_id)
     applications = Applications.query.filter_by(position=position_id).all()
     return render_template("review_applications.html", position=position, applications=applications)

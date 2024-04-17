@@ -46,6 +46,7 @@ def register_student():
                     title=topic,
                 )
                 db.session.add(newtopic)
+                db.session.commit()
                 student.topics_of_interest.append(newtopic)
         student.set_password(sform.password.data)
         db.session.add(student)
@@ -72,7 +73,7 @@ def register_faculty():
             email=fform.email.data,
             firstname=fform.firstname.data,
             lastname=fform.lastname.data,
-            department=fform.department.data.id,
+            department=fform.department.data.name,
             phone_number=fform.phone_number.data,
             user_type="Faculty",
         )
@@ -85,6 +86,7 @@ def register_faculty():
                     id=ResearchField.query.count() + 1, title=topic
                 )
                 db.session.add(newtopic)
+                db.session.commit()
                 faculty.research_areas.append(newtopic)
         faculty.set_password(fform.password.data)
         db.session.add(faculty)
