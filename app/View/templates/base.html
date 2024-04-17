@@ -1,55 +1,60 @@
-{% extends 'bootstrap/base.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
+{% extends 'bootstrap/base.html' %} {% import 'bootstrap/wtf.html' as wtf %} {%
+block styles %} {{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}" />
+{% endblock %} {% block navbar %}
 
-{% block styles %}
-{{super()}}
-  <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
-{% endblock %}
-
-{% block navbar %}
-
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#"><span style="color:#a9b0b7">Re</span><span style="color:#ac2b37">Connect</span></a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <u1 class="nav navbar-nav">
-                    <li><a href="{{ url_for('routes.index')}}"> Home </a></li>
-                    <!-- Change to route for Applied Postions Page -->
-                    {% if current_user.user_type == 'Student' %}
-
-                        <li><a href="{{ url_for('routes.view_applied')}}"> View Applied Positions </a></li>
-
-                    {% elif current_user.user_type == 'Faculty' %}
-                    <!-- Change to route for (Applied Postions Page?) -->
-                        <li><a href="{{ url_for('routes.create_position')}}"> Create Position </a></li>
-                        <li><a href="{{ url_for('routes.view_created')}}"> View Created Positions </a></li>
-                    {% endif %}
-                    {% if not current_user.is_anonymous %}
-                        <li><a href="{{ url_for('routes.view_profile')}}"> Profile </a></li>
-                    {% endif %}
-                    <li><a href="{{ url_for('routes.about_us')}}">About Us</a></li>
-                </u1>
-                <ul class="nav navbar navbar-right">
-                    {% if current_user.is_anonymous %}
-                        <li><a href="{{ url_for('auth.login')}}"> Login </a></li>
-                    {% else %}
-                        <li><a href="{{ url_for('auth.logout')}}" class="link-custom"> Logout </a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info"> {{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"
+        ><span style="color: #a9b0b7">Re</span
+        ><span style="color: #ac2b37">Connect</span></a
+      >
     </div>
-{% endblock %}
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <u1 class="nav navbar-nav">
+        <li><a href="{{ url_for('routes.index')}}"> Home </a></li>
+        <!-- Change to route for Applied Postions Page -->
+        {% if current_user.user_type == 'Student' %}
 
+        <li>
+          <a href="{{ url_for('routes.view_applied')}}">
+            View Applied Positions
+          </a>
+        </li>
+
+        {% elif current_user.user_type == 'Faculty' %}
+        <!-- Change to route for (Applied Postions Page?) -->
+        <li>
+          <a href="{{ url_for('routes.create_position')}}"> Create Position </a>
+        </li>
+        <li>
+          <a href="{{ url_for('routes.view_created')}}">
+            View Created Positions
+          </a>
+        </li>
+        {% endif %} {% if not current_user.is_anonymous %}
+        <li><a href="{{ url_for('routes.view_profile')}}"> Profile </a></li>
+        {% endif %}
+        <li><a href="{{ url_for('routes.about_us')}}">About Us</a></li>
+      </u1>
+      <ul class="nav navbar navbar-right">
+        {% if current_user.is_anonymous %}
+        <li><a href="{{ url_for('auth.login')}}"> Login </a></li>
+        {% else %}
+        <li>
+          <a href="{{ url_for('auth.logout')}}" class="link-custom"> Logout </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div>
+  {% with messages = get_flashed_messages() %} {% if messages %} {% for message
+  in messages %}
+  <div class="alert alert-info">{{ message }}</div>
+  {% endfor %} {% endif %} {% endwith %}
+</div>
+{% endblock %}

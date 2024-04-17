@@ -1,23 +1,19 @@
-{% extends "base.html" %} 
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <h1>All Available Positions</h1>
 
 <form method="POST" action="{{ url_for('routes.index') }}">
   {{ search_form.hidden_tag() }}
   <div class="form-group">
-      {{ search_form.sortOrder.label }} {{ search_form.sortOrder }}
-      <button type="submit" class="btn btn-primary btn-custom">Search</button>
+    {{ search_form.sortOrder.label }} {{ search_form.sortOrder }}
+    <button type="submit" class="btn btn-primary btn-custom">Search</button>
   </div>
 </form>
-    
+
 <!-- List out all the research positions available (or to his/her recommendations) on the student's end-->
 <div class="postlist">
   {% for post in posts %}
-      <div class="post-box">
-          {% include '_research-position.html' %} 
-      </div>
+  <div class="post-box">{% include '_research-position.html' %}</div>
   {% endfor %}
 </div>
 

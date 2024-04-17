@@ -1,32 +1,38 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
+<h1>Sign in</h1>
 
-    <h1> Sign in</h1>
+{% if form %}
 
-    {% if form %}
+<form method="post" class="row">
+  {{ form.hidden_tag() }}
+  <div class="col-md-4">
+    <div class="form-group">
+      {{ form.username.label }} {{ form.username(class="formselect") }}
+    </div>
+    <div class="form-group">
+      {{ form.password.label }} {{ form.password(class="formselect") }}
+    </div>
+    <div class="form-group">
+      {{ form.submit(class="btn btn-primary btn-custom") }}
+    </div>
+  </div>
+</form>
 
-    <form method="post" class="row">
-        {{ form.hidden_tag() }}
-        <div class="col-md-4">
-            <div class="form-group">
-                {{ form.username.label }}
-                {{ form.username(class="formselect") }}
-            </div>
-            <div class="form-group">
-                {{ form.password.label }}
-                {{ form.password(class="formselect") }}
-            </div>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-primary btn-custom") }}
-            </div>
-        </div>
-    </form>
+{% endif %}
 
-    {% endif %}
+<br />
+<p>
+  New Student?
+  <a href="{{ url_for('auth.register_student') }}" class="link-custom"
+    >Click to Register!</a
+  >
+</p>
+<p>
+  New Faculty?
+  <a href="{{ url_for('auth.register_faculty') }}" class="link-custom"
+    >Click to Register!</a
+  >
+</p>
 
-    <br>
-    <p>New Student? <a href="{{ url_for('auth.register_student') }}" class="link-custom">Click to Register!</a></p>
-    <p>New Faculty? <a href="{{ url_for('auth.register_faculty') }}" class="link-custom">Click to Register!</a></p>
-    
 {% endblock %}

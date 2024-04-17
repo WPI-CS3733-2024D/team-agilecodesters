@@ -1,49 +1,76 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
+<!-- info about the research position -->
+<h1>{{ position.title }}</h1>
+<li><span class="label">Description:</span> {{ position.description }}</li>
+<li><span class="label">Research Goals:</span> {{ position.researchGoals }}</li>
+<li><span class="label">Desired GPA:</span> {{ position.wantedGPA }}</li>
+<li>
+  <span class="label">Required Programming Languages:</span> {% for language in
+  position.languages %} {{ language }} {% endfor %}
+</li>
+<li>
+  <span class="label">Time Commitment:</span> {{ position.timeCommitment }}
+  hours/week
+</li>
+<li>
+  <span class="label">Start Date:</span> {{ position.startDate.strftime('%B %d,
+  %Y') }}
+</li>
+<li>
+  <span class="label">End Date:</span> {{ position.endDate.strftime('%B %d, %Y')
+  }}
+</li>
 
-    <!-- info about the research position -->
-    <h1>{{ position.title }}</h1>
-    <li><span class="label">Description:</span> {{ position.description }}</li>
-    <li><span class="label">Research Goals:</span> {{ position.researchGoals }}</li>
-    <li><span class="label">Desired GPA:</span> {{ position.wantedGPA }}</li>
-    <li><span class="label">Required Programming Languages:</span> {% for language in position.languages %} {{ language }} {% endfor %}</li>
-    <li><span class="label">Time Commitment:</span> {{ position.timeCommitment }} hours/week</li> 
-    <li><span class="label">Start Date:</span> {{ position.startDate.strftime('%B %d, %Y') }}</li>
-    <li><span class="label">End Date:</span> {{ position.endDate.strftime('%B %d, %Y') }}</li>   
+<!-- Info about the faculty member who posted the research position -->
+<div class="faculty-details">
+  <h4>Posted By:</h4>
+  <li>
+    <span class="label">Name:</span> {{ get_faculty(position.faculty).firstname
+    }} {{ get_faculty(position.faculty).lastname }}
+  </li>
+  <li>
+    <span class="label">Phone Number:</span> {{
+    get_faculty(position.faculty).phone_number }}
+  </li>
+  <li>
+    <span class="label">Email:</span> {{ get_faculty(position.faculty).email }}
+  </li>
+  <li>
+    <span class="label">Department:</span> {{
+    get_faculty(position.faculty).department }}
+  </li>
+  <li><span class="label">Research Areas:</span></li>
+  <ul>
+    {% for area in get_faculty(position.faculty).research_areas %}
+    <li>{{ area.title }}</li>
+    {% endfor %}
+  </ul>
+</div>
 
-    <!-- Info about the faculty member who posted the research position -->
-    <div class="faculty-details">
-        <h4>Posted By:</h4>
-            <li><span class="label">Name:</span> {{ get_faculty(position.faculty).firstname }} {{ get_faculty(position.faculty).lastname }}</li>
-            <li><span class="label">Phone Number:</span> {{ get_faculty(position.faculty).phone_number }}</li>
-            <li><span class="label">Email:</span> {{ get_faculty(position.faculty).email }}</li>
-            <li><span class="label">Department:</span> {{ get_faculty(position.faculty).department }}</li>
-            <li><span class="label">Research Areas:</span></li>
-            <ul>
-                {% for area in get_faculty(position.faculty).research_areas %}
-                    <li>{{ area.title }}</li>
-                {% endfor %}
-            </ul>
-    </div>
-
-    <!-- Decide which buttons to show based on who is looking at the post -->
-    {% if current_user.is_authenticated %}
-        {% if current_user.user_type == 'Student' %}
-            {% if current_user.has_applied_to_position(position.id) %}
-                <form action="{{ url_for('routes.unapply_for_position', position_id=position.id) }}" method="post">
-                    <button type="submit" class="btn btn-danger">Unapply</button>
-                </form>
-            {% else %}
-                <form action="{{ url_for('routes.apply_for_position', position_id=position.id) }}" method="post">
-                    <button type="submit" class="btn btn-primary btn-custom">Apply</button>
-                </form>
-            {% endif %}
-        {% elif current_user == get_faculty(position.faculty) %}
-            <form action="{{ url_for('routes.edit_position', position_id=position.id) }}" method="post">
-                <button type="submit" class="btn btn-primary btn-custom">Edit Position</button>
-            </form>
-        {% endif %}
-    {% endif %}
-    
-{% endblock %}
+<!-- Decide which buttons to show based on who is looking at the post -->
+{% if current_user.is_authenticated %} {% if current_user.user_type == 'Student'
+%} {% if current_user.has_applied_to_position(position.id) %}
+<form
+  action="{{ url_for('routes.unapply_for_position', position_id=position.id) }}"
+  method="post"
+>
+  <button type="submit" class="btn btn-danger">Unapply</button>
+</form>
+{% else %}
+<form
+  action="{{ url_for('routes.apply_for_position', position_id=position.id) }}"
+  method="post"
+>
+  <button type="submit" class="btn btn-primary btn-custom">Apply</button>
+</form>
+{% endif %} {% elif current_user == get_faculty(position.faculty) %}
+<form
+  action="{{ url_for('routes.edit_position', position_id=position.id) }}"
+  method="post"
+>
+  <button type="submit" class="btn btn-primary btn-custom">
+    Edit Position
+  </button>
+</form>
+{% endif %} {% endif %} {% endblock %}

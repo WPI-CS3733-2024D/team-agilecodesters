@@ -1,44 +1,38 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<h1>Apply For {{position_title}}</h1>
 
-{% block content %}
-    <h1>Apply For {{position_title}}</h1>
-    
-    {% if form %}
+{% if form %}
 
-    <form method="post" class="row">
-        {{ form.hidden_tag() }}
-        <div class="col-md-4">
-            <div class="form-group">
-                {{ form.firstname.label }}
-                {{ form.firstname(class="formselect") }}
-            </div>
-            <div class="form-group">
-                {{ form.lastname.label }}
-                {{ form.lastname(class="formselect") }}
-            </div>
-            <div class="form-group">
-                {{ form.statement_of_interest.label }}
-                {{ form.statement_of_interest(class="formselect") }}
-            </div>
-            <div class="form-group">
-                {{ form.reference_faculty_firstname.label }}
-                {{ form.reference_faculty_firstname(class="formselect") }}
-            </div>
-            <div class="form-group">
-                {{ form.reference_faculty_lastname.label }}
-                {{ form.reference_faculty_lastname(class="formselect") }}
-            </div>
-            <div class="form-group">
-                {{ form.reference_faculty_email.label }}
-                {{ form.reference_faculty_email(class="formselect") }}
-            </div>
-            <br>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-primary btn-custom") }}
-            </div>
-        </div>
-    </form>
+<form method="post" class="row">
+  {{ form.hidden_tag() }}
+  <div class="col-md-4">
+    <div class="form-group">
+      {{ form.firstname.label }} {{ form.firstname(class="formselect") }}
+    </div>
+    <div class="form-group">
+      {{ form.lastname.label }} {{ form.lastname(class="formselect") }}
+    </div>
+    <div class="form-group">
+      {{ form.statement_of_interest.label }} {{
+      form.statement_of_interest(class="formselect") }}
+    </div>
+    <div class="form-group">
+      {{ form.reference_faculty_firstname.label }} {{
+      form.reference_faculty_firstname(class="formselect") }}
+    </div>
+    <div class="form-group">
+      {{ form.reference_faculty_lastname.label }} {{
+      form.reference_faculty_lastname(class="formselect") }}
+    </div>
+    <div class="form-group">
+      {{ form.reference_faculty_email.label }} {{
+      form.reference_faculty_email(class="formselect") }}
+    </div>
+    <br />
+    <div class="form-group">
+      {{ form.submit(class="btn btn-primary btn-custom") }}
+    </div>
+  </div>
+</form>
 
-    {% endif %}
-
-{% endblock %}
+{% endif %} {% endblock %}
