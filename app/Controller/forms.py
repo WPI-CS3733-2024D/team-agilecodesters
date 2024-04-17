@@ -110,7 +110,11 @@ class EditPositionForm(FlaskForm):
 class SearchForm(FlaskForm):
     sortOrder = SelectField(
         "Sort by:",
-        choices=[("Date", "Start Date"), ("GPA", "Required GPA"), ("Recommended", "Recommended")],
+        choices=[
+            ("Date", "Start Date"),
+            ("GPA", "Required GPA"),
+            ("Recommended", "Recommended"),
+        ],
         default="Date",
     )
     submit = SubmitField("Search")

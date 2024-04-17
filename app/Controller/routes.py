@@ -292,7 +292,7 @@ def edit_profile():
                     db.session.add(newLanguage)
                     db.session.commit()
                     current_user.languages.append(newLanguage)
-            
+
         db.session.add(current_user)
         db.session.commit()
         flash("Your profile has been updated!")
