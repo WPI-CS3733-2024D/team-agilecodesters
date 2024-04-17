@@ -19,8 +19,16 @@ jobs:
       - name: Push changes
         if: steps.git-check.outputs.modified == 'true'
         run: |
-          git config --global user.name 'Myrrh Khan'
-          git config --global user.email '57461851+myrrhkhan@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git commit -am "Automated changes"
-          git push
+          # make new branch and pull request to pull back into original branch
+          # example: if someone makes a PR from branch iteration2 to main, then we make a new branch iteration2-autoformat and a new PR from iteration2-autoformat to iteration2
+          git checkout -b ${{ github.head_ref }}-autoformat
+          git add -A
+          git commit -m "Autoformat python code"
+          git push origin ${{ github.head_ref }}-autoformat
+          gh pr create --base ${{ github.head_ref }} --head ${{ github.head_ref }}-autoformat --title "Autoformat python code"
+
+          # git config --global user.name 'Myrrh Khan'
+          # git config --global user.email '57461851+myrrhkhan@users.noreply.github.com'
+          # git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          # git commit -am "Automated changes"
+          # git push
