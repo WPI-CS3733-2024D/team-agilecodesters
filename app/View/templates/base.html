@@ -21,7 +21,7 @@
 
                         <li><a href="{{ url_for('routes.view_applied')}}"> View Applied Positions </a></li>
 
-                    {% else %}
+                    {% elif current_user.user_type == 'Faculty' %}
                     <!-- Change to route for (Applied Postions Page?) -->
                         <li><a href="{{ url_for('routes.create_position')}}"> Create Position </a></li>
                         <li><a href="{{ url_for('routes.view_created')}}"> View Created Positions </a></li>
