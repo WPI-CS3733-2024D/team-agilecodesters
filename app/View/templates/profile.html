@@ -27,7 +27,7 @@
             </li>
             <li><span class="label">Proficient Languages:</span>
                 <ul>
-                    {% for language in current_user.proficient_languages %}
+                    {% for language in current_user.languages %}
                         <li>{{ language.title }}</li>
                     {% endfor %}
                 </ul>
