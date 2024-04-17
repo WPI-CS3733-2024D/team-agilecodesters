@@ -12,17 +12,24 @@ studentFields = db.Table(
     db.Column("student_id", db.Integer, db.ForeignKey("student.id")),
     db.Column("field_id", db.Integer, db.ForeignKey("research_field.id")),
 )
-facultyInterests = db.Table(
-        "facultyInterests",
-        db.Column("faculty_id", db.Integer, db.ForeignKey("faculty.id")),
-        db.Column("field_id", db.Integer, db.ForeignKey("research_field.id")),
-        )
-
+#Table linking students to programming languages
 studentLanguages = db.Table(
     "studentLanguages",
     db.Column("student_id", db.Integer, db.ForeignKey("student.id")),
     db.Column("language_id", db.Integer, db.ForeignKey("programming_language.id"))
 )
+# Table linking positions to programming languages
+positionLanguages = db.Table(
+    "positionLanguages",
+    db.Column("position_id", db.Integer, db.ForeignKey("research_position.id")),
+    db.Column("language_id", db.Integer, db.ForeignKey("programming_language.id"))
+)
+
+facultyInterests = db.Table(
+        "facultyInterests",
+        db.Column("faculty_id", db.Integer, db.ForeignKey("faculty.id")),
+        db.Column("field_id", db.Integer, db.ForeignKey("research_field.id")),
+        )
 
 
 # TODO: cite sources for inheritance
@@ -92,19 +99,22 @@ class Student(User):
     GPA = db.Column(db.Float)
     graduationdate = db.Column(db.DateTime)
     user_type = db.Column(db.String(20), default="Student")
+
+    # Programming languages the student is proficient with
+    languages = db.relationship(
+        "ProgrammingLanguage",
+        secondary=studentLanguages,
+        primaryjoin=(studentLanguages.c.student_id==id),
+        backref=db.backref("studentLanguages", lazy="dynamic"),
+        lazy="dynamic"
+    )
+
     # Topics of interest coincides with research Areas in faculty
     topics_of_interest = db.relationship(
         "ResearchField",
         secondary=studentFields,
         primaryjoin=(studentFields.c.student_id == id),
         backref=db.backref("studentFields", lazy="dynamic"),
-        lazy="dynamic"
-    )
-    proficient_languages = db.relationship(
-        "ProgrammingLanguage",
-        secondary=studentLanguages,
-        primaryjoin=(studentLanguages.c.student_id == id),
-        backref=db.backref("studentLanguages", lazy="dynamic"),
         lazy="dynamic"
     )
     appliedPositions = db.relationship(
@@ -224,14 +234,29 @@ class ResearchField(db.Model):
         return self.title
 
 class ProgrammingLanguage(db.Model):
+    """
+    Represents the research fields that one may be interested in and that some positions may pertain to
+    Attributes:
+        id: Integer, primary key
+        title: String, max 30 characters
+        student_proficient: Many-to-many relationship with student
+    """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30))
 
     student_proficient = db.relationship(
         "Student",
         secondary=studentLanguages,
-        primaryjoin=(studentLanguages.c.language_id == id),
+        primaryjoin=(studentLanguages.c.language_id==id),
         backref=db.backref("studentLanguages", lazy="dynamic"),
+        lazy="dynamic"
+    )
+
+    position_required_by = db.relationship(
+        "ResearchPosition",
+        secondary=positionLanguages,
+        primaryjoin=(positionLanguages.c.language_id==id),
+        backref=db.backref("positionLanguages", lazy="dynamic"),
         lazy="dynamic"
     )
 
@@ -240,7 +265,6 @@ class ProgrammingLanguage(db.Model):
     
     def __repr__(self):
         return self.title
-
 # Represents the posted research positions
 class ResearchPosition(db.Model):
     """
@@ -269,6 +293,15 @@ class ResearchPosition(db.Model):
     endDate = db.Column(db.DateTime)
     timeCommitment = db.Column(db.Integer)
     faculty = db.Column(db.Integer, db.ForeignKey("faculty.id"))
+
+    # Programming languages the position recommends
+    languages = db.relationship(
+        "ProgrammingLanguage",
+        secondary=positionLanguages,
+        primaryjoin=(positionLanguages.c.position_id==id),
+        backref=db.backref("positionLanguages", lazy="dynamic"),
+        lazy="dynamic"
+    )
 
     students_application = db.relationship(
         "Applications", back_populates="enrolled_position"

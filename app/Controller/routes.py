@@ -210,8 +210,8 @@ def edit_profile():
             current_user.graduationdate = form.graduationdate.data
             for topic in form.topics_of_interest.data:
                 current_user.topics_of_interest.append(topic)
-            for language in form.programming_languages:
-                current_user.proficient_languages.append(language)
+            for language in form.languages.data:
+                current_user.languages.append(language)
             if form.other_topics.data:
                 other_topics = form.other_topics.data.split(",")
                 for topic in other_topics:

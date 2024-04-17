@@ -5,7 +5,7 @@ from app.Controller.auth_forms import (
     LoginForm,
     StudentRegistrationForm,
 )
-from app.Model.models import Faculty, ResearchField, Student, User
+from app.Model.models import Faculty, ProgrammingLanguage, ResearchField, Student, User
 from sqlalchemy import func
 from config import Config
 from app import db
@@ -48,6 +48,15 @@ def register_student():
                 db.session.add(newtopic)
                 db.session.commit()
                 student.topics_of_interest.append(newtopic)
+        for language in sform.languages.data:
+            student.languages.append(language)
+        if sform.other_languages.data:
+            other_languages = sform.other_languages.data.split(",")
+            for language in other_languages:
+                newLanguage = ProgrammingLanguage(title=language)
+                db.session.add(newLanguage)
+                db.session.commit()
+                student.languages.append(newLanguage)
         student.set_password(sform.password.data)
         db.session.add(student)
         db.session.commit()
@@ -73,7 +82,7 @@ def register_faculty():
             email=fform.email.data,
             firstname=fform.firstname.data,
             lastname=fform.lastname.data,
-            department=fform.department.data.name,
+            department=fform.department.data.id,
             phone_number=fform.phone_number.data,
             user_type="Faculty",
         )

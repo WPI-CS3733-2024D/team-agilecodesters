@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms import DateField, IntegerField, SelectField, StringField, SubmitField, TextAreaField, PasswordField, FloatField, validators
 from wtforms.validators import Length, DataRequired, Email, EqualTo
-from app.Model.models import PositionField, ResearchField, ProgrammingLanguage
+from app.Model.models import PositionField, ProgrammingLanguage, ResearchField
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_login import current_user
 
@@ -34,7 +34,14 @@ class CreatePositionForm(FlaskForm):
         option_widget=CheckboxInput(),
     )
     wantedGPA = FloatField('Lowest Desired GPA', validators=[DataRequired()])
-    langauges = StringField('Required Programming Languages', validators=[DataRequired()])
+    languages = QuerySelectMultipleField(
+        "Programming Languages",
+        query_factory = lambda: ProgrammingLanguage.query.all(),
+        get_label=lambda x: x.title,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
+    other_languages = StringField("Languages Not Listed Above, Please Separate with Commas")
     timeCommitment = IntegerField('Time Commitment (Hours / Week)', validators=[DataRequired()])
     startDate = DateField('Start Date', validators=[DataRequired()])
     endDate = DateField('End Date', validators=[DataRequired()])
@@ -51,7 +58,14 @@ class EditPositionForm(FlaskForm):
         option_widget=CheckboxInput(),
     )
     wantedGPA = FloatField('Lowest Desired GPA', validators=[DataRequired()])
-    languages = StringField('Required Programming Languages', validators=[DataRequired()])
+    languages = QuerySelectMultipleField(
+        "Programming Languages",
+        query_factory = lambda: ProgrammingLanguage.query.all(),
+        get_label=lambda x: x.title,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
+    other_languages = StringField("Languages Not Listed Above, Please Separate with Commas")
     timeCommitment = IntegerField('Time Commitment (Hours / Week)', validators=[DataRequired()])
     startDate = DateField('Start Date', validators=[DataRequired()])
     endDate = DateField('End Date', validators=[DataRequired()])
@@ -79,14 +93,15 @@ class EditStudentProfileForm(FlaskForm):
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
-    programming_languages = QuerySelectMultipleField(
-        "Programming Language",
-        query_factory=lambda: ProgrammingLanguage.query.all(),
+    languages = QuerySelectMultipleField(
+        "Programming Languages",
+        query_factory = lambda: ProgrammingLanguage.query.all(),
         get_label=lambda x: x.title,
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
     other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
+    other_languages = StringField("Topics Not Listed Above, Please Separate with Commas")
     password = PasswordField('Password', validators=[DataRequired()])
     password_2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Save Changes')
