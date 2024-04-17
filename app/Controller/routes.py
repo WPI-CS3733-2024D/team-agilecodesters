@@ -84,7 +84,7 @@ def index():
         title="Home",
         posts=posts,
         search_form=search_form,
-        get_faculty=lambda id: User.query.get(id),
+        get_faculty=lambda id: Faculty.query.get(id),
     )
 
 
@@ -239,7 +239,11 @@ def delete_position(position_id):
 @routes_blueprint.route("/profile", methods=["GET"])
 @login_required
 def view_profile():
-    return render_template("profile.html", title="Profile")
+    if current_user.user_type == "Faculty":
+        posts = ResearchPosition.query.filter_by(faculty=current_user.id).all()
+        return render_template("profile.html", title="Profile", posts=posts, get_faculty=lambda id: Faculty.query.get(id),)
+    else:
+        return render_template("profile.html", title="Profile")
 
 
 @routes_blueprint.route("/profile/edit", methods=["GET", "POST"])
@@ -400,5 +404,6 @@ def other_profile(user_id):
             flash("Only faculty profiles can be viewed from a student profile!")
             return redirect(url_for("routes.index"))
         else:
-            return render_template("view_other_profile.html", user=faculty)
+            posts = ResearchPosition.query.filter_by(faculty=faculty.id).all()
+            return render_template("view_other_profile.html", user=faculty, posts=posts, get_faculty=lambda id: Faculty.query.get(id),)
     return redirect(url_for("routes.index"))

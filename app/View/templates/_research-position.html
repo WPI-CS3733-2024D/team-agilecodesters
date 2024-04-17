@@ -63,8 +63,16 @@
     <tr>
         <td colspan="3" style="text-align: center">
             <br />
-            Posted By: {{ get_faculty(post.faculty).firstname }} {{
-            get_faculty(post.faculty).lastname }}
+            Posted By:
+                <a
+                    href="{{ url_for('routes.other_profile', user_id=post.faculty) }}"
+                    class="link-custom">
+                    {{
+                    get_faculty(post.faculty).firstname
+                    }} {{
+                    get_faculty(post.faculty).lastname
+                    }}</a
+                >
         </td>
     </tr>
 </table>

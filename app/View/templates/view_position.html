@@ -3,7 +3,7 @@
 <!-- info about the research position -->
 <h1>{{ position.title }}</h1>
 <li><span class="label">Description:</span> {{ position.description }}</li>
-<li><span class="label">Research Goals:</span> {{ position.researchGoals }}</li>
+<li><span class="label">Research Goals:</span> {{ position.researchGoals[1:-1] }}</li>
 <li><span class="label">Desired GPA:</span> {{ position.wantedGPA }}</li>
 <li>
     <span class="label">Required Programming Languages:</span> {% for language
@@ -26,9 +26,15 @@
 <div class="faculty-details">
     <h4>Posted By:</h4>
     <li>
-        <span class="label">Name:</span> {{
-        get_faculty(position.faculty).firstname }} {{
-        get_faculty(position.faculty).lastname }}
+        <span class="label">Name:</span> <a
+        href="{{ url_for('routes.other_profile', user_id=position.faculty) }}" class="link-custom"
+    >
+        {{
+        get_faculty(position.faculty).firstname
+        }} {{
+        get_faculty(position.faculty).lastname
+        }}</a
+    >
     </li>
     <li>
         <span class="label">Phone Number:</span> {{
