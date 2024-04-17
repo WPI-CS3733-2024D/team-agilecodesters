@@ -6,11 +6,11 @@
 
 Prepared by:
 
-- `Jonathan Buwembo`,`AgileCodesters`
-- `Amber Drinkwater`,`AgileCodesters`
-- `Dennis Field`,`AgileCodesters`
-- `Connor Jason`,`AgileCodesters`
-- `Myrrh Khan`,`AgileCodesters`
+-   `Jonathan Buwembo`,`AgileCodesters`
+-   `Amber Drinkwater`,`AgileCodesters`
+-   `Dennis Field`,`AgileCodesters`
+-   `Connor Jason`,`AgileCodesters`
+-   `Myrrh Khan`,`AgileCodesters`
 
 ---
 
@@ -22,15 +22,15 @@ Prepared by:
 
 ## Table of Contents
 
-- [1. Introduction](#1-introduction)
-- [2. Requirements Specification](#2-requirements-specification)
-- [2.1 Customer, Users, and Stakeholders](#21-customer-users-and-stakeholders)
-- [2.2 User Stories](#22-user-stories)
-- [2.3 Use Cases](#23-use-cases)
-- [3. User Interface](#3-user-interface)
-- [4. Product Backlog](#4-product-backlog)
-- [4. References](#4-references)
-- [Appendix: Grading Rubric](#appendix-grading-rubric)
+-   [1. Introduction](#1-introduction)
+-   [2. Requirements Specification](#2-requirements-specification)
+-   [2.1 Customer, Users, and Stakeholders](#21-customer-users-and-stakeholders)
+-   [2.2 User Stories](#22-user-stories)
+-   [2.3 Use Cases](#23-use-cases)
+-   [3. User Interface](#3-user-interface)
+-   [4. Product Backlog](#4-product-backlog)
+-   [4. References](#4-references)
+-   [Appendix: Grading Rubric](#appendix-grading-rubric)
 
 <a name="revision-history"> </a>
 
@@ -195,15 +195,15 @@ This section will include the specification for your project in the form of use 
 
 Group the related user stories and provide a use case for each user story group. You don't need to draw the use-case diagram for the use cases; you will only provide the textual descriptions. **Also, you don't need to include the use cases for "registration" and "login" use cases for both student and faculty users.**
 
-- First, provide a short description of the actors involved (e.g., regular user, administrator, etc.) and then follow with a list of the use cases.
-- Then, for each use case, include the following:
+-   First, provide a short description of the actors involved (e.g., regular user, administrator, etc.) and then follow with a list of the use cases.
+-   Then, for each use case, include the following:
 
-- Name,
-- Participating actors,
-- Entry condition(s) (in what system state is this use case applicable),
-- Exit condition(s) (what is the system state after the use case is done),
-- Flow of events (how will the user interact with the system; list the user actions and the system responses to those),
-- Alternative flow of events (what are the exceptional cases in the flow of events and they will be handles)
+-   Name,
+-   Participating actors,
+-   Entry condition(s) (in what system state is this use case applicable),
+-   Exit condition(s) (what is the system state after the use case is done),
+-   Flow of events (how will the user interact with the system; list the user actions and the system responses to those),
+-   Alternative flow of events (what are the exceptional cases in the flow of events and they will be handles)
 
 Each use case should also have a field called "Iteration" where you specify in which iteration you plan to implement this feature.
 

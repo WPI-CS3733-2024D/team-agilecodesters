@@ -45,12 +45,8 @@ def initDB(*args, **kwargs):
             db.session.commit()
 
         if ProgrammingLanguage.query.count() == 0:
-            languages = [
-                "Python",
-                "Java",
-                "JavaScript",
-                "C",
-                "C++",
+            languages = ["Python","Java","JavaScript",
+                "C","C++",
                 "C#",
                 "Ruby",
                 "Swift",
