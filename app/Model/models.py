@@ -265,6 +265,7 @@ class ProgrammingLanguage(db.Model):
     
     def __repr__(self):
         return self.title
+    
 # Represents the posted research positions
 class ResearchPosition(db.Model):
     """

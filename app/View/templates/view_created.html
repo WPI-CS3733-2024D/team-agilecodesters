@@ -23,9 +23,13 @@
             <tr>
                 <td>{{ position.title }}</td>
                 <td>{{ position.wantedGPA }}</td>
-                <td>{{ position.languages }}</td>
+                <td>
+                    {% for language in position.languages %}
+                        {{ language.title }}
+                    {% endfor %}
+                </td>                
                 <td>{{ position.description }}</td>
-                <td>{{ position.researchGoals }}</td>
+                <td>{{ position.researchGoals[1:-1] }}</td>
                 <td>{{ position.startDate.strftime('%B %d, %Y') }}</td>
                 <td>{{ position.endDate.strftime('%B %d, %Y') }}</td>
                 
