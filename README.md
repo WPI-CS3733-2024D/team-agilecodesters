@@ -8,8 +8,8 @@
 
 ### Team Members
 
-- Myrrh Khan
-- Jonathan Buwembo
-- Amber Drinkwater
-- Dennis Field
-- Connor Jason
+-   Myrrh Khan
+-   Jonathan Buwembo
+-   Amber Drinkwater
+-   Dennis Field
+-   Connor Jason
