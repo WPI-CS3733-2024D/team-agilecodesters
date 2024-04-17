@@ -3,7 +3,7 @@ from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from app.Controller.forms import (ApplicationForm, EditFacultyProfileForm, EditStudentProfileForm, CreatePositionForm, SearchForm, EditPositionForm)
-from app.Model.models import (Applications, Faculty, PositionField, ResearchField, ResearchPosition)
+from app.Model.models import (Applications, Faculty, PositionField, ResearchField, ResearchPosition, Student)
 from config import Config
 from app import db
 from app.Model.models import User
@@ -324,3 +324,11 @@ def reject_application(position_id):
 @routes_blueprint.route("/aboutus")
 def about_us():
     return render_template("about_us.html", title="About Us")
+
+@routes_blueprint.route('/student_profile/<student_id>')
+def student_profile(student_id):
+    if current_user.user_type != "Faculty":
+        flash("Only faculty can view student profiles!")
+        return redirect(url_for("routes.index"))
+    student = Student.query.get(student_id)
+    return render_template('view_student.html', student=student)

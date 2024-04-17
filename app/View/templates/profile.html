@@ -2,11 +2,8 @@
 
 {% block content %}
 
-    {% if current_user.user_type == 'Student' %}
-        <h1>Student Profile</h1>
-    {% elif current_user.user_type == 'Faculty' %}
-        <h1>Faculty Profile</h1>
-    {% endif %}
+        <h1>Your Profile</h1>
+        
     <li><span class="label">Username:</span> {{ current_user.username }}</li>
         <li><span class="label">First Name:</span> {{ current_user.firstname }}</li>
         <li><span class="label">Last Name:</span> {{ current_user.lastname }}</li>

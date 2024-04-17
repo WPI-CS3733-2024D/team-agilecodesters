@@ -19,7 +19,9 @@
             <!-- Get all info for applications -->
             {% for application in applications %}
             <tr style="text-align: center;">
-                <td>{{ application.student_enrolled.firstname }} {{ application.student_enrolled.lastname }}</td>
+                <td>
+                    <a href="{{ url_for('routes.student_profile', student_id=application.student_enrolled.id) }}">{{ application.student_enrolled.firstname }} {{ application.student_enrolled.lastname }}</a>
+                </td>                
                 <td>{{ application.student_enrolled.GPA }}</td>
                 <td>{{ application.statement_of_interest }}</td>
                 <td>{{ application.referenceName }}<br> {{ application.referenceEmail }}</td>
