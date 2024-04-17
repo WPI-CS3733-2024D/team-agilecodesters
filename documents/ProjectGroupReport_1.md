@@ -104,7 +104,7 @@ As a student, I can see the time commitment to further see if the project fits m
 
 As a student, I can see the different research fields that match this research opportunity in order to make a holistic decision whether I want to apply.
 
--
+-   Connor, 
 
 As a faculty member, I can share the time commitment so that interested students know what they are getting into.
 
@@ -124,8 +124,8 @@ As a student, I can see the department this faculty member works in.
 
 As a student, I should submit a brief statement describing why I am interested in this research topic and what I hope to gain by participating in that project.
 
--   Amber
+-   Connor, Amber
 
 As a student, I can share another professor as a reference so that they can share their recommendations on my behalf.
 
--
+-   Connor, 

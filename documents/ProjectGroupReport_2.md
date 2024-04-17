@@ -61,21 +61,25 @@ The team is loosely divided into two subgroups: UI and Database, these subgroups
 
 -   List the user stories completed in `Iteration-2`. Mention who worked on those user stories.
     -   As a student, I can share another professor as a reference so that they can share their recommendations on my behalf.
+        -   Connor
     -   As a student, I can share a brief statement of interest with the professors.
+        -   Connor
     -   As a student, I should submit a brief statement describing why I am interested in this research topic and what I hope to gain by participating in that project.
+        -   Connor
     -   As a faculty member, I can share the project’s goals and objectives to persuade any interested users to join my project.
-        -   Amber
+        -   Amber, Connor
     -   As a faculty member, I can share my project’s title to give students a very basic understanding of my project.
-        -   Amber
+        -   Amber, Connor
     -   As a faculty member, I can share the time commitment so that interested students know what they are getting into.
+        - Connor
     -   As a faculty member, I can share the start and end dates to ensure that all students interested in the project immediately know if the project can fit their schedules or not.
-        -   Amber
+        -   Amber, Connor
 
 ---
 
 ## 3. Iteration 2 - Sprint Retrospective
 
-Our scrum meetings in Iteration 2 were more helpful, with members sharing what was blocking them and other members helping to solve issues. Communication throughout the sprint was also more effective and all members seemed equally intent on completing the tasks well before the deadline.Based on the success of this sprint we do not aim to make changes to our workstyle going into Iteration 3.
+Our scrum meetings in Iteration 2 were more helpful, with members sharing what was blocking them and other members helping to solve issues. Communication throughout the sprint was also more effective and all members seemed equally intent on completing the tasks well before the deadline. Based on the success of this sprint we do not aim to make changes to our workstyle going into Iteration 3.
 
 ---
 
@@ -89,5 +93,15 @@ Include a draft of your `Iteration-3 spring backlog`.
 
 -   List the user stories you plan to complete in `Iteration-3`. Make sure to break down the larger user stories into smaller size stories. Mention the team member(s) who will work on each user story.
 -   Make sure to update the "issues" on your GitHub repo accordingly.
-    **There are no user stories to complete in Iteration-3, however, here are the issues we currently have; tagged either 'bug' or 'enhancement'** - no way to remove languages or topics of interest in the edit profile page - Amber - Accepting an application does nothing - Sort by relevancy - Amber - Add in new programming languages like topics of interest - Amber - in edit profile it doesnt preselect the topics of interest you already had picked - make the add additional skills thingy more intuitive using append_entry() - sorting by research field / topics of interest probably doesn't work idk though
--
+    **There are no user stories to complete in Iteration-3, however, here are the issues we currently have; tagged either 'bug' or 'enhancement'** 
+    - no way to remove languages or topics of interest in the edit profile page 
+        - Amber 
+    - Accepting an application does nothing 
+    - Sort by relevancy 
+        - Amber, Connor
+    - in edit profile it doesnt preselect the topics of interest you already had picked
+        -   Connor
+    - make the add additional skills thingy more intuitive using append_entry()
+        -   Myrrh
+    - Add bonus very cool features for extra credit!!!
+        -   everyone
