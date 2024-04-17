@@ -71,7 +71,7 @@ The team is loosely divided into two subgroups: UI and Database, these subgroups
     -   As a faculty member, I can share my project’s title to give students a very basic understanding of my project.
         -   Amber, Connor
     -   As a faculty member, I can share the time commitment so that interested students know what they are getting into.
-        - Connor
+        -   Connor
     -   As a faculty member, I can share the start and end dates to ensure that all students interested in the project immediately know if the project can fit their schedules or not.
         -   Amber, Connor
 
@@ -93,15 +93,15 @@ Include a draft of your `Iteration-3 spring backlog`.
 
 -   List the user stories you plan to complete in `Iteration-3`. Make sure to break down the larger user stories into smaller size stories. Mention the team member(s) who will work on each user story.
 -   Make sure to update the "issues" on your GitHub repo accordingly.
-    **There are no user stories to complete in Iteration-3, however, here are the issues we currently have; tagged either 'bug' or 'enhancement'** 
-    - no way to remove languages or topics of interest in the edit profile page 
-        - Amber 
-    - Accepting an application does nothing 
-    - Sort by relevancy 
-        - Amber, Connor
-    - in edit profile it doesnt preselect the topics of interest you already had picked
+    **There are no user stories to complete in Iteration-3, however, here are the issues we currently have; tagged either 'bug' or 'enhancement'**
+    -   no way to remove languages or topics of interest in the edit profile page
+        -   Amber
+    -   Accepting an application does nothing
+    -   Sort by relevancy
+        -   Amber, Connor
+    -   in edit profile it doesnt preselect the topics of interest you already had picked
         -   Connor
-    - make the add additional skills thingy more intuitive using append_entry()
+    -   make the add additional skills thingy more intuitive using append_entry()
         -   Myrrh
-    - Add bonus very cool features for extra credit!!!
+    -   Add bonus very cool features for extra credit!!!
         -   everyone
