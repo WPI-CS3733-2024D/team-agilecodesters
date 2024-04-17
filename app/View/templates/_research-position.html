@@ -1,54 +1,70 @@
-<table class="posttable" style="width: 100%;" valign="top">
-    <tr> 
-        <td colspan="3">
-            <div style="text-align: center;">
-                <a href="{{ url_for('routes.view_position', position_id=post.id) }}" class="link-custom">
-                     {{post.title}} 
-                </a>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td width="80%" class="postmessage" style="text-align: center;">
-            <div>
-                <!-- INFO about a research position-->
-                <p> Description: {{post.description}}</p>
-                <p> Research Areas: {{ post.researchGoals[1:-1] }}</p>
-                <p> Required GPA: {{ post.wantedGPA }}</p>
-                <p> Start Date: {{ post.startDate.strftime('%B %d, %Y') }}</p>
-                <p> End Date: {{ post.endDate.strftime('%B %d, %Y') }}</p>                
-            </div>
-           <div class="posttimestamp" style="text-align: left;">
-            <!-- Time/Date that the research position was posted by the faculty member -->
-                <div class="post">
-                    <!-- TODO add when it was posted -->
-                </div>
-            <!-- Decide which buttons to show based on who is looking at the post -->
-           </div> 
-           {% if current_user.user_type == "Student" %}
-                {% if current_user.has_applied_to_position(post.id) %}
-                    <form action="{{ url_for('routes.unapply_for_position', position_id=post.id) }}" method="post">
-                        <button type="submit" class="btn btn-primary btn-custom">Unapply</button>
-                    </form>
-                {% else %}
-                    <form action="{{ url_for('routes.apply_for_position', position_id=post.id) }}" method="post">
-                        <button type="submit" class="btn btn-primary btn-custom-apply">Apply!</button>
-                    </form>
-                {% endif %}
-            {% elif current_user == get_faculty(post.faculty)%}
-                <form action="{{ url_for('routes.edit_position', position_id=post.id) }}" method="post">
-                    <button type="submit" class="btn btn-primary btn-custom">Edit Position</button>
-                </form>
-            {% endif %}
+<table class="posttable" style="width: 100%" valign="top">
+  <tr>
+    <td colspan="3">
+      <div style="text-align: center">
+        <a
+          href="{{ url_for('routes.view_position', position_id=post.id) }}"
+          class="link-custom"
+        >
+          {{post.title}}
+        </a>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td width="80%" class="postmessage" style="text-align: center">
+      <div>
+        <!-- INFO about a research position-->
+        <p>Description: {{post.description}}</p>
+        <p>Research Areas: {{ post.researchGoals[1:-1] }}</p>
+        <p>Required GPA: {{ post.wantedGPA }}</p>
+        <p>Start Date: {{ post.startDate.strftime('%B %d, %Y') }}</p>
+        <p>End Date: {{ post.endDate.strftime('%B %d, %Y') }}</p>
+      </div>
+      <div class="posttimestamp" style="text-align: left">
+        <!-- Time/Date that the research position was posted by the faculty member -->
+        <div class="post">
+          <!-- TODO add when it was posted -->
+        </div>
+        <!-- Decide which buttons to show based on who is looking at the post -->
+      </div>
+      {% if current_user.user_type == "Student" %} {% if
+      current_user.has_applied_to_position(post.id) %}
+      <form
+        action="{{ url_for('routes.unapply_for_position', position_id=post.id) }}"
+        method="post"
+      >
+        <button type="submit" class="btn btn-primary btn-custom">
+          Unapply
+        </button>
+      </form>
+      {% else %}
+      <form
+        action="{{ url_for('routes.apply_for_position', position_id=post.id) }}"
+        method="post"
+      >
+        <button type="submit" class="btn btn-primary btn-custom-apply">
+          Apply!
+        </button>
+      </form>
+      {% endif %} {% elif current_user == get_faculty(post.faculty)%}
+      <form
+        action="{{ url_for('routes.edit_position', position_id=post.id) }}"
+        method="post"
+      >
+        <button type="submit" class="btn btn-primary btn-custom">
+          Edit Position
+        </button>
+      </form>
+      {% endif %}
+    </td>
+  </tr>
 
-        </td> 
-    </tr>
-    
-    <tr>
-        <td colspan="3" style="text-align: center;">
-            <br>
-              Posted By: {{ get_faculty(post.faculty).firstname }} {{ get_faculty(post.faculty).lastname }}
-          </td>
-        </tr>
-    </tr>
+  <tr>
+    <td colspan="3" style="text-align: center">
+      <br />
+      Posted By: {{ get_faculty(post.faculty).firstname }} {{
+      get_faculty(post.faculty).lastname }}
+    </td>
+  </tr>
 </table>
