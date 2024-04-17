@@ -7,7 +7,7 @@
     <li><span class="label">Description:</span> {{ position.description }}</li>
     <li><span class="label">Research Goals:</span> {{ position.researchGoals }}</li>
     <li><span class="label">Desired GPA:</span> {{ position.wantedGPA }}</li>
-    <li><span class="label">Required Programming Languages:</span> {{ position.languages }}</li>
+    <li><span class="label">Required Programming Languages:</span> {% for language in position.languages %} {{ language }} {% endfor %}</li>
     <li><span class="label">Time Commitment:</span> {{ position.timeCommitment }} hours/week</li> 
     <li><span class="label">Start Date:</span> {{ position.startDate.strftime('%B %d, %Y') }}</li>
     <li><span class="label">End Date:</span> {{ position.endDate.strftime('%B %d, %Y') }}</li>   
