@@ -258,8 +258,11 @@ def edit_profile():
 
         if current_user.user_type == "Faculty":
             current_user.department = form.department.data
-            current_user.research_areas = [ResearchField.query.get(topic_id) for topic_id in form.research_areas.data
-                if ResearchField.query.get(topic_id) is not None]
+            current_user.research_areas = [
+                ResearchField.query.get(topic_id)
+                for topic_id in form.research_areas.data
+                if ResearchField.query.get(topic_id) is not None
+            ]
             for topic in form.research_areas.data:
                 current_user.research_areas.append(topic)
             if form.other_areas.data:
@@ -277,8 +280,11 @@ def edit_profile():
             current_user.GPA = form.GPA.data
             current_user.graduationdate = form.graduationdate.data
 
-            current_user.topic_of_interest = [ ResearchField.query.get(topic_id) for topic_id in form.topics_of_interest.data
-                if ResearchField.query.get(topic_id) is not None]
+            current_user.topic_of_interest = [
+                ResearchField.query.get(topic_id)
+                for topic_id in form.topics_of_interest.data
+                if ResearchField.query.get(topic_id) is not None
+            ]
             for topic in form.topics_of_interest.data:
                 current_user.topics_of_interest.append(topic)
 
@@ -296,12 +302,19 @@ def edit_profile():
                         db.session.flush()
                     current_user.topics_of_interest.append(newtopic)
 
-            current_user.languages = [ ProgrammingLanguage.query.get(lang_id) if isinstance(lang_id, int) 
-                                      else ProgrammingLanguage(title=lang_id) for lang_id in form.languages.data
+            current_user.languages = [
+                (
+                    ProgrammingLanguage.query.get(lang_id)
+                    if isinstance(lang_id, int)
+                    else ProgrammingLanguage(title=lang_id)
+                )
+                for lang_id in form.languages.data
             ] + [
-                ProgrammingLanguage(title=lang) for lang in form.other_languages.data.split(",")
-                if lang and not ProgrammingLanguage.query.filter_by(title=lang).first()]
-            
+                ProgrammingLanguage(title=lang)
+                for lang in form.other_languages.data.split(",")
+                if lang and not ProgrammingLanguage.query.filter_by(title=lang).first()
+            ]
+
             # for lang in form.languages.data:
             #     current_user.languages.append(lang)
 
@@ -312,7 +325,6 @@ def edit_profile():
             #         db.session.add(newLanguage)
             #         db.session.commit()
             #         current_user.languages.append(newLanguage)
-    
 
         # db.session.add(current_user)
         db.session.commit()
