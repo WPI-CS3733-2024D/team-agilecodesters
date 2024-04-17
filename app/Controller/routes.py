@@ -57,7 +57,7 @@ def create_position():
             startDate=form.startDate.data,
             endDate=form.endDate.data,
             timeCommitment=form.timeCommitment.data,
-            languages=form.langauges.data,
+            languages=form.languages.data,
         )
         position.faculty = current_user.id
         db.session.add(position)
