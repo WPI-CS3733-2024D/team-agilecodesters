@@ -1,6 +1,6 @@
 from config import Config
 from app import create_app, db
-from app.Model.models import Department, Major
+from app.Model.models import Department, Major, ProgrammingLanguage, ResearchField
 
 app = create_app(Config)
 
@@ -41,6 +41,34 @@ def initDB(*args, **kwargs):
                     if department:
                         new_major = Major(name=major["name"], department=department.id)
                         db.session.add(new_major)
+            db.session.commit()
+        
+        if ProgrammingLanguage.query.count() == 0:
+            languages = ["Python", "Java", "JavaScript", "C", "C++", "C#", "Ruby", "Swift", "Go", "PHP", "Kotlin"]
+            for lang in languages:
+                new_lang = ProgrammingLanguage(title=lang)
+                db.session.add(new_lang)
+            db.session.commit()
+
+        if ResearchField.query.count() == 0:
+            fields = [
+                "Artificial Intelligence",
+                "Quantum Computing",
+                "Machine Learning",
+                "Ending the World",
+                "Robotics",
+                "Neural Networks",
+                "Cybersecurity",
+                "Biotechnology",
+                "Space Exploration",
+                "Becoming Iron Man",
+                "Nanotechnology",
+                "Augmented Reality",
+                "Virtual Reality",
+            ]
+            for field in fields:
+                new_field = ResearchField(title=field)
+                db.session.add(new_field)
             db.session.commit()
 
 
