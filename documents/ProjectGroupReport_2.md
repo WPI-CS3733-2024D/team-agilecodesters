@@ -51,12 +51,15 @@ The team is loosely divided into two subgroups: UI and Database, these subgroups
 -   Include as summary of your `Iteration-2` accomplishments.
 
     -   Fixed the various forms throughout the website, where UI was broken and overlapping itself.
+        -   Dennis
     -   Restricted access of Students and Faculty to only pages they should be allowed to access.
         -   Eg. Students cannot access the /create_position url
     -   UI for the index page was improved and sorting was introduced.
+        -   Dennis
     -   Students can now apply to positions and withdraw their applications
     -   Faculty can see all applications to their position and reject students, though they cannot accept them as of now.
     -   Included Programming Languages as a field for both Students and Research positions.
+        -   Dennis
     -   Included an About Us page that as of now has nothing meaningful.
 
 -   List the user stories completed in `Iteration-2`. Mention who worked on those user stories.
@@ -100,8 +103,10 @@ Include a draft of your `Iteration-3 spring backlog`.
     -   Sort by relevancy
         -   Amber, Connor
     -   in edit profile it doesnt preselect the topics of interest you already had picked
-        -   Connor
+        -   Connor, Dennis
     -   make the add additional skills thingy more intuitive using append_entry()
         -   Myrrh
+    -   Get recommended position sorting working (based on overlap between student and position)
+        -   Dennis
     -   Add bonus very cool features for extra credit!!!
         -   everyone
