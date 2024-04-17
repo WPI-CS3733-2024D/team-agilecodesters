@@ -1,26 +1,26 @@
-name: Formatting python code
-on:
-  push:
+name: auto-format
+on: pull_request
 jobs:
-  autoyapf:
+  format:
+    # Check if the PR is not from a fork
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v1
         with:
           ref: ${{ github.head_ref }}
-      - name: autoyapf
-        id: autoyapf
-        uses: mritunjaysharma394/autoyapf@v2
+      - name: black
+        uses: lgeiger/black-action@v1.0.1
         with:
-          args: --style pep8 --recursive --in-place .
+          args: .
       - name: Check for modified files
         id: git-check
-        run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
+        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
       - name: Push changes
         if: steps.git-check.outputs.modified == 'true'
         run: |
-          git config --global user.name 'github-actions' 
-          git config --global user.email 'github-actions@github.com' 
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git commit -am "Automated autoyapf fixes"
+          git commit -am "Automated changes"
           git push
