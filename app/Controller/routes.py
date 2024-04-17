@@ -249,14 +249,17 @@ def edit_profile():
         form = EditStudentProfileForm()
     else:
         form = EditFacultyProfileForm()
-    if request.method == "POST":
+    if form.validate_on_submit():
         current_user.firstname = form.firstname.data
         current_user.lastname = form.lastname.data
         current_user.phone_number = form.phone_number.data
         current_user.email = form.email.data
         current_user.set_password(form.password.data)
+
         if current_user.user_type == "Faculty":
             current_user.department = form.department.data
+            current_user.research_areas = [ResearchField.query.get(topic_id) for topic_id in form.research_areas.data
+                if ResearchField.query.get(topic_id) is not None]
             for topic in form.research_areas.data:
                 current_user.research_areas.append(topic)
             if form.other_areas.data:
@@ -265,6 +268,7 @@ def edit_profile():
                     newArea = ResearchField(
                         id=ResearchField.query.count() + 1, title=area
                     )
+                    area = area.strip()
                     db.session.add(newArea)
                     db.session.commit()
                     current_user.research_areas.append(newArea)
@@ -272,32 +276,49 @@ def edit_profile():
             current_user.major = form.major.data
             current_user.GPA = form.GPA.data
             current_user.graduationdate = form.graduationdate.data
+
+            current_user.topic_of_interest = [ ResearchField.query.get(topic_id) for topic_id in form.topics_of_interest.data
+                if ResearchField.query.get(topic_id) is not None]
             for topic in form.topics_of_interest.data:
                 current_user.topics_of_interest.append(topic)
+
             if form.other_topics.data:
                 other_topics = form.other_topics.data.split(",")
                 for topic in other_topics:
+                    topic = topic.strip()
                     newtopic = ResearchField(
                         id=ResearchField.query.count() + 1, title=topic
                     )
-                    db.session.add(newtopic)
-                    db.session.commit()
+                    existing_topic = ResearchField.query.filter_by(title=topic).first()
+                    if not existing_topic:
+                        newtopic = ResearchField(title=topic)
+                        db.session.add(newtopic)
+                        db.session.flush()
                     current_user.topics_of_interest.append(newtopic)
-            for lang in form.languages.data:
-                current_user.languages.append(lang)
-            if form.other_languages.data:
-                other_languages = form.other_languages.data.split(",")
-                for language in other_languages:
-                    newLanguage = ProgrammingLanguage(title=language)
-                    db.session.add(newLanguage)
-                    db.session.commit()
-                    current_user.languages.append(newLanguage)
 
-        db.session.add(current_user)
+            current_user.languages = [ ProgrammingLanguage.query.get(lang_id) if isinstance(lang_id, int) 
+                                      else ProgrammingLanguage(title=lang_id) for lang_id in form.languages.data
+            ] + [
+                ProgrammingLanguage(title=lang) for lang in form.other_languages.data.split(",")
+                if lang and not ProgrammingLanguage.query.filter_by(title=lang).first()]
+            
+            # for lang in form.languages.data:
+            #     current_user.languages.append(lang)
+
+            # if form.other_languages.data:
+            #     other_languages = form.other_languages.data.split(",")
+            #     for language in other_languages:
+            #         newLanguage = ProgrammingLanguage(title=language)
+            #         db.session.add(newLanguage)
+            #         db.session.commit()
+            #         current_user.languages.append(newLanguage)
+    
+
+        # db.session.add(current_user)
         db.session.commit()
         flash("Your profile has been updated!")
         return redirect(url_for("routes.view_profile"))
-    elif request.method == "GET":
+    if request.method == "GET":
         form.firstname.data = current_user.firstname
         form.lastname.data = current_user.lastname
         form.phone_number.data = current_user.phone_number
@@ -313,6 +334,7 @@ def edit_profile():
             form.graduationdate.data = datetime.strptime(
                 current_user.graduationdate.strftime("%Y-%m-%d"), "%Y-%m-%d"
             ).date()
+
             form.topics_of_interest.data = [
                 topic.id for topic in current_user.topics_of_interest
             ]
