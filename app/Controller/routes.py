@@ -241,7 +241,12 @@ def delete_position(position_id):
 def view_profile():
     if current_user.user_type == "Faculty":
         posts = ResearchPosition.query.filter_by(faculty=current_user.id).all()
-        return render_template("profile.html", title="Profile", posts=posts, get_faculty=lambda id: Faculty.query.get(id),)
+        return render_template(
+            "profile.html",
+            title="Profile",
+            posts=posts,
+            get_faculty=lambda id: Faculty.query.get(id),
+        )
     else:
         return render_template("profile.html", title="Profile")
 
@@ -405,5 +410,10 @@ def other_profile(user_id):
             return redirect(url_for("routes.index"))
         else:
             posts = ResearchPosition.query.filter_by(faculty=faculty.id).all()
-            return render_template("view_other_profile.html", user=faculty, posts=posts, get_faculty=lambda id: Faculty.query.get(id),)
+            return render_template(
+                "view_other_profile.html",
+                user=faculty,
+                posts=posts,
+                get_faculty=lambda id: Faculty.query.get(id),
+            )
     return redirect(url_for("routes.index"))
