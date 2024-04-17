@@ -1,7 +1,46 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
+<h1>Applied Positions</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="text-align: center">Position Title</th>
+            <th style="text-align: center">Professor Name</th>
+            <th style="text-align: center">Applied Date</th>
+            <th style="text-align: center">Application Status</th>
+            <th style="text-align: center">Action</th>
+        </tr>
+    </thead>
+    <!-- display all info about all the positions applied by the student -->
+    <tbody>
+        {% for application in applications %}
+        <tr style="text-align: center">
+            <td>{{ application.enrolled_position.title }}</td>
+            <td>
+                {{ get_faculty(application.enrolled_position.faculty).firstname
+                }} {{
+                get_faculty(application.enrolled_position.faculty).lastname }}
+            </td>
+            <td>
+                {{ application.applied_date.strftime('%B %d, %Y %I:%M %p') }}
+            </td>
+            <td>{{ application.status }}</td>
+            <!-- show withdraw button if the application is pending -->
+            <td>
+                {% if application.status == 'Pending' %}
+                <form
+                    action="{{ url_for('routes.unapply_for_position', position_id=application.position) }}"
+                    method="post"
+                >
+                    <button type="submit" class="btn btn-primary btn-custom">
+                        Withdraw
+                    </button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 
-    <h1>View Applied Page</h1>
-    
-{% endblock %}
+    {% endblock %}
+</table>
