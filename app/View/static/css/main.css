@@ -1,85 +1,85 @@
 body {
-  margin: 1px 1px 1px 15px;
-  padding: 1px;
+    margin: 1px 1px 1px 15px;
+    padding: 1px;
 }
 
 .btn-custom {
-  background-color: #ac2b37;
-  border: 1px solid #000000;
+    background-color: #ac2b37;
+    border: 1px solid #000000;
 }
 
 .btn-custom:hover {
-  background-color: #961f2a;
+    background-color: #961f2a;
 }
 
 .btn-custom-apply {
-  background-color: #2b974a;
+    background-color: #2b974a;
 }
 
 .btn-custom-apply:hover {
-  background-color: #1a6d31;
+    background-color: #1a6d31;
 }
 
 .link-custom {
-  color: #ac2b37;
+    color: #ac2b37;
 }
 
 .link-custom:hover {
-  color: #751c25;
+    color: #751c25;
 }
 
 .post-box {
-  border: 2px solid black;
-  padding: 10px;
-  margin: 10px;
-  width: calc(33.33% - 20px);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    border: 2px solid black;
+    padding: 10px;
+    margin: 10px;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 @media screen and (min-width: 800px) and (max-width: 1200px) {
-  .post-box {
-    width: 46%;
-  }
+    .post-box {
+        width: 46%;
+    }
 }
 
 @media screen and (max-width: 800px) {
-  .post-box {
-    width: 95%;
-  }
+    .post-box {
+        width: 95%;
+    }
 }
 
 .postlist {
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .form-group {
-  display: block;
-  margin-bottom: 10px;
-  margin-left: 20px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  font-size: 16px;
+    display: block;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+    font-size: 16px;
 }
 
 .formselect {
-  display: block;
-  padding: 4px;
-  border: 1px solid #ccc;
-  border-radius: 3.2px;
-  width: 80%;
+    display: block;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 3.2px;
+    width: 80%;
 }
 
 .label {
-  font-weight: 600;
-  color: black;
-  font-size: 16px;
+    font-weight: 600;
+    color: black;
+    font-size: 16px;
 }
 
 .label-no-wrap {
-  white-space: nowrap;
+    white-space: nowrap;
 }

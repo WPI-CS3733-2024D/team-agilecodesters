@@ -13,16 +13,16 @@
 {% if current_user.is_authenticated %} {% if user_type == 'student' %} {% if
 current_user.has_applied_to(position_id) %}
 <form
-  action="{{ url_for('routes.unapply_for_position', position_id=position_id) }}"
-  method="post"
+    action="{{ url_for('routes.unapply_for_position', position_id=position_id) }}"
+    method="post"
 >
-  <button type="submit" class="btn btn-danger">Unapply</button>
+    <button type="submit" class="btn btn-danger">Unapply</button>
 </form>
 {% else %}
 <form
-  action="{{ url_for('routes.apply_for_position', position_id=position_id) }}"
-  method="post"
+    action="{{ url_for('routes.apply_for_position', position_id=position_id) }}"
+    method="post"
 >
-  <button type="submit" class="btn btn-primary">Apply</button>
+    <button type="submit" class="btn btn-primary">Apply</button>
 </form>
 {% endif %} {% endif %} {% endif %} {% endblock %}

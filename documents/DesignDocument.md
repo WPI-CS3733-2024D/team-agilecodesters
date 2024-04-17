@@ -6,11 +6,11 @@
 
 Prepared by:
 
-- `Jonathan Buwembo`,`AgileCodesters`
-- `Amber Drinkwater`,`AgileCodesters`
-- `Dennis Field`,`AgileCodesters`
-- `Connor Jason`,`AgileCodesters`
-- `Myrrh Khan`,`AgileCodesters`
+-   `Jonathan Buwembo`,`AgileCodesters`
+-   `Amber Drinkwater`,`AgileCodesters`
+-   `Dennis Field`,`AgileCodesters`
+-   `Connor Jason`,`AgileCodesters`
+-   `Myrrh Khan`,`AgileCodesters`
 
 ---
 
@@ -22,17 +22,17 @@ Prepared by:
 
 ## Table of Contents
 
-- [Project Design Document](#project-design-document)
-  - [Your Project Title](#your-project-title)
-  - [Table of Contents](#table-of-contents)
-    - [Document Revision History](#document-revision-history)
-- [1. Introduction](#1-introduction)
-- [2. Component-level Design](#2-component-level-design)
-  - [2.1 Model](#21-model)
-  - [2.2 Controller](#22-controller)
-  - [2.3 View and User Interface Design](#23-view-and-user-interface-design)
-- [3. References](#3-references)
-- [Appendix: Grading Rubric](#appendix-grading-rubric)
+-   [Project Design Document](#project-design-document)
+    -   [Your Project Title](#your-project-title)
+    -   [Table of Contents](#table-of-contents)
+        -   [Document Revision History](#document-revision-history)
+-   [1. Introduction](#1-introduction)
+-   [2. Component-level Design](#2-component-level-design)
+    -   [2.1 Model](#21-model)
+    -   [2.2 Controller](#22-controller)
+    -   [2.3 View and User Interface Design](#23-view-and-user-interface-design)
+-   [3. References](#3-references)
+-   [Appendix: Grading Rubric](#appendix-grading-rubric)
 
 <a name="revision-history"> </a>
 
@@ -56,18 +56,18 @@ With the completion of the scope of the project, it is pertinent to discuss how 
 
 **Provide a list of your tables (i.e., SQL Alchemy classes) in your database model and briefly explain the role of each table.**
 
-- User: A superclass that defines all information that any user would have (username, email...)
-- Student: stores information about students, subclass of User.
-- Faculty: stores information about professors, subclass of User.
-- Major: stores student's major
-- StudentMajor: links students to their major
-- ResearchPosition: stores information about research projects.
-- Applications: links students to a research position they have applied to
-- StudentToField: link students to research fields they are interested in
-- FacultyToField: link faculty to research fields they are interested in
-- Department: Represents the various departments faculty could be a part of
-- ResearchField: Represents different topics that students and faculty could be interested in
-- PositionToField: Relates ResearchPosition to ResearchFields
+-   User: A superclass that defines all information that any user would have (username, email...)
+-   Student: stores information about students, subclass of User.
+-   Faculty: stores information about professors, subclass of User.
+-   Major: stores student's major
+-   StudentMajor: links students to their major
+-   ResearchPosition: stores information about research projects.
+-   Applications: links students to a research position they have applied to
+-   StudentToField: link students to research fields they are interested in
+-   FacultyToField: link faculty to research fields they are interested in
+-   Department: Represents the various departments faculty could be a part of
+-   ResearchField: Represents different topics that students and faculty could be interested in
+-   PositionToField: Relates ResearchPosition to ResearchFields
 
 Provide a UML diagram of your database model showing the associations and relationships among tables.
 
@@ -77,9 +77,9 @@ Provide a UML diagram of your database model showing the associations and relati
 
 Include a detailed description of the routes your application will implement.
 
-- Brainstorm with your team members and identify all routes you need to implement for the **completed** application.
-- For each route specify its “methods”, “URL path”, and “a description of the operation it implements”.  
-  You can use the following table template to list your route specifications.
+-   Brainstorm with your team members and identify all routes you need to implement for the **completed** application.
+-   For each route specify its “methods”, “URL path”, and “a description of the operation it implements”.  
+    You can use the following table template to list your route specifications.
 
 |     | Methods  | URL Path                | Description                                  |
 | :-- | :------- | :---------------------- | :------------------------------------------- |
@@ -117,10 +117,10 @@ For the websites, give the title, author (if applicable) and the website URL.
 
 (Please remove this part in your final submission)
 
-- You will first submit a draft version of this document:
-  - "Project 3 : Project Design Document - draft" (5pts).
-- We will provide feedback on your document and you will revise and update it.
-  - "Project 5 : Project Design Document - final" (80pts)
+-   You will first submit a draft version of this document:
+    -   "Project 3 : Project Design Document - draft" (5pts).
+-   We will provide feedback on your document and you will revise and update it.
+    -   "Project 5 : Project Design Document - final" (80pts)
 
 Below is the grading rubric that we will use to evaluate the final version of your document.
 
