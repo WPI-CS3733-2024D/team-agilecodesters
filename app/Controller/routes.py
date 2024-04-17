@@ -384,10 +384,23 @@ def about_us():
     return render_template("about_us.html", title="About Us")
 
 
-@routes_blueprint.route("/student_profile/<student_id>")
-def student_profile(student_id):
-    if current_user.user_type != "Faculty":
-        flash("Only faculty can view student profiles!")
+@routes_blueprint.route("/profile/<user_id>")
+def other_profile(user_id):
+    student = Student.query.get(user_id)
+    faculty = Faculty.query.get(user_id)
+
+    if student:
+        if current_user.user_type != "Faculty":
+            flash("Only student profiles can be viewed from a faculty profile!")
+            return redirect(url_for("routes.index"))
+        else:
+            return render_template("view_other_profile.html", user=student, user_type="Student")
+    elif faculty:
+        if current_user.user_type != "Student":
+            flash("Only faculty profiles can be viewed from a student profile!")
+            return redirect(url_for("routes.index"))
+        else:
+            return render_template("view_other_profile.html", user=faculty, user_type="Faculty")
+    else:
+        flash("User does not exist!")
         return redirect(url_for("routes.index"))
-    student = Student.query.get(student_id)
-    return render_template("view_student.html", student=student)

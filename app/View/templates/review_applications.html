@@ -18,11 +18,8 @@
         {% for application in applications %}
         <tr style="text-align: center">
             <td>
-                <a
-                    href="{{ url_for('routes.student_profile', student_id=application.student_enrolled.id) }}"
-                    >{{ application.student_enrolled.firstname }} {{
-                    application.student_enrolled.lastname }}</a
-                >
+                <a href="{{ url_for('routes.other_profile', user_id=application.student_enrolled.id) }}">
+                    {{ application.student_enrolled.firstname }} {{application.student_enrolled.lastname }}</a>
             </td>
             <td>{{ application.student_enrolled.GPA }}</td>
             <td>{{ application.statement_of_interest }}</td>
