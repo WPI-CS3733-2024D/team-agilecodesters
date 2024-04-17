@@ -38,11 +38,11 @@ Prepared by:
 
 ### Document Revision History
 
-| Name       | Date       | Changes       | Version |
-| ---------- | ---------- | ------------- | ------- |
-| Revision 1 | 2024-04-01 | Initial draft | 1.0     |
-| Revision 2 | 2024-04-01 | Added names   | 1.01    |
-| Final Revision | 2024-04-13 | Made final changes to document | 2.0 |
+| Name           | Date       | Changes                        | Version |
+| -------------- | ---------- | ------------------------------ | ------- |
+| Revision 1     | 2024-04-01 | Initial draft                  | 1.0     |
+| Revision 2     | 2024-04-01 | Added names                    | 1.01    |
+| Final Revision | 2024-04-13 | Made final changes to document | 2.0     |
 
 # 1. Introduction
 
