@@ -4,6 +4,7 @@ from app.Model.models import Department, Major, ProgrammingLanguage, ResearchFie
 
 app = create_app(Config)
 
+
 @app.before_request
 def initDB(*args, **kwargs):
     if app._got_first_request:
@@ -42,9 +43,21 @@ def initDB(*args, **kwargs):
                         new_major = Major(name=major["name"], department=department.id)
                         db.session.add(new_major)
             db.session.commit()
-        
+
         if ProgrammingLanguage.query.count() == 0:
-            languages = ["Python", "Java", "JavaScript", "C", "C++", "C#", "Ruby", "Swift", "Go", "PHP", "Kotlin"]
+            languages = [
+                "Python",
+                "Java",
+                "JavaScript",
+                "C",
+                "C++",
+                "C#",
+                "Ruby",
+                "Swift",
+                "Go",
+                "PHP",
+                "Kotlin",
+            ]
             for lang in languages:
                 new_lang = ProgrammingLanguage(title=lang)
                 db.session.add(new_lang)
@@ -70,7 +83,6 @@ def initDB(*args, **kwargs):
                 new_field = ResearchField(title=field)
                 db.session.add(new_field)
             db.session.commit()
-
 
 
 # will run only if this module is the 'main' module.

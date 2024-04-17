@@ -43,13 +43,15 @@ class StudentRegistrationForm(FlaskForm):
     )
     languages = QuerySelectMultipleField(
         "Programming Languages",
-        query_factory = lambda: ProgrammingLanguage.query.all(),
+        query_factory=lambda: ProgrammingLanguage.query.all(),
         get_label=lambda x: x.title,
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
     other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
-    other_languages = StringField("Languages Not Listed Above, Please Separate with Commas")
+    other_languages = StringField(
+        "Languages Not Listed Above, Please Separate with Commas"
+    )
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]
@@ -77,7 +79,9 @@ class FacultyRegistrationForm(FlaskForm):
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
-    other_topics = StringField("Research Areas Not Listed Above, Please Separate with Commas")
+    other_topics = StringField(
+        "Research Areas Not Listed Above, Please Separate with Commas"
+    )
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]
