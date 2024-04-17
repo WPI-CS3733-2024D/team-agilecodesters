@@ -7,8 +7,8 @@
 <li><span class="label">Last Name:</span> {{ user.lastname }}</li>
 <li><span class="label">Email:</span> {{ user.email }}</li>
 <li>
-    <span class="label">Phone Number:</span> {{ user.phone_number[:3]
-    }}-{{ user.phone_number[3:6] }}-{{ user.phone_number[6:] }}
+    <span class="label">Phone Number:</span> {{ user.phone_number[:3] }}-{{
+    user.phone_number[3:6] }}-{{ user.phone_number[6:] }}
 </li>
 
 <!-- Student specific fields -->
@@ -47,6 +47,4 @@
         {% endfor %}
     </ul>
 </li>
-{% endif %}
-
-{% endblock %}
+{% endif %} {% endblock %}
