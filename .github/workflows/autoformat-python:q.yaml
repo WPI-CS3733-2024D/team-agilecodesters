@@ -12,7 +12,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: black (python formatter)
-        uses: psf/black@stable
+        uses: lgeiger/black-action@v1.0.1
         with:
           args: .
 
