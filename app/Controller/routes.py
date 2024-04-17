@@ -27,41 +27,41 @@ def index():
             posts = ResearchPosition.query.order_by(ResearchPosition.startDate.asc())
         elif sort_option == 'GPA':
             posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
-        elif sort_option == 'Fields':
-            if current_user.user_type == "Student":
-                shared_positions = (
-                    ResearchPosition.query.join(PositionField)
-                    .join(ResearchField)
-                    .filter(
-                        PositionField.field_ID.in_(
-                            [field.id for field in current_user.topics_of_interest]
-                        )
-                    )
-                    .all()
-                )
-            else:
-                shared_positions = (
-                    ResearchPosition.query.join(PositionField)
-                    .join(ResearchField)
-                    .filter(
-                        PositionField.field_ID.in_(
-                            [field.id for field in current_user.research_areas]
-                        )
-                    )
-                    .all()
-                )
-            posts = shared_positions
-        elif sort_option == 'Languages':
-            if current_user.user_type == "Student":
-                shared_positions = (
-                    ResearchPosition.query.filter(
-                        ResearchPosition.languages.in_(
-                            [lang.title for lang in current_user.languages]
-                        )
-                    )
-                    .all()
-                )
-            posts = shared_positions
+        # elif sort_option == 'Fields':
+        #     if current_user.user_type == "Student":
+        #         shared_positions = (
+        #             ResearchPosition.query.join(PositionField)
+        #             .join(ResearchField)
+        #             .filter(
+        #                 PositionField.field_ID.in_(
+        #                     [field.id for field in current_user.topics_of_interest]
+        #                 )
+        #             )
+        #             .all()
+        #         )
+        #     else:
+        #         shared_positions = (
+        #             ResearchPosition.query.join(PositionField)
+        #             .join(ResearchField)
+        #             .filter(
+        #                 PositionField.field_ID.in_(
+        #                     [field.id for field in current_user.research_areas]
+        #                 )
+        #             )
+        #             .all()
+        #         )
+        #     posts = shared_positions
+        # elif sort_option == 'Languages':
+        #     if current_user.user_type == "Student":
+        #         shared_positions = (
+        #             ResearchPosition.query.filter(
+        #                 ResearchPosition.languages.in_(
+        #                     [lang.title for lang in current_user.languages]
+        #                 )
+        #             )
+        #             .all()
+        #         )
+        #     posts = shared_positions
 
     return render_template(
         "index.html",

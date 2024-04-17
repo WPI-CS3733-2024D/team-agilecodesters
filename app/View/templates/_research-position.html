@@ -13,7 +13,8 @@
             <div>
                 <!-- INFO about a research position-->
                 <p> Description: {{post.description}}</p>
-                <p> Research Areas: {{ post.researchGoals }}</p>
+                <p> Research Areas: {{ post.researchGoals[1:-1] }}</p>
+                <p> Required GPA: {{ post.wantedGPA }}</p>
                 <p> Start Date: {{ post.startDate.strftime('%B %d, %Y') }}</p>
                 <p> End Date: {{ post.endDate.strftime('%B %d, %Y') }}</p>                
             </div>
