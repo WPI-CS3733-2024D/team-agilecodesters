@@ -132,6 +132,7 @@ def edit_position(position_id):
                         id=PositionField.query.count() + 1, title=goal
                     )
                     db.session.add(newGoal)
+                    db.session.commit()
                     position.fields.append(newGoal)
         position.wantedGPA = form.wantedGPA.data
         position.languages = form.languages.data
@@ -182,6 +183,7 @@ def edit_profile():
                         id=ResearchField.query.count() + 1, title=area
                     )
                     db.session.add(newArea)
+                    db.session.commit()
                     current_user.research_areas.append(newArea)
         if current_user.user_type == "Student":
             current_user.major = form.major.data
@@ -196,6 +198,7 @@ def edit_profile():
                         id=ResearchField.query.count() + 1, title=topic
                     )
                     db.session.add(newtopic)
+                    db.session.commit()
                     current_user.topics_of_interest.append(newtopic)
         db.session.add(current_user)
         db.session.commit()
