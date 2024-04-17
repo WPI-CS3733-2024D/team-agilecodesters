@@ -26,7 +26,6 @@
     <div class="form-group">
       {{ form.research_areas.label }}
       <div style="max-height: 600px; overflow: scroll">
-        <!-- Uncommented this why was this commented -->
         {{ form.research_areas(class="formselect", multiple="multiple") }}
       </div>
     </div>
@@ -47,24 +46,21 @@
     <div class="form-group">
       {{ form.topics_of_interest.label }}
       <div style="max-height: 600px; overflow: scroll">
-        <!-- Uncommented this why was this commented -->
         {{ form.topics_of_interest(class="formselect", multiple="multiple") }}
       </div>
     </div>
     <div class="form-group">
+        {{ form.other_topics.label }} {{ form.other_topics(class="formselect") }}
+      </div>
+    <div class="form-group">
       {{ form.languages.label }}
       <div style="max-height: 600px; overflow: scroll">
-        <!-- Uncommented this why was this commented -->
         {{ form.languages(class="formselect", multiple="multiple") }}
       </div>
     </div>
     <div class="form-group">
-      {{ form.other_topics.label }}
-      <div style="max-height: 600px; overflow: scroll">
-        <!-- Uncommented this why was this commented -->
-        {{ form.other_topics(class="formselect") }}
+        {{ form.other_languages.label }} {{ form.other_languages(class="formselect") }}
       </div>
-    </div>
     {% endif %}
     <div class="form-group">
       {{ form.password.label }} {{ form.password(class="formselect") }}
@@ -72,7 +68,7 @@
     <div class="form-group">
       {{ form.password_2.label }} {{ form.password_2(class="formselect") }}
     </div>
-    <br />
+    <br>
     <div class="form-group">
       {{ form.submit(class="btn btn-primary btn-custom") }}
     </div>

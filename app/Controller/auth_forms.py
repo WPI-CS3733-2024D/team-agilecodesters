@@ -41,6 +41,7 @@ class StudentRegistrationForm(FlaskForm):
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
+    other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
     languages = QuerySelectMultipleField(
         "Programming Languages",
         query_factory=lambda: ProgrammingLanguage.query.all(),
@@ -48,7 +49,6 @@ class StudentRegistrationForm(FlaskForm):
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
-    other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
     other_languages = StringField(
         "Languages Not Listed Above, Please Separate with Commas"
     )

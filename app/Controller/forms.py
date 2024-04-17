@@ -110,10 +110,9 @@ class EditPositionForm(FlaskForm):
 class SearchForm(FlaskForm):
     sortOrder = SelectField(
         "Sort by:",
-        choices=[("Date", "Start Date"), ("GPA", "Required GPA")],
+        choices=[("Date", "Start Date"), ("GPA", "Required GPA"), ("Recommended", "Recommended")],
         default="Date",
     )
-    # , ('Fields', 'Research Fields'), ('Languages', 'Programming Languages')
     submit = SubmitField("Search")
 
     def get_choices(self):
@@ -137,6 +136,7 @@ class EditStudentProfileForm(FlaskForm):
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
+    other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
     languages = QuerySelectMultipleField(
         "Programming Languages",
         query_factory=lambda: ProgrammingLanguage.query.all(),
@@ -144,9 +144,8 @@ class EditStudentProfileForm(FlaskForm):
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
-    other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
     other_languages = StringField(
-        "Topics Not Listed Above, Please Separate with Commas"
+        "Languages Not Listed Above, Please Separate with Commas"
     )
     password = PasswordField("Password", validators=[DataRequired()])
     password_2 = PasswordField(

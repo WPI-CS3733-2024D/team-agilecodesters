@@ -14,6 +14,7 @@ from app.Model.models import (
     Applications,
     Faculty,
     PositionField,
+    ProgrammingLanguage,
     ResearchField,
     ResearchPosition,
     Student,
@@ -273,8 +274,6 @@ def edit_profile():
             current_user.graduationdate = form.graduationdate.data
             for topic in form.topics_of_interest.data:
                 current_user.topics_of_interest.append(topic)
-            for language in form.languages.data:
-                current_user.languages.append(language)
             if form.other_topics.data:
                 other_topics = form.other_topics.data.split(",")
                 for topic in other_topics:
@@ -284,6 +283,16 @@ def edit_profile():
                     db.session.add(newtopic)
                     db.session.commit()
                     current_user.topics_of_interest.append(newtopic)
+            for lang in form.languages.data:
+                current_user.languages.append(lang)
+            if form.other_languages.data:
+                other_languages = form.other_languages.data.split(",")
+                for language in other_languages:
+                    newLanguage = ProgrammingLanguage(title=language)
+                    db.session.add(newLanguage)
+                    db.session.commit()
+                    current_user.languages.append(newLanguage)
+            
         db.session.add(current_user)
         db.session.commit()
         flash("Your profile has been updated!")

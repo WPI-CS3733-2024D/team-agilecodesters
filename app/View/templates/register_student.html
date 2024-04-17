@@ -33,21 +33,22 @@
       form.graduation_date(class="formselect") }}
     </div>
     <div class="form-group">
-      {{ form.languages.label }}
-      <div style="max-height: 600px; overflow: scroll">
-        <!-- Uncommented this why was this commented -->
-        {{ form.languages(class="formselect", multiple="multiple") }}
+        {{ form.topics_of_interest.label }}
+        <div style="max-height: 600px; overflow: scroll">
+          {{ form.topics_of_interest(class="formselect", multiple="multiple") }}
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      {{ form.topics_of_interest.label }}
-      <div style="max-height: 600px; overflow: scroll">
-        <!-- Uncommented this why was this commented -->
-        {{ form.topics_of_interest(class="formselect", multiple="multiple") }}
+      <div class="form-group">
+          {{ form.other_topics.label }} {{ form.other_topics(class="formselect") }}
+        </div>
+      <div class="form-group">
+        {{ form.languages.label }}
+        <div style="max-height: 600px; overflow: scroll">
+          {{ form.languages(class="formselect", multiple="multiple") }}
+        </div>
       </div>
-    </div>
     <div class="form-group">
-      {{ form.other_topics.label }} {{ form.other_topics(class="formselect") }}
+        {{ form.other_languages.label }} {{ form.other_languages(class="formselect") }}
     </div>
     <div class="form-group">
       {{ form.password.label }} {{ form.password(class="formselect") }}
