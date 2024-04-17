@@ -1,0 +1,42 @@
+name: autoformat
+on: push
+jobs:
+  format-html-css-python:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+
+      - name: black (python formatter)
+        uses: lgeiger/black-action@v1.0.1
+        with:
+          args: .
+
+      - name: prettier (html, css, js, md formatter)
+        uses: creyD/prettier_action@v4.3
+        with:
+          # This part is also where you can pass other options, for example:
+          prettier_options: --write **/*.{js,md,html,css} --tab-width 4
+  # python-format:
+  #   # Check if the PR is not from a fork
+  #   # if: github.event.pull_request.head.repo.full_name == github.repository
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #       with:
+  #         ref: ${{ github.head_ref }}
+  # - name: Check for modified files
+  #   id: git-check
+  #   run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
+  # - name: Push changes
+  #   if: steps.git-check.outputs.modified == 'true'
+  #   run: |
+  #     git config --global user.name 'github-actions'
+  #     git config --global user.email 'github-actions@github.com'
+  #     git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+  #     git commit -am "Automated changes"
+  #     git push
