@@ -394,13 +394,11 @@ def other_profile(user_id):
             flash("Only student profiles can be viewed from a faculty profile!")
             return redirect(url_for("routes.index"))
         else:
-            return render_template("view_other_profile.html", user=student, user_type="Student")
+            return render_template("view_other_profile.html", user=student)
     elif faculty:
         if current_user.user_type != "Student":
             flash("Only faculty profiles can be viewed from a student profile!")
             return redirect(url_for("routes.index"))
         else:
-            return render_template("view_other_profile.html", user=faculty, user_type="Faculty")
-    else:
-        flash("User does not exist!")
-        return redirect(url_for("routes.index"))
+            return render_template("view_other_profile.html", user=faculty)
+    return redirect(url_for("routes.index"))
