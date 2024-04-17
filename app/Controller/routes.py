@@ -321,3 +321,6 @@ def reject_application(position_id):
     flash("Application rejected successfully!")
     return redirect(url_for("routes.review_applications", position_id=position_id))
 
+@routes_blueprint.route("/aboutus")
+def about_us():
+    return render_template("about_us.html", title="About Us")

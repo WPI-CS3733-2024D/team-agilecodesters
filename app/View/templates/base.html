@@ -29,6 +29,7 @@
                     {% if not current_user.is_anonymous %}
                         <li><a href="{{ url_for('routes.view_profile')}}"> Profile </a></li>
                     {% endif %}
+                    <li><a href="{{ url_for('routes.about_us')}}">About Us</a></li>
                 </u1>
                 <ul class="nav navbar navbar-right">
                     {% if current_user.is_anonymous %}
