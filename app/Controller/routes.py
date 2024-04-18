@@ -402,10 +402,6 @@ def other_profile(user_id):
         else:
             return render_template("view_other_profile.html", user=student)
     elif faculty:
-        if current_user.user_type != "Student":
-            flash("Only faculty profiles can be viewed from a student profile!")
-            return redirect(url_for("routes.index"))
-        else:
             posts = ResearchPosition.query.filter_by(faculty=faculty.id).all()
             return render_template(
                 "view_other_profile.html",

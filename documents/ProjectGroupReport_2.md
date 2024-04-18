@@ -98,7 +98,7 @@ Include a draft of your `Iteration-3 spring backlog`.
 -   Make sure to update the "issues" on your GitHub repo accordingly.
     **There are no user stories to complete in Iteration-3, however, here are the issues we currently have; tagged either 'bug' or 'enhancement'**
     -   no way to remove languages or topics of interest in the edit profile page
-        -   Amber
+        -   Amber, Jonathan
     -   Accepting an application does nothing
     -   Sort by relevancy
         -   Amber, Connor
@@ -110,5 +110,3 @@ Include a draft of your `Iteration-3 spring backlog`.
         -   Dennis
     -   Add bonus very cool features for extra credit!!!
         -   everyone
-    -   Fixing edit_profile bug
-        -   Jonathan
