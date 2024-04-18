@@ -45,29 +45,32 @@ def index():
             posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
         elif sort_option == "Recommended":
             if current_user.user_type == "Student":
-                #Could make a helper function in position that takes in the student's topics of interest and returns a score based on that
+                # Could make a helper function in position that takes in the student's topics of interest and returns a score based on that
                 # Retrieve the student's programming languages and research fields
                 student_languages = current_user.languages.all()
                 student_fields = current_user.topics_of_interest.all()
 
                 # Query and sort research positions based on relevancy score
                 positions = ResearchPosition.query.all()
-                posts = sorted(positions, key=lambda pos: pos.relevancy_scorer(student_fields, student_languages), reverse=True)
+                posts = sorted(
+                    positions,
+                    key=lambda pos: pos.relevancy_scorer(
+                        student_fields, student_languages
+                    ),
+                    reverse=True,
+                )
 
             else:
                 # TODO: Find best way to deal with faculty
                 posts = ResearchPosition.query.filter_by(faculty=current_user.id)
 
-        elif sort_option == 'Languages':
+        elif sort_option == "Languages":
             if current_user.user_type == "Student":
-                shared_positions = (
-                    ResearchPosition.query.filter(
-                        ResearchPosition.languages.in_(
-                            [lang.title for lang in current_user.languages]
-                        )
+                shared_positions = ResearchPosition.query.filter(
+                    ResearchPosition.languages.in_(
+                        [lang.title for lang in current_user.languages]
                     )
-                    .all()
-                )
+                ).all()
             posts = shared_positions
 
     return render_template(

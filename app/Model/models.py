@@ -321,16 +321,16 @@ class ResearchPosition(db.Model):
         """
         Takes in a student object and counts how many topics of interest and programming languages overlap
         """
-        #minimum score is 0
+        # minimum score is 0
         score = 0
-        #Not sure if this is the best way to access these, but as far as I can see there is no method like __contains__ in the relationships - Amber
+        # Not sure if this is the best way to access these, but as far as I can see there is no method like __contains__ in the relationships - Amber
         fields = []
         position_languages = []
         for field in self.researchFields:
             fields.append(field)
         for language in self.languages:
             position_languages.append(language)
-        #For each overalapping topic or language add 
+        # For each overalapping topic or language add
         for topic in topics_of_interest:
             if fields.__contains__(topic):
                 score += 1
