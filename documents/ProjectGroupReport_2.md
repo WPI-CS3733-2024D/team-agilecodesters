@@ -66,15 +66,15 @@ The team is loosely divided into two subgroups: UI and Database, these subgroups
     -   As a student, I can share another professor as a reference so that they can share their recommendations on my behalf.
         -   Connor
     -   As a student, I can share a brief statement of interest with the professors.
-        -   Connor
+        -   Connor, Jonathan
     -   As a student, I should submit a brief statement describing why I am interested in this research topic and what I hope to gain by participating in that project.
-        -   Connor
+        -   Connor, Jonathan
     -   As a faculty member, I can share the project’s goals and objectives to persuade any interested users to join my project.
         -   Amber, Connor
     -   As a faculty member, I can share my project’s title to give students a very basic understanding of my project.
         -   Amber, Connor
     -   As a faculty member, I can share the time commitment so that interested students know what they are getting into.
-        -   Connor
+        -   Connor, Jonathan
     -   As a faculty member, I can share the start and end dates to ensure that all students interested in the project immediately know if the project can fit their schedules or not.
         -   Amber, Connor
 
