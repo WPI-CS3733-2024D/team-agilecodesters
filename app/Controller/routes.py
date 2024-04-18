@@ -402,11 +402,11 @@ def other_profile(user_id):
         else:
             return render_template("view_other_profile.html", user=student)
     elif faculty:
-            posts = ResearchPosition.query.filter_by(faculty=faculty.id).all()
-            return render_template(
-                "view_other_profile.html",
-                user=faculty,
-                posts=posts,
-                get_faculty=lambda id: Faculty.query.get(id),
-            )
+        posts = ResearchPosition.query.filter_by(faculty=faculty.id).all()
+        return render_template(
+            "view_other_profile.html",
+            user=faculty,
+            posts=posts,
+            get_faculty=lambda id: Faculty.query.get(id),
+        )
     return redirect(url_for("routes.index"))
