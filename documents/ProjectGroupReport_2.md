@@ -110,3 +110,5 @@ Include a draft of your `Iteration-3 spring backlog`.
         -   Dennis
     -   Add bonus very cool features for extra credit!!!
         -   everyone
+    -   Fixing edit_profile bug 
+        - Jonathan
