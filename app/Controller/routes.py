@@ -265,6 +265,7 @@ def edit_profile():
         current_user.email = form.email.data
         current_user.set_password(form.password.data)
         if current_user.user_type == "Faculty":
+            current_user.research_areas = []
             current_user.department = form.department.data
             for topic in form.research_areas.data:
                 current_user.research_areas.append(topic)
@@ -281,6 +282,7 @@ def edit_profile():
             current_user.major = form.major.data
             current_user.GPA = form.GPA.data
             current_user.graduationdate = form.graduationdate.data
+            current_user.topics_of_interest = []
             for topic in form.topics_of_interest.data:
                 current_user.topics_of_interest.append(topic)
             if form.other_topics.data:
@@ -292,6 +294,7 @@ def edit_profile():
                     db.session.add(newtopic)
                     db.session.commit()
                     current_user.topics_of_interest.append(newtopic)
+            current_user.languages = []
             for lang in form.languages.data:
                 current_user.languages.append(lang)
             if form.other_languages.data:
