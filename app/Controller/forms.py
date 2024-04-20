@@ -28,7 +28,7 @@ class ApplicationForm(FlaskForm):
     firstname = StringField("First Name", validators=[DataRequired()])
     lastname = StringField("Last Name", validators=[DataRequired()])
     statement_of_interest = TextAreaField(
-        "Body", validators=[DataRequired(), Length(max=1500)]
+        "Statement of Interest", validators=[DataRequired(), Length(max=1500)]
     )
     reference_faculty_firstname = StringField(
         "Reference First Name", validators=[DataRequired()]
