@@ -1,6 +1,6 @@
 <table class="posttable" style="width: 100%" valign="top">
     <tr>
-        <td colspan="3">
+        <td colspan="2">
             <div style="text-align: center">
                 <a
                     href="{{ url_for('routes.view_position', position_id=post.id) }}"
@@ -23,6 +23,7 @@
             </div>
             <div class="posttimestamp" style="text-align: left">
                 <!-- Time/Date that the research position was posted by the faculty member -->
+                <p>Posted on: <span>{{ post.timestamp }}</span></p>
                 <div class="post">
                     <!-- TODO add when it was posted -->
                 </div>

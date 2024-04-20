@@ -293,6 +293,7 @@ class ResearchPosition(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30), unique=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     # Specifies the lowest desired GPA
     wantedGPA = db.Column(db.Float)
     languages = db.Column(db.String(150))
