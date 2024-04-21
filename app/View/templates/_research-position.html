@@ -26,11 +26,17 @@
                 <p>Description: {{post.description}}</p>
                 <p>Research Areas: {{ post.researchGoals[1:-1] }}</p>
                 <p>Required GPA: {{ post.wantedGPA }}</p>
-                <p>Dates: {{ post.startDate.strftime('%B %d, %Y') }} - {{ post.endDate.strftime('%B %d, %Y') }}</p>
+                <p>
+                    Dates: {{ post.startDate.strftime('%B %d, %Y') }} - {{
+                    post.endDate.strftime('%B %d, %Y') }}
+                </p>
             </div>
             <div class="posttimestamp" style="text-align: center">
                 <!-- Time/Date that the research position was posted by the faculty member -->
-                <p>Posted on: <span>{{ post.timestamp.strftime('%B %d, %Y') }}</span></p>
+                <p>
+                    Posted on:
+                    <span>{{ post.timestamp.strftime('%B %d, %Y') }}</span>
+                </p>
                 <div class="post">
                     <!-- TODO add when it was posted -->
                 </div>
