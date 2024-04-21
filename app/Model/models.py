@@ -334,7 +334,7 @@ class ResearchPosition(db.Model):
         # For each overalapping topic or language add
         for topic in topics_of_interest:
             if fields.__contains__(topic):
-                score += 1
+                score += 2
         for language in student_languages:
             if position_languages.__contains__(language):
                 score += 1

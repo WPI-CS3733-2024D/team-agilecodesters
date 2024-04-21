@@ -59,7 +59,6 @@ def index():
                     ),
                     reverse=True,
                 )
-
             else:
                 # TODO: Find best way to deal with faculty
                 posts = ResearchPosition.query.filter_by(faculty=current_user.id)
