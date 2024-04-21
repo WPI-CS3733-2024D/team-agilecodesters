@@ -113,7 +113,8 @@ class SearchForm(FlaskForm):
         choices=[
             ("Date", "Start Date"),
             ("GPA", "Required GPA"),
-            ("Recommended", "Recommended"),
+            ("Recommended", "Recommended For You"),
+            ("Languages", "Programming Languages"),
         ],
         default="Date",
     )
