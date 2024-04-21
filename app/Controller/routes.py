@@ -7,8 +7,9 @@ from app.Controller.forms import (
     EditFacultyProfileForm,
     EditStudentProfileForm,
     CreatePositionForm,
-    SearchForm,
+    FacultySearchForm,
     EditPositionForm,
+    StudentSearchForm,
 )
 from app.Model.models import (
     Applications,
@@ -33,7 +34,10 @@ routes_blueprint.template_folder = Config.TEMPLATE_FOLDER
 def index():
     # add logic to filter out research positions based on searches.
     # research positions that align with student queried information [search feature] will show on the screen.
-    search_form = SearchForm()
+    if current_user.user_type == "Student":
+        search_form = StudentSearchForm()
+    else:
+        search_form = FacultySearchForm()
     posts = ResearchPosition.query.order_by(ResearchPosition.startDate.desc())
 
     if search_form.validate_on_submit():
@@ -114,8 +118,10 @@ def index():
                 posts = shared_positions
 
             else:
-                # TODO: Find best way to deal with faculty
-                posts = ResearchPosition.query.filter_by(faculty=current_user.id)
+                if sort_option == "Mine":
+                    posts = ResearchPosition.query.filter_by(faculty=current_user.id)
+                else:
+                    posts = ResearchPosition.query.filter_by(faculty=current_user.id)
 
     return render_template(
         "index.html",
