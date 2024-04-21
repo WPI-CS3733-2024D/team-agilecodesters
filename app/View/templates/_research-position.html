@@ -1,7 +1,6 @@
 <table class="posttable" style="width: 100%" valign="top">
     <tr>
         <td colspan="3">
-            
             <div style="text-align: center">
                 <a
                     href="{{ url_for('routes.view_position', position_id=post.id) }}"
@@ -10,7 +9,12 @@
                     {{post.title}}
                 </a>
                 {% if post.recommended %}
-                    <img src="static/img/starIcon.ico" alt="Star Icon" width="20" height="20">
+                <img
+                    src="static/img/starIcon.ico"
+                    alt="Star Icon"
+                    width="20"
+                    height="20"
+                />
                 {% endif %}
             </div>
         </td>
@@ -65,17 +69,17 @@
         </td>
     </tr>
 
-            <tr>
-            <td colspan="3" style="text-align: center">
-                <br />
-                Posted By:
-                <a
-                    href="{{ url_for('routes.other_profile', user_id=post.faculty) }}"
-                    class="link-custom"
-                >
-                    {{ get_faculty(post.faculty).firstname }} {{
-                    get_faculty(post.faculty).lastname }}</a
-                >
-            </td>
-            </tr>
-            </table>
+    <tr>
+        <td colspan="3" style="text-align: center">
+            <br />
+            Posted By:
+            <a
+                href="{{ url_for('routes.other_profile', user_id=post.faculty) }}"
+                class="link-custom"
+            >
+                {{ get_faculty(post.faculty).firstname }} {{
+                get_faculty(post.faculty).lastname }}</a
+            >
+        </td>
+    </tr>
+</table>

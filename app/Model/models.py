@@ -318,7 +318,7 @@ class ResearchPosition(db.Model):
         "Applications", back_populates="enrolled_position"
     )
     researchFields = db.relationship("PositionField", back_populates="position")
-    
+
     def topic_scorer(self, topics_of_interest) -> int:
         score = 0
         for topic in topics_of_interest:
