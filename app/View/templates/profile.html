@@ -1,58 +1,65 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
+<h1>Your Profile</h1>
 
-<style>
-    .link-custom {
-        color: #ac2b37;
-    }
-    .link-custom:hover {
-        color: #751c25;
-    }
-    .label {
-        font-weight: bold;
-        color: black; 
-        font-size: 1.2em;
-    }
-</style>
+<li><span class="label">Username:</span> {{ current_user.username }}</li>
+<li><span class="label">First Name:</span> {{ current_user.firstname }}</li>
+<li><span class="label">Last Name:</span> {{ current_user.lastname }}</li>
+<li><span class="label">Email:</span> {{ current_user.email }}</li>
+<li>
+    <span class="label">Phone Number:</span> {{ current_user.phone_number[:3]
+    }}-{{ current_user.phone_number[3:6] }}-{{ current_user.phone_number[6:] }}
+</li>
 
-    {% if current_user.user_type == 'Student' %}
-        <h1>Student Profile</h1>
-    {% elif current_user.user_type == 'Faculty' %}
-        <h1>Faculty Profile</h1>
-    {% endif %}
-    <li><span class="label">Username:</span> {{ current_user.username }}</li>
-        <li><span class="label">First Name:</span> {{ current_user.firstname }}</li>
-        <li><span class="label">Last Name:</span> {{ current_user.lastname }}</li>
-        <li><span class="label">Email:</span> {{ current_user.email }}</li>
-        <li><span class="label">Phone Number:</span> {{ current_user.phone_number[:3] }}-{{ current_user.phone_number[3:6] }}-{{ current_user.phone_number[6:] }}</li>
-        
-        <!-- Student specific fields -->
-        {% if current_user.user_type == 'Student' %}
-        <li><span class="label">Major:</span> {{ current_user.major }}</li>
-            <li><span class="label">GPA:</span> {{ current_user.GPA }}</li>
-            <li><span class="label">Graduation Date:</span> {{ current_user.graduationdate.strftime('%B %d, %Y') }}</li>
-            <li><span class="label">Topics of Interest:</span>
-                <ul>
-                    {% for topic in current_user.topics_of_interest %}
-                        <li>{{ topic.title }}</li>
-                    {% endfor %}
-                </ul>
-            </li>
-        
-            <!-- Faculty specific fields -->
-        {% elif current_user.user_type == 'Faculty' %}
-            <li><span class="label">Department:</span> {{ current_user.department }}</li>
-            <li><span class="label">Research Areas:</span> 
-                <ul>
-                    {% for area in current_user.research_areas %}
-                        <li>{{ area.title }}</li>
-                    {% endfor %}
-                </ul>
-            </li>
-        {% endif %}
+<!-- Student specific fields -->
+{% if current_user.user_type == 'Student' %}
+<li><span class="label">Major:</span> {{ current_user.major }}</li>
+<li><span class="label">GPA:</span> {{ current_user.GPA }}</li>
+<li>
+    <span class="label">Graduation Date:</span> {{
+    current_user.graduationdate.strftime('%B %d, %Y') }}
+</li>
+<li>
+    <span class="label">Topics of Interest:</span>
+    <ul>
+        {% for topic in current_user.topics_of_interest %}
+        <li>{{ topic.title }}</li>
+        {% endfor %}
     </ul>
-        <p><a href="{{ url_for('routes.edit_profile') }}" class="link-custom">Edit Profile</a></p>
+</li>
+<li>
+    <span class="label">Proficient Languages:</span>
+    <ul>
+        {% for language in current_user.languages %}
+        <li>{{ language.title }}</li>
+        {% endfor %}
+    </ul>
+</li>
 
+<!-- Faculty specific fields -->
+{% elif current_user.user_type == 'Faculty' %}
+<li><span class="label">Department:</span> {{ current_user.department }}</li>
+<li>
+    <span class="label">Research Areas:</span>
+    <ul>
+        {% for area in current_user.research_areas %}
+        <li>{{ area.title }}</li>
+        {% endfor %}
+    </ul>
+</li>
+{% endif %}
 
-{% endblock %}
+<p>
+    <a href="{{ url_for('routes.edit_profile') }}" class="link-custom"
+        >Edit Profile</a
+    >
+</p>
+
+{% if current_user.user_type == 'Faculty' %}
+<h3>Your Research Positions</h3>
+<div class="postlist">
+    {% for post in posts %}
+    <div class="post-box">{% include '_research-position.html' %}</div>
+    {% endfor %}
+</div>
+{% endif %} {% endblock %}

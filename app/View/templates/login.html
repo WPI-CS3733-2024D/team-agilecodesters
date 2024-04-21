@@ -1,28 +1,38 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
-<style>
-.link-custom {
-    color: #ac2b37;
-}
-.link-custom:hover {
-    color: #751c25;
-}
-</style>
+<h1>Sign in</h1>
 
-    <h1> Sign in</h1>
+{% if form %}
 
-    {% if form %}
-
-        <div class="row">
-            <div class="col-md-4">
-                {{ wtf.quick_form(form, action = url_for('auth.login') ) }}
-            </div>
+<form method="post" class="row">
+    {{ form.hidden_tag() }}
+    <div class="col-md-4">
+        <div class="form-group">
+            {{ form.username.label }} {{ form.username(class="formselect") }}
         </div>
+        <div class="form-group">
+            {{ form.password.label }} {{ form.password(class="formselect") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary btn-custom") }}
+        </div>
+    </div>
+</form>
 
-    {% endif %}
-    <br>
-    <p>New Student? <a href="{{ url_for('auth.register_student') }}" class="link-custom">Click to Register!</a></p>
-    <p>New Faculty? <a href="{{ url_for('auth.register_faculty') }}" class="link-custom">Click to Register!</a></p>
-    
+{% endif %}
+
+<br />
+<p>
+    New Student?
+    <a href="{{ url_for('auth.register_student') }}" class="link-custom"
+        >Click to Register!</a
+    >
+</p>
+<p>
+    New Faculty?
+    <a href="{{ url_for('auth.register_faculty') }}" class="link-custom"
+        >Click to Register!</a
+    >
+</p>
+
 {% endblock %}

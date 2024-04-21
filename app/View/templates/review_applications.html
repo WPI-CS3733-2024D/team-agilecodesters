@@ -1,43 +1,67 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
+<h1>Review Applications for "{{ position.title }}"</h1>
 
-    <h1>Review Applications for "{{ position.title }}"</h1>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Student Name</th>
-                <th>GPA</th>
-                <th>Statement of Interest</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Get all info for applications -->
-            {% for application in applications %}
-            <tr>
-                <td>{{ application.student_enrolled.firstname }} {{ application.student_enrolled.lastname }}</td>
-                <td>{{ application.student_enrolled.GPA }}</td>
-                <td>{{ application.statement_of_interest }}</td>
-                <td>{{ application.status }}</td>
-                <!-- Display (or don't display) buttons -->
-                <td>
-                    {% if application.status == 'Pending' %}
-                        <form action="{{ url_for('routes.accept_application', position_id=application.position) }}" method="post" style="display: inline;">
-                            <button type="submit" class="btn btn-success">Accept</button>
-                        </form>
-                        <form action="{{ url_for('routes.reject_application', position_id=application.position) }}" method="post" style="display: inline;">
-                            <button type="submit" class="btn btn-danger">Reject</button>
-                        </form>
-                    {% else %}
-                        Application Processed
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="text-align: center">Student Name</th>
+            <th style="text-align: center">GPA</th>
+            <th style="text-align: center">Statement of Interest</th>
+            <th style="text-align: center">Reference</th>
+            <th style="text-align: center">Status</th>
+            <th style="text-align: center">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Get all info for applications -->
+        {% for application in applications %}
+        <tr style="text-align: center">
+            <td>
+                <a
+                    href="{{ url_for('routes.other_profile', user_id=application.student_enrolled.id) }}"
+                    class="link-custom"
+                >
+                    {{ application.student_enrolled.firstname }}
+                    {{application.student_enrolled.lastname }}</a
+                >
+            </td>
+            <td>{{ application.student_enrolled.GPA }}</td>
+            <td>{{ application.statement_of_interest }}</td>
+            <td>
+                {{ application.referenceName }}<br />
+                {{ application.referenceEmail }}
+            </td>
+            <td>{{ application.status }}</td>
+            <!-- Display (or don't display) buttons -->
+            <td>
+                {% if application.status == 'Pending' %}
+                <form
+                    action="{{ url_for('routes.accept_application', position_id=application.position) }}"
+                    method="post"
+                    style="display: inline"
+                >
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-custom-apply"
+                    >
+                        Accept
+                    </button>
+                </form>
+                <form
+                    action="{{ url_for('routes.reject_application', position_id=application.position) }}"
+                    method="post"
+                    style="display: inline"
+                >
+                    <button type="submit" class="btn btn-primary btn-custom">
+                        Reject
+                    </button>
+                </form>
+                {% else %} Application Processed {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

@@ -26,7 +26,6 @@ def create_app(config_class=Config):
     # creates the database for communication
     db.init_app(app)
 
-
     login.init_app(app)
     moment.init_app(app)
     bootstrap.init_app(app)

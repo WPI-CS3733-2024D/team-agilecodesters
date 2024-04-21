@@ -1,49 +1,53 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
+<h1>Your Research Positions</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="text-align: center">Title</th>
+            <th style="text-align: center">Wanted GPA</th>
+            <th style="text-align: center">Languages</th>
+            <th style="text-align: center">Description</th>
+            <th style="text-align: center">Research Goals</th>
+            <th style="text-align: center">Start Date</th>
+            <th style="text-align: center">End Date</th>
+            <th style="text-align: center">Review Applications</th>
+            <th style="text-align: center">Edit Position</th>
+        </tr>
+    </thead>
+    <tbody style="text-align: center">
+        <!-- display all info about all the positions created by you -->
+        {% for position in positions %}
+        <tr>
+            <td>{{ position.title }}</td>
+            <td>{{ position.wantedGPA }}</td>
+            <td>
+                {% for language in position.languages %} {{ language.title }} {%
+                endfor %}
+            </td>
+            <td>{{ position.description }}</td>
+            <td>{{ position.researchGoals[1:-1] }}</td>
+            <td>{{ position.startDate.strftime('%B %d, %Y') }}</td>
+            <td>{{ position.endDate.strftime('%B %d, %Y') }}</td>
 
-<style>
-    .btn-custom {
-        background-color: #ac2b37;
-        border: 1px solid #000000;
-    }
-    .btn-custom:hover {
-        background-color: #961f2a;
-    }
-</style>
+            <!-- button to review applications for the position -->
+            <td>
+                <a
+                    href="{{ url_for('routes.review_applications', position_id=position.id) }}"
+                    class="btn btn-primary btn-custom-apply"
+                    >Review</a
+                >
+            </td>
+            <td>
+                <a
+                    href="{{ url_for('routes.edit_position', position_id=position.id) }}"
+                    class="btn btn-primary btn-custom"
+                    >Edit</a
+                >
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 
-    <h1>Your Research Positions</h1>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Wanted GPA</th>
-                <th>Languages</th>
-                <th>Description</th>
-                <th>Research Goals</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Review Applications</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- display all info about all the positions created by you -->
-            {% for position in positions %}
-            <tr>
-                <td>{{ position.title }}</td>
-                <td>{{ position.wantedGPA }}</td>
-                <td>{{ position.languages }}</td>
-                <td>{{ position.description }}</td>
-                <td>{{ position.researchGoals }}</td>
-                <td>{{ position.startDate.strftime('%B %d, %Y') }}</td>
-                <td>{{ position.endDate.strftime('%B %d, %Y') }}</td>
-                
-                <!-- button to review applications for the position -->
-                <td>
-                    <a href="{{ url_for('routes.review_applications', position_id=position.id) }}" class="btn btn-primary btn-custom">Review</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        
-{% endblock %}
+    {% endblock %}
+</table>

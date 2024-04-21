@@ -10,7 +10,7 @@ from wtforms import (
 )
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.validators import DataRequired, Email, EqualTo
-from app.Model.models import Department, Major, ResearchField
+from app.Model.models import Department, Major, ProgrammingLanguage, ResearchField
 from wtforms.widgets import ListWidget, CheckboxInput
 
 
@@ -42,6 +42,16 @@ class StudentRegistrationForm(FlaskForm):
         option_widget=CheckboxInput(),
     )
     other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
+    languages = QuerySelectMultipleField(
+        "Programming Languages",
+        query_factory=lambda: ProgrammingLanguage.query.all(),
+        get_label=lambda x: x.title,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
+    other_languages = StringField(
+        "Languages Not Listed Above, Please Separate with Commas"
+    )
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]
@@ -69,7 +79,9 @@ class FacultyRegistrationForm(FlaskForm):
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
-    other_topics = StringField("Research Areas Not Listed Above, Please Separate with Commas")
+    other_topics = StringField(
+        "Research Areas Not Listed Above, Please Separate with Commas"
+    )
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]

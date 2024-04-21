@@ -1,46 +1,38 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<h1>Apply For {{position_title}}</h1>
 
-{% block content %}
-    <h1>Apply For {{position_title}}</h1>
-    
-    {% if form %}
-        <form method="post" class="form-group">
-            {{ form.hidden_tag() }}
+{% if form %}
 
-            {{ form.firstname.label }}<br>
-            {{ form.firstname(class="formselect") }} <br>
-            
-            {{ form.lastname.label }}<br>
-            {{ form.lastname(class="formselect") }} <br>
+<form method="post" class="row">
+    {{ form.hidden_tag() }}
+    <div class="col-md-4">
+        <div class="form-group">
+            {{ form.firstname.label }} {{ form.firstname(class="formselect") }}
+        </div>
+        <div class="form-group">
+            {{ form.lastname.label }} {{ form.lastname(class="formselect") }}
+        </div>
+        <div class="form-group">
+            {{ form.statement_of_interest.label }} {{
+            form.statement_of_interest(class="formselect") }}
+        </div>
+        <div class="form-group">
+            {{ form.reference_faculty_firstname.label }} {{
+            form.reference_faculty_firstname(class="formselect") }}
+        </div>
+        <div class="form-group">
+            {{ form.reference_faculty_lastname.label }} {{
+            form.reference_faculty_lastname(class="formselect") }}
+        </div>
+        <div class="form-group">
+            {{ form.reference_faculty_email.label }} {{
+            form.reference_faculty_email(class="formselect") }}
+        </div>
+        <br />
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary btn-custom") }}
+        </div>
+    </div>
+</form>
 
-            {{ form.statement_of_interest.label }} <br>
-            {{ form.statement_of_interest(class="formselect") }} <br>
-
-            {{ form.reference_faculty_firstname.label }} <br>
-            {{ form.reference_faculty_firstname(class="formselect") }} <br>
-
-            {{ form.reference_faculty_lastname.label }} <br>
-            {{ form.reference_faculty_lastname(class="formselect") }} <br>
-
-            {{ form.reference_faculty_email.label }} <br>
-            {{ form.reference_faculty_email(class="formselect") }} <br>
-
-            {{ form.submit(class="btn btn-primary btn-custom") }} <br>
-        </form>
-
-<!-- 
-        <div class="row">
-            <div class="col-md-4">
-                {{ wtf.quick_form(form, action = url_for('routes.apply_for_position', position_id = position_id) ) }}
-            </div>
-        </div> -->
-
-    {% endif %}
-    
-    <style>
-        .formselect{
-            padding: 20px;
-        }
-    </style>
-
-{% endblock %}
+{% endif %} {% endblock %}

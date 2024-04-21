@@ -1,0 +1,58 @@
+{% extends "base.html" %} {% block content %}
+
+<h1>{{ user.firstname }} {{ user.lastname }}'s Profile</h1>
+
+<li><span class="label">Username:</span> {{ user.username }}</li>
+<li><span class="label">First Name:</span> {{ user.firstname }}</li>
+<li><span class="label">Last Name:</span> {{ user.lastname }}</li>
+<li><span class="label">Email:</span> {{ user.email }}</li>
+<li>
+    <span class="label">Phone Number:</span> {{ user.phone_number[:3] }}-{{
+    user.phone_number[3:6] }}-{{ user.phone_number[6:] }}
+</li>
+
+<!-- Student specific fields -->
+{% if user.user_type == 'Student' %}
+<li><span class="label">Major:</span> {{ user.major }}</li>
+<li><span class="label">GPA:</span> {{ user.GPA }}</li>
+<li>
+    <span class="label">Graduation Date:</span> {{
+    user.graduationdate.strftime('%B %d, %Y') }}
+</li>
+<li>
+    <span class="label">Topics of Interest:</span>
+    <ul>
+        {% for topic in user.topics_of_interest %}
+        <li>{{ topic.title }}</li>
+        {% endfor %}
+    </ul>
+</li>
+<li>
+    <span class="label">Proficient Languages:</span>
+    <ul>
+        {% for language in user.languages %}
+        <li>{{ language.title }}</li>
+        {% endfor %}
+    </ul>
+</li>
+
+<!-- Faculty specific fields -->
+{% elif user.user_type == 'Faculty' %}
+<li><span class="label">Department:</span> {{ user.department }}</li>
+<li>
+    <span class="label">Research Areas:</span>
+    <ul>
+        {% for area in user.research_areas %}
+        <li>{{ area.title }}</li>
+        {% endfor %}
+    </ul>
+</li>
+<br />
+<h3>Available Research Positions</h3>
+<div class="postlist">
+    {% for post in posts %}
+    <div class="post-box">{% include '_research-position.html' %}</div>
+    {% endfor %}
+</div>
+
+{% endif %} {% endblock %}
