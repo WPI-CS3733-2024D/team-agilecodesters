@@ -122,14 +122,15 @@ class StudentSearchForm(FlaskForm):
 
     def get_choices(self):
         return self.sortOrder.choices
-    
+
+
 class FacultySearchForm(FlaskForm):
     sortOrder = SelectField(
         "Sort by:",
         choices=[
             ("Date", "Start Date"),
             ("GPA", "Required GPA"),
-            ("Mine", "My Positions")
+            ("Mine", "My Positions"),
         ],
         default="Date",
     )
