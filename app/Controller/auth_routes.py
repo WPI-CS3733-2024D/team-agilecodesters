@@ -88,15 +88,22 @@ def register_faculty():
         )
         for topic in fform.research_areas.data:
             faculty.research_areas.append(topic)
-        if fform.other_topics.data:
-            other_topics = fform.other_topics.data.split(", ")
-            for topic in other_topics:
+
+        # Add other topics
+        if fform.add_topic.data:
+            fform.other_topics.append_entry()
+            return render_template("register_faculty.html", form=fform)
+
+        for topic in fform.other_topics:
+            if topic.data:
                 newtopic = ResearchField(
-                    id=ResearchField.query.count() + 1, title=topic
+                    title=topic.data,
                 )
                 db.session.add(newtopic)
                 db.session.commit()
                 faculty.research_areas.append(newtopic)
+
+
         faculty.set_password(fform.password.data)
         db.session.add(faculty)
         db.session.commit()

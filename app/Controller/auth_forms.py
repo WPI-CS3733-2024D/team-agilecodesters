@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import (
     DateField,
+    FieldList,
     FloatField,
+    FormField,
     StringField,
     SubmitField,
     PasswordField,
@@ -58,6 +60,13 @@ class StudentRegistrationForm(FlaskForm):
     )
     submit = SubmitField("Register")
 
+class OtherTopicForm(FlaskForm):
+    other_topic = StringField("Other Research Area", validators=[DataRequired()])
+    submit = SubmitField("Add Topic")
+
+    class Meta:
+        csrf = False
+
 
 class FacultyRegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
@@ -79,9 +88,9 @@ class FacultyRegistrationForm(FlaskForm):
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
-    other_topics = StringField(
-        "Research Areas Not Listed Above, Please Separate with Commas"
-    )
+    other_topics = FieldList(FormField(OtherTopicForm), label="Other Research Areas")
+    add_topic = SubmitField("Add Other Research Area")
+
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]
