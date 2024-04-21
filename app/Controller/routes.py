@@ -46,56 +46,68 @@ def index():
         elif current_user.user_type == "Student":
             if sort_option == "Recommended":
 
-                    def sortList(positions):
-                        """
-                        Sorts the position list based on topic and language scores
-                        """
-                        # Lists to hold positions based on scores
-                        both_scores_higher = []
-                        one_score_zero = []
-                        both_scores_zero = []
-                        above_user_gpa = []
+                def sortList(positions):
+                    """
+                    Sorts the position list based on topic and language scores
+                    """
+                    # Lists to hold positions based on scores
+                    both_scores_higher = []
+                    one_score_zero = []
+                    both_scores_zero = []
+                    above_user_gpa = []
 
-                        # Iterate through positions and categorize based on scores and GPA
-                        for pos in positions:
-                            pos_topic_score = pos.topic_scorer(current_user.topics_of_interest.all())
-                            pos_language_score = pos.language_scorer(current_user.languages.all())
+                    # Iterate through positions and categorize based on scores and GPA
+                    for pos in positions:
+                        pos_topic_score = pos.topic_scorer(
+                            current_user.topics_of_interest.all()
+                        )
+                        pos_language_score = pos.language_scorer(
+                            current_user.languages.all()
+                        )
 
-                            # Check if required GPA is higher than user's GPA
-                            if pos.wantedGPA > current_user.GPA:
-                                above_user_gpa.append(pos)
+                        # Check if required GPA is higher than user's GPA
+                        if pos.wantedGPA > current_user.GPA:
+                            above_user_gpa.append(pos)
+                        else:
+                            # Check other scores too
+                            if pos_topic_score > 0 and pos_language_score > 0:
+                                both_scores_higher.append(
+                                    (pos, pos_topic_score + pos_language_score)
+                                )
+                                pos.recommended = True
+                            elif (pos_topic_score > 0 and pos_language_score == 0) or (
+                                pos_topic_score == 0 and pos_language_score > 0
+                            ):
+                                one_score_zero.append(
+                                    (pos, pos_topic_score + pos_language_score)
+                                )
                             else:
-                                # Check other scores too
-                                if pos_topic_score > 0 and pos_language_score > 0:
-                                    both_scores_higher.append((pos, pos_topic_score + pos_language_score))
-                                    pos.recommended = True
-                                elif (pos_topic_score > 0 and pos_language_score == 0) or (pos_topic_score == 0 and pos_language_score > 0):
-                                    one_score_zero.append((pos, pos_topic_score + pos_language_score))
-                                else:
-                                    both_scores_zero.append((pos, pos_topic_score + pos_language_score))
+                                both_scores_zero.append(
+                                    (pos, pos_topic_score + pos_language_score)
+                                )
 
-                        # Sort the lists based on combined scores
-                        both_scores_higher.sort(key=lambda x: x[1], reverse=True)
-                        one_score_zero.sort(key=lambda x: x[1], reverse=True)
-                        both_scores_zero.sort(key=lambda x: x[1], reverse=True)
+                    # Sort the lists based on combined scores
+                    both_scores_higher.sort(key=lambda x: x[1], reverse=True)
+                    one_score_zero.sort(key=lambda x: x[1], reverse=True)
+                    both_scores_zero.sort(key=lambda x: x[1], reverse=True)
 
-                        # Combine lists
-                        sorted_positions = ([pos[0] for pos in both_scores_higher]
-                                            + [pos[0] for pos in one_score_zero]
-                                            + [pos[0] for pos in both_scores_zero]
-                                            + above_user_gpa
-                                            )
+                    # Combine lists
+                    sorted_positions = (
+                        [pos[0] for pos in both_scores_higher]
+                        + [pos[0] for pos in one_score_zero]
+                        + [pos[0] for pos in both_scores_zero]
+                        + above_user_gpa
+                    )
 
-                        return sorted_positions
+                    return sorted_positions
 
-
-                    # Query and sort research positions based on relevancy score
-                    positions = ResearchPosition.query.all()
-                    posts = sortList(positions)
+                # Query and sort research positions based on relevancy score
+                positions = ResearchPosition.query.all()
+                posts = sortList(positions)
 
             elif sort_option == "Languages":
                 shared_positions = ResearchPosition.query.filter(
-                ResearchPosition.languages.in_(
+                    ResearchPosition.languages.in_(
                         [lang.title for lang in current_user.languages]
                     )
                 ).all()
