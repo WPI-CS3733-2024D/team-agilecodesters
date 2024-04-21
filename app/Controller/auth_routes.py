@@ -103,7 +103,6 @@ def register_faculty():
                 db.session.commit()
                 faculty.research_areas.append(newtopic)
 
-
         faculty.set_password(fform.password.data)
         db.session.add(faculty)
         db.session.commit()

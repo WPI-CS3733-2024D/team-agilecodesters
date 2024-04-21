@@ -60,6 +60,7 @@ class StudentRegistrationForm(FlaskForm):
     )
     submit = SubmitField("Register")
 
+
 class OtherTopicForm(FlaskForm):
     other_topic = StringField("Other Research Area", validators=[DataRequired()])
     submit = SubmitField("Add Topic")
