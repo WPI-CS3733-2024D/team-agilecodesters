@@ -123,8 +123,10 @@ class Student(User):
     )
 
     def has_applied_to_position(self, position):
-        return Applications.query.filter_by(studentID=self.id, position=position).first() is not None
-        
+        return (
+            Applications.query.filter_by(studentID=self.id, position=position).first()
+            is not None
+        )
 
     __mapper_args__ = {"polymorphic_identity": UserType.Student}
 

@@ -1,6 +1,8 @@
 import warnings
+
 warnings.filterwarnings("ignore")
 import os
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 from datetime import datetime, timedelta
@@ -10,11 +12,12 @@ from app.Model.models import User, Faculty, Student, ResearchPosition, Applicati
 from config import Config
 from unittest.mock import patch
 
+
 class TestConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite://'
-    ROOT_PATH = '..//'+basedir
-    
+    SQLALCHEMY_DATABASE_URI = "sqlite://"
+    ROOT_PATH = "..//" + basedir
+
 
 class TestModels(unittest.TestCase):
 
@@ -30,46 +33,52 @@ class TestModels(unittest.TestCase):
         self.app_context.pop()
 
     def test_password_hashing(self):
-        student = Student(username='Joshua3', email='joshy34.adam1@gmail.edu')
-        student.set_password('PASSWORDX')
-        self.assertFalse(student.check_password('PAssWordX'))
-        self.assertTrue(student.check_password('PASSWORDX'))
-        self.assertFalse(student.check_password('passing_wrd'))
+        student = Student(username="Joshua3", email="joshy34.adam1@gmail.edu")
+        student.set_password("PASSWORDX")
+        self.assertFalse(student.check_password("PAssWordX"))
+        self.assertTrue(student.check_password("PASSWORDX"))
+        self.assertFalse(student.check_password("passing_wrd"))
 
-        faculty = Faculty(username='Joshua3', email='joshy34.adam1@gmail.edu')
-        faculty.set_password('learn100josh')
-        self.assertFalse(faculty.check_password('LEArn100jOSh'))
-        self.assertTrue(faculty.check_password('learn100josh'))
-        self.assertFalse(faculty.check_password('passing_wrd'))
-    
+        faculty = Faculty(username="Joshua3", email="joshy34.adam1@gmail.edu")
+        faculty.set_password("learn100josh")
+        self.assertFalse(faculty.check_password("LEArn100jOSh"))
+        self.assertTrue(faculty.check_password("learn100josh"))
+        self.assertFalse(faculty.check_password("passing_wrd"))
+
     def test_studentLogin(self):
-        student1 = Student(username = 'DanielB',
-                           firstname = 'Dan', lastname = "Adams", email='dan100@gmail.edu',
-                           phone_number = '1234567899', graduationdate = datetime.utcnow(), 
-                           GPA = 3.5)
-        
+        student1 = Student(
+            username="DanielB",
+            firstname="Dan",
+            lastname="Adams",
+            email="dan100@gmail.edu",
+            phone_number="1234567899",
+            graduationdate=datetime.utcnow(),
+            GPA=3.5,
+        )
+
         student1.set_password("1234passtest")
 
         db.session.add(student1)
         db.session.commit()
-        
+
         # get student from database
-        get_student = Student.query.filter_by(username='DanielB').first()
+        get_student = Student.query.filter_by(username="DanielB").first()
 
         # check if student is in database
         self.assertIsNotNone(get_student, "Student should be in the database")
 
         self.assertEqual(get_student.username, student1.username)
-        self.assertFalse(student1.check_password('1234PASStest'))
-        self.assertTrue(student1.check_password('1234passtest'))
+        self.assertFalse(student1.check_password("1234PASStest"))
+        self.assertTrue(student1.check_password("1234passtest"))
 
- 
     def test_has_applied_to_position(self):
 
-        student = Student(username='Amin100', email='sAmin@example.com')
+        student = Student(username="Amin100", email="sAmin@example.com")
         db.session.add(student)
 
-        applied_position = ResearchPosition(title='AI research', description = "some description")
+        applied_position = ResearchPosition(
+            title="AI research", description="some description"
+        )
         db.session.add(applied_position)
         db.session.commit()
 
@@ -81,7 +90,7 @@ class TestModels(unittest.TestCase):
         self.assertTrue(student.has_applied_to_position(applied_position))
 
         # Check with a position the student has not applied to
-        unapplied_position = ResearchPosition(title='Another Position')
+        unapplied_position = ResearchPosition(title="Another Position")
         db.session.add(unapplied_position)
         db.session.commit()
 
@@ -89,11 +98,7 @@ class TestModels(unittest.TestCase):
 
 
 # Run the tests
-if __name__ == '__main__':
-    unittest.main(verbosity=2) # get more information on which tests are passing/failing
-
-
-
-
-
-
+if __name__ == "__main__":
+    unittest.main(
+        verbosity=2
+    )  # get more information on which tests are passing/failing
