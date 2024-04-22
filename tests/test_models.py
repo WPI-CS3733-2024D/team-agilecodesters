@@ -62,7 +62,28 @@ class TestModels(unittest.TestCase):
         self.assertEqual(get_student.username, student1.username)
         self.assertFalse(student1.check_password('1234PASStest'))
         self.assertTrue(student1.check_password('1234passtest'))
+    
+    def test_facultyLogin(self):
+        faculty1 = Faculty(username = 'George_W',
+                           firstname = 'Dan', lastname = "Adams", email='dan100@gmail.edu',
+                           phone_number = '1234567899', researchAreas = "Computer Science", department = "CS Department" 
+                          )
+        
+        faculty1.set_password("faculty100")
 
+        db.session.add(faculty1)
+        db.session.commit()
+        
+        # get student from database
+        get_professor = Faculty.query.filter_by(username='George_W').first()
+
+        # check if student is in database
+        self.assertIsNotNone(get_professor, "Student should be in the database")
+
+        self.assertEqual(get_professor.username, faculty1.username)
+        self.assertFalse(faculty1.check_password('faculty101'))
+        self.assertTrue(faculty1.check_password('faculty100'))
+    
  
     def test_has_applied_to_position(self):
 
@@ -81,7 +102,7 @@ class TestModels(unittest.TestCase):
         self.assertTrue(student.has_applied_to_position(applied_position))
 
         # Check with a position the student has not applied to
-        unapplied_position = ResearchPosition(title='Another Position')
+        unapplied_position = ResearchPosition(title='unapplied Position')
         db.session.add(unapplied_position)
         db.session.commit()
 
