@@ -47,6 +47,8 @@ def index():
             posts = ResearchPosition.query.order_by(ResearchPosition.startDate.asc())
         elif sort_option == "GPA":
             posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
+        elif sort_option == "Recent":
+            posts = ResearchPosition.query.order_by(ResearchPosition.timestamp.desc())
         elif current_user.user_type == "Student":
             if sort_option == "Recommended":
 

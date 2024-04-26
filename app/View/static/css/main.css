@@ -39,7 +39,7 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 15px;
-    background-color: #ebf0f3;
+    background-color: #f1f1f1;
 }
 
 @media screen and (min-width: 800px) and (max-width: 1200px) {
