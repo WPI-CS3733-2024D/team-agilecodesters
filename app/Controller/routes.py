@@ -415,20 +415,20 @@ def review_applications(position_id):
     )
 
 
-@routes_blueprint.route("/accept_application/<position_id>", methods=["POST"])
+@routes_blueprint.route("/accept_application/<position_id>/<studentID>", methods=["POST"])
 @login_required
-def accept_application(position_id):
-    application = Applications.query.filter_by(position=position_id).first()
+def accept_application(position_id, studentID):
+    application = Applications.query.filter_by(position=position_id, studentID=studentID).first()
     application.status = "Approved for Interview"
     db.session.commit()
     flash("Application accepted successfully!")
     return redirect(url_for("routes.review_applications", position_id=position_id))
 
 
-@routes_blueprint.route("/reject_application/<position_id>", methods=["POST"])
+@routes_blueprint.route("/reject_application/<position_id>/<studentID>", methods=["POST"])
 @login_required
-def reject_application(position_id):
-    application = Applications.query.filter_by(position=position_id).first()
+def reject_application(position_id, studentID):
+    application = Applications.query.filter_by(position=position_id, studentID=studentID).first()
     application.status = "Rejected"
     db.session.commit()
     flash("Application rejected successfully!")
