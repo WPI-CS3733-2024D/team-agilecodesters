@@ -115,7 +115,7 @@ class StudentSearchForm(FlaskForm):
             ("GPA", "Required GPA"),
             ("Recent", "Most Recent"),
             ("Recommended", "Recommended For You"),
-            #("Languages", "Programming Languages"),
+            # ("Languages", "Programming Languages"),
         ],
         default="Date",
     )
