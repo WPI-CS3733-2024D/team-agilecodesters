@@ -214,7 +214,7 @@ def unapply_for_position(position_id):
         db.session.delete(application)
         db.session.commit()
         flash("Successfully unapplied for the position.")
-    return redirect(url_for("routes.view_applied"))
+    return redirect(url_for("routes.index"))
 
 
 @routes_blueprint.route("/position/<position_id>", methods=["GET", "POST"])
