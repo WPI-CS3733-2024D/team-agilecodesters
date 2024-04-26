@@ -28,7 +28,6 @@ class OtherTopicForm(FlaskForm):
     submit = SubmitField("Add Topic")
 
 
-
 class StudentRegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     firstname = StringField("First Name", validators=[DataRequired()])
@@ -59,13 +58,16 @@ class StudentRegistrationForm(FlaskForm):
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
-    other_topics = FieldList(FormField(OtherTopicForm), label="Other Research Areas", min_entries=1)
-    add_topic = SubmitField("+ Area")
+    other_topics = FieldList(
+        FormField(OtherTopicForm), label="Other Research Areas", min_entries=1
+    )
+    add_topic = SubmitField("Add Other Research Area")
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]
     )
     submit = SubmitField("Register")
+
 
 class FacultyRegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])

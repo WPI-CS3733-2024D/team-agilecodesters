@@ -26,7 +26,7 @@ def add_newtopic(topic):
 
 @auth_blueprint.route("/register/student", methods=["GET", "POST"])
 def register_student():
-    sform = StudentRegistrationForm()    
+    sform = StudentRegistrationForm()
 
 
     if sform.add_topic.data and sform.add_topic.validate(sform):
