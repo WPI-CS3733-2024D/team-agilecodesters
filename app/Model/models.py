@@ -123,8 +123,9 @@ class Student(User):
     )
 
     def has_applied_to_position(self, position):
-        return bool(
+        return (
             Applications.query.filter_by(studentID=self.id, position=position).first()
+            is not None
         )
 
     __mapper_args__ = {"polymorphic_identity": UserType.Student}
@@ -303,6 +304,7 @@ class ResearchPosition(db.Model):
     endDate = db.Column(db.DateTime)
     timeCommitment = db.Column(db.Integer)
     faculty = db.Column(db.Integer, db.ForeignKey("faculty.id"))
+    recommended = db.Column(db.Boolean, default=False)
 
     # Programming languages the position recommends
     languages = db.relationship(
@@ -318,25 +320,17 @@ class ResearchPosition(db.Model):
     )
     researchFields = db.relationship("PositionField", back_populates="position")
 
-    def relevancy_scorer(self, topics_of_interest, student_languages) -> int:
-        """
-        Takes in a student object and counts how many topics of interest and programming languages overlap
-        """
-        # minimum score is 0
+    def topic_scorer(self, topics_of_interest) -> int:
         score = 0
-        # Not sure if this is the best way to access these, but as far as I can see there is no method like __contains__ in the relationships - Amber
-        fields = []
-        position_languages = []
-        for field in self.researchFields:
-            fields.append(field)
-        for language in self.languages:
-            position_languages.append(language)
-        # For each overalapping topic or language add
         for topic in topics_of_interest:
-            if fields.__contains__(topic):
+            if self.researchGoals[1:-1].find(str(topic)) is not -1:
                 score += 1
+        return score
+
+    def language_scorer(self, student_languages) -> int:
+        score = 0
         for language in student_languages:
-            if position_languages.__contains__(language):
+            if language in self.languages:
                 score += 1
         return score
 

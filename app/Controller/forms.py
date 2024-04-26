@@ -107,13 +107,30 @@ class EditPositionForm(FlaskForm):
 
 
 # SEARCH FEATURE on index page
-class SearchForm(FlaskForm):
+class StudentSearchForm(FlaskForm):
     sortOrder = SelectField(
         "Sort by:",
         choices=[
             ("Date", "Start Date"),
             ("GPA", "Required GPA"),
-            ("Recommended", "Recommended"),
+            ("Recommended", "Recommended For You"),
+            ("Languages", "Programming Languages"),
+        ],
+        default="Date",
+    )
+    submit = SubmitField("Search")
+
+    def get_choices(self):
+        return self.sortOrder.choices
+
+
+class FacultySearchForm(FlaskForm):
+    sortOrder = SelectField(
+        "Sort by:",
+        choices=[
+            ("Date", "Start Date"),
+            ("GPA", "Required GPA"),
+            ("Mine", "My Positions"),
         ],
         default="Date",
     )

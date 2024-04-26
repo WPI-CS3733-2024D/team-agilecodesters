@@ -7,8 +7,9 @@ from app.Controller.forms import (
     EditFacultyProfileForm,
     EditStudentProfileForm,
     CreatePositionForm,
-    SearchForm,
+    FacultySearchForm,
     EditPositionForm,
+    StudentSearchForm,
 )
 from app.Model.models import (
     Applications,
@@ -33,7 +34,10 @@ routes_blueprint.template_folder = Config.TEMPLATE_FOLDER
 def index():
     # add logic to filter out research positions based on searches.
     # research positions that align with student queried information [search feature] will show on the screen.
-    search_form = SearchForm()
+    if current_user.user_type == "Student":
+        search_form = StudentSearchForm()
+    else:
+        search_form = FacultySearchForm()
     posts = ResearchPosition.query.order_by(ResearchPosition.startDate.desc())
 
     if search_form.validate_on_submit():
@@ -43,35 +47,81 @@ def index():
             posts = ResearchPosition.query.order_by(ResearchPosition.startDate.asc())
         elif sort_option == "GPA":
             posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
-        elif sort_option == "Recommended":
-            if current_user.user_type == "Student":
-                # Could make a helper function in position that takes in the student's topics of interest and returns a score based on that
-                # Retrieve the student's programming languages and research fields
-                student_languages = current_user.languages.all()
-                student_fields = current_user.topics_of_interest.all()
+        elif current_user.user_type == "Student":
+            if sort_option == "Recommended":
+
+                def sortList(positions):
+                    """
+                    Sorts the position list based on topic and language scores
+                    """
+                    # Lists to hold positions based on scores
+                    both_scores_higher = []
+                    one_score_zero = []
+                    both_scores_zero = []
+                    above_user_gpa = []
+
+                    # Iterate through positions and categorize based on scores and GPA
+                    for pos in positions:
+                        pos_topic_score = pos.topic_scorer(
+                            current_user.topics_of_interest.all()
+                        )
+                        pos_language_score = pos.language_scorer(
+                            current_user.languages.all()
+                        )
+
+                        # Check if required GPA is higher than user's GPA
+                        if pos.wantedGPA > current_user.GPA:
+                            above_user_gpa.append(pos)
+                        else:
+                            # Check other scores too
+                            if pos_topic_score > 0 and pos_language_score > 0:
+                                both_scores_higher.append(
+                                    (pos, pos_topic_score + pos_language_score)
+                                )
+                                pos.recommended = True
+                            elif (pos_topic_score > 0 and pos_language_score == 0) or (
+                                pos_topic_score == 0 and pos_language_score > 0
+                            ):
+                                one_score_zero.append(
+                                    (pos, pos_topic_score + pos_language_score)
+                                )
+                            else:
+                                both_scores_zero.append(
+                                    (pos, pos_topic_score + pos_language_score)
+                                )
+
+                    # Sort the lists based on combined scores
+                    both_scores_higher.sort(key=lambda x: x[1], reverse=True)
+                    one_score_zero.sort(key=lambda x: x[1], reverse=True)
+                    both_scores_zero.sort(key=lambda x: x[1], reverse=True)
+
+                    # Combine lists
+                    sorted_positions = (
+                        [pos[0] for pos in both_scores_higher]
+                        + [pos[0] for pos in one_score_zero]
+                        + [pos[0] for pos in both_scores_zero]
+                        + above_user_gpa
+                    )
+
+                    return sorted_positions
 
                 # Query and sort research positions based on relevancy score
                 positions = ResearchPosition.query.all()
-                posts = sorted(
-                    positions,
-                    key=lambda pos: pos.relevancy_scorer(
-                        student_fields, student_languages
-                    ),
-                    reverse=True,
-                )
+                posts = sortList(positions)
 
-            else:
-                # TODO: Find best way to deal with faculty
-                posts = ResearchPosition.query.filter_by(faculty=current_user.id)
-
-        elif sort_option == "Languages":
-            if current_user.user_type == "Student":
+            elif sort_option == "Languages":
                 shared_positions = ResearchPosition.query.filter(
                     ResearchPosition.languages.in_(
                         [lang.title for lang in current_user.languages]
                     )
                 ).all()
-            posts = shared_positions
+                posts = shared_positions
+
+            else:
+                if sort_option == "Mine":
+                    posts = ResearchPosition.query.filter_by(faculty=current_user.id)
+                else:
+                    posts = ResearchPosition.query.filter_by(faculty=current_user.id)
 
     return render_template(
         "index.html",

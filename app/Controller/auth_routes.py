@@ -61,7 +61,8 @@ def register_student():
         db.session.add(student)
         db.session.commit()
         flash("You have successfully registered as a student!")
-        return redirect(url_for("auth.login"))
+        login_user(student)
+        return redirect(url_for("routes.index"))
     return render_template("register_student.html", form=sform)
 
 
@@ -107,7 +108,8 @@ def register_faculty():
         db.session.add(faculty)
         db.session.commit()
         flash("You have successfully registered as faculty!")
-        return redirect(url_for("auth.login"))
+        login_user(faculty)
+        return redirect(url_for("routes.index"))
     return render_template("register_faculty.html", form=fform)
 
 
@@ -115,7 +117,6 @@ def register_faculty():
 def login():
     if current_user.is_authenticated:
         # check if user is a student
-        route = "auth.login"
         if Student.query.filter_by(id=current_user.id).first():
             flash("Welcome, Student!")
             return redirect(url_for("routes.index"))
