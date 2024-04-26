@@ -60,7 +60,7 @@ class StudentRegistrationForm(FlaskForm):
         option_widget=CheckboxInput(),
     )
     other_topics = FieldList(FormField(OtherTopicForm), label="Other Research Areas", min_entries=1)
-    add_topic = SubmitField("Add Other Research Area")
+    add_topic = SubmitField("+ Area")
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]

@@ -7,32 +7,59 @@
 <form method="post" class="row">
     {{ form.hidden_tag() }}
     <div class="col-md-4">
+
+<!-- Username -->
+        
         <div class="form-group">
             {{ form.username.label }} {{ form.username(class="formselect") }}
         </div>
+
+<!-- First Name -->
+
         <div class="form-group">
             {{ form.firstname.label }} {{ form.firstname(class="formselect") }}
         </div>
+
+<!-- Last Name -->
+
         <div class="form-group">
             {{ form.lastname.label }} {{ form.lastname(class="formselect") }}
         </div>
+
+<!-- Phone Number -->
+
         <div class="form-group">
             {{ form.phone_number.label }} 
             {{ form.phone_number(class="formselect") }}
         </div>
+
+<!-- Email -->
+
         <div class="form-group">
             {{ form.email.label }} {{ form.email(class="formselect") }}
         </div>
+
+<!-- Major -->
+
         <div class="form-group">
             {{ form.major.label }} {{ form.major(class="formselect") }}
         </div>
+
+<!-- GPA -->
+
         <div class="form-group">
             {{ form.gpa.label }} {{ form.gpa(class="formselect") }}
         </div>
+
+<!-- Graduation Date -->
+
         <div class="form-group">
             {{ form.graduation_date.label }} 
             {{ form.graduation_date(class="formselect") }}
         </div>
+
+<!-- Languages -->
+
         <div class="form-group">
             {{ form.languages.label }}
             <div style="max-height: 600px; overflow: scroll">
@@ -40,6 +67,9 @@
                 {{ form.languages(class="formselect", multiple="multiple") }}
             </div>
         </div>
+
+<!-- Topics of Interest -->
+
         <div class="form-group">
             {{ form.topics_of_interest.label }}
             <div style="max-height: 600px; overflow: scroll">
@@ -48,18 +78,33 @@
                 multiple="multiple") }}
             </div>
         </div>
+
+<!-- Other Topics to Add -->
+
         <div class="form-group">
-            {{ form.hidden_tag() }}
-            {% for topic in form.other_topics %}
-                {{ topic.label }} {{ topic(class="formselect") }}
+            {{ form.other_topics.label }}
+            {% for oform in form.other_topics %}
+            <div class="other-topic-form">
+                {{ oform.hidden_tag() }}
+                {{ oform.other_topic.label }} {{ oform.other_topic(class="formselect") }}
+            </div>
             {% endfor %}
+            {{ form.add_topic(class="btn btn-primary btn-custom", type="button") }}
         </div>
+<!-- Password -->
+
         <div class="form-group">
             {{ form.password.label }} {{ form.password(class="formselect") }}
         </div>
+
+<!-- Confirm Password -->
+
         <div class="form-group">
             {{ form.password2.label }} {{ form.password2(class="formselect") }}
         </div>
+
+<!-- Submit Button -->
+
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-custom">
                 Register
