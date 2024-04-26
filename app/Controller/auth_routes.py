@@ -3,6 +3,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from app.Controller.auth_forms import (
     FacultyRegistrationForm,
     LoginForm,
+    OtherTopicForm,
     StudentRegistrationForm,
 )
 from app.Model.models import Faculty, ProgrammingLanguage, ResearchField, Student, User
@@ -13,10 +14,43 @@ from app import db
 auth_blueprint = Blueprint("auth", __name__)
 auth_blueprint.template_folder = Config.TEMPLATE_FOLDER
 
+def add_othertopic(topic):
+    """
+    Add other topics to database
+    Args:
+        topic (): a topic within StudentRegistrationForm.other_topics (use for loop)
+
+    Returns: topic
+        
+    """
+    if not topic.data:
+        return None
+    print(topic.data)
+    print(topic.other_topic.data)
+    newtopic = ResearchField(
+        title= topic.other_topic.data,
+    )
+    # db.session.add(newtopic)
+    # db.session.commit()
+    return newtopic
+
+@auth_blueprint.route("/add_newtopic", methods=["POST"])
+def add_newtopic():
+    form = OtherTopicForm()
+    if form.validate_on_submit():
+        newtopic = ResearchField(
+            title=form.other_topic.data,
+        )
+        db.session.add(newtopic)
+        db.session.commit()
+        return redirect(url_for("auth.register_student"))
+
 
 @auth_blueprint.route("/register/student", methods=["GET", "POST"])
 def register_student():
-    sform = StudentRegistrationForm()
+    sform = StudentRegistrationForm()    
+
+    # if StudentRegistrationForm is submitted
     if sform.validate_on_submit():
         # Check if the username or email already exists in Faculty table
         existing_student = Student.query.filter(
@@ -39,15 +73,12 @@ def register_student():
         )
         for topic in sform.topics_of_interest.data:
             student.topics_of_interest.append(topic)
-        if sform.other_topics.data:
-            other_topics = sform.other_topics.data.split(",")
-            for topic in other_topics:
-                newtopic = ResearchField(
-                    title=topic,
-                )
-                db.session.add(newtopic)
-                db.session.commit()
+        # check through other_topics form and add to database and student
+        for topic in sform.other_topics:
+            newtopic = add_othertopic(topic)
+            if newtopic:
                 student.topics_of_interest.append(newtopic)
+
         for language in sform.languages.data:
             student.languages.append(language)
         if sform.other_languages.data:

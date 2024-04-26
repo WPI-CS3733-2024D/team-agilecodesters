@@ -23,6 +23,12 @@ def validate_phone_number(form, field):
         raise validators.ValidationError("Phone number must be 10 digits long!")
 
 
+class OtherTopicForm(FlaskForm):
+    other_topic = StringField("Other Research Area", validators=[DataRequired()])
+    submit = SubmitField("Add Topic")
+
+
+
 class StudentRegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     firstname = StringField("First Name", validators=[DataRequired()])
@@ -36,14 +42,6 @@ class StudentRegistrationForm(FlaskForm):
     )
     gpa = FloatField("GPA", validators=[DataRequired()])
     graduation_date = DateField("Graduation Date", validators=[DataRequired()])
-    topics_of_interest = QuerySelectMultipleField(
-        "Topics of Interest",
-        query_factory=lambda: ResearchField.query.all(),
-        get_label=lambda x: x.title,
-        widget=ListWidget(prefix_label=False),
-        option_widget=CheckboxInput(),
-    )
-    other_topics = StringField("Topics Not Listed Above, Please Separate with Commas")
     languages = QuerySelectMultipleField(
         "Programming Languages",
         query_factory=lambda: ProgrammingLanguage.query.all(),
@@ -54,20 +52,20 @@ class StudentRegistrationForm(FlaskForm):
     other_languages = StringField(
         "Languages Not Listed Above, Please Separate with Commas"
     )
+    topics_of_interest = QuerySelectMultipleField(
+        "Topics of Interest",
+        query_factory=lambda: ResearchField.query.all(),
+        get_label=lambda x: x.title,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
+    other_topics = FieldList(FormField(OtherTopicForm), label="Other Research Areas", min_entries=1)
+    add_topic = SubmitField("Add Other Research Area")
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]
     )
     submit = SubmitField("Register")
-
-
-class OtherTopicForm(FlaskForm):
-    other_topic = StringField("Other Research Area", validators=[DataRequired()])
-    submit = SubmitField("Add Topic")
-
-    class Meta:
-        csrf = False
-
 
 class FacultyRegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
