@@ -17,8 +17,8 @@
             {{ form.lastname.label }} {{ form.lastname(class="formselect") }}
         </div>
         <div class="form-group">
-            {{ form.phone_number.label }} 
-            {{ form.phone_number(class="formselect") }}
+            {{ form.phone_number.label }} {{
+            form.phone_number(class="formselect") }}
         </div>
         <div class="form-group">
             {{ form.email.label }} {{ form.email(class="formselect") }}
@@ -30,8 +30,8 @@
             {{ form.gpa.label }} {{ form.gpa(class="formselect") }}
         </div>
         <div class="form-group">
-            {{ form.graduation_date.label }} 
-            {{ form.graduation_date(class="formselect") }}
+            {{ form.graduation_date.label }} {{
+            form.graduation_date(class="formselect") }}
         </div>
         <div class="form-group">
             {{ form.languages.label }}
@@ -49,10 +49,8 @@
             </div>
         </div>
         <div class="form-group">
-            {{ form.hidden_tag() }}
-            {% for topic in form.other_topics %}
-                {{ topic.label }} {{ topic(class="formselect") }}
-            {% endfor %}
+            {{ form.hidden_tag() }} {% for topic in form.other_topics %} {{
+            topic.label }} {{ topic(class="formselect") }} {% endfor %}
         </div>
         <div class="form-group">
             {{ form.password.label }} {{ form.password(class="formselect") }}

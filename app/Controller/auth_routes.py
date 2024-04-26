@@ -14,6 +14,7 @@ from app import db
 auth_blueprint = Blueprint("auth", __name__)
 auth_blueprint.template_folder = Config.TEMPLATE_FOLDER
 
+
 def add_othertopic(topic):
     """
     Add other topics to database
@@ -21,18 +22,19 @@ def add_othertopic(topic):
         topic (): a topic within StudentRegistrationForm.other_topics (use for loop)
 
     Returns: topic
-        
+
     """
     if not topic.data:
         return None
     print(topic.data)
     print(topic.other_topic.data)
     newtopic = ResearchField(
-        title= topic.other_topic.data,
+        title=topic.other_topic.data,
     )
     # db.session.add(newtopic)
     # db.session.commit()
     return newtopic
+
 
 @auth_blueprint.route("/add_newtopic", methods=["POST"])
 def add_newtopic():
@@ -48,7 +50,7 @@ def add_newtopic():
 
 @auth_blueprint.route("/register/student", methods=["GET", "POST"])
 def register_student():
-    sform = StudentRegistrationForm()    
+    sform = StudentRegistrationForm()
 
     # if StudentRegistrationForm is submitted
     if sform.validate_on_submit():
