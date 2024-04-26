@@ -14,6 +14,7 @@ from app import db
 auth_blueprint = Blueprint("auth", __name__)
 auth_blueprint.template_folder = Config.TEMPLATE_FOLDER
 
+
 def add_newtopic(topic):
     if topic.data:
         newtopic = ResearchField(
@@ -24,10 +25,10 @@ def add_newtopic(topic):
         return newtopic
     return None
 
+
 @auth_blueprint.route("/register/student", methods=["GET", "POST"])
 def register_student():
     sform = StudentRegistrationForm()
-
 
     if sform.add_topic.data and sform.add_topic.validate(sform):
         sform.other_topics.append_entry()
@@ -61,8 +62,6 @@ def register_student():
             newtopic = add_newtopic(topic)
             if newtopic:
                 student.topics_of_interest.append(newtopic)
-
-
 
         for language in sform.languages.data:
             student.languages.append(language)
