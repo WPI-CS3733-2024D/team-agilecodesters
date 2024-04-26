@@ -111,7 +111,10 @@ def register_faculty():
 def login():
     if current_user.is_authenticated:
         # check if user is a valid member
-        if Student.query.filter_by(id=current_user.id).first() or Faculty.query.filter_by(id=current_user.id).first():
+        if (
+            Student.query.filter_by(id=current_user.id).first()
+            or Faculty.query.filter_by(id=current_user.id).first()
+        ):
             flash("Welcome, " + current_user.firstname + "!")
             return redirect(url_for("routes.index"))
         else:
