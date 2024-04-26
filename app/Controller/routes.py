@@ -362,12 +362,11 @@ def edit_profile():
         form.email.data = current_user.email
         if current_user.user_type == "Faculty":
             form.department.data = current_user.department
-            form.research_areas.data = [
-                topic.id for topic in current_user.research_areas
-            ]
+            form.research_areas.data = current_user.research_areas
         if current_user.user_type == "Student":
             form.major.data = current_user.major
             form.GPA.data = current_user.GPA
+            form.languages.data = current_user.languages
             form.graduationdate.data = datetime.strptime(
                 current_user.graduationdate.strftime("%Y-%m-%d"), "%Y-%m-%d"
             ).date()
