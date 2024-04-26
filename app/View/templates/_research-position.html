@@ -23,11 +23,11 @@
         <td width="80%" class="postmessage" style="text-align: center">
             <div>
                 <!-- INFO about a research position-->
-                <p>Description: {{post.description}}</p>
-                <p>Research Areas: {{ post.researchGoals[1:-1] }}</p>
-                <p>Required GPA: {{ post.wantedGPA }}</p>
+                <p>{{post.description}}</p>
+                <p>GPA: {{ post.wantedGPA }}</p>
+                <p>{{ post.researchGoals[1:-1] }}</p>
                 <p>
-                    Dates: {{ post.startDate.strftime('%B %d, %Y') }} - {{
+                    {{ post.startDate.strftime('%B %d, %Y') }} - {{
                     post.endDate.strftime('%B %d, %Y') }}
                 </p>
             </div>
