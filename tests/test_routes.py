@@ -21,11 +21,6 @@ def test_client():
     yield testing_client
     ctx.pop()
 
-def new_user():
-    user = Student(username='sakire', email='sakire@wsu.edu',firstname='Sakire',lastname='Arslan Ay', address='Pullman, WA')
-    user.set_password('1234')
-    return user
-
 def init_database(request,test_client, init_database):
     db.create_all()
     # Insert user data
