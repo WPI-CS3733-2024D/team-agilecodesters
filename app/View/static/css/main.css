@@ -38,6 +38,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 15px;
+    background-color: #ebf0f3;
 }
 
 @media screen and (min-width: 800px) and (max-width: 1200px) {
