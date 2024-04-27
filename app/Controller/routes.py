@@ -270,6 +270,9 @@ def edit_position(position_id):
 @login_required
 def delete_position(position_id):
     position = ResearchPosition.query.get(position_id)
+    position.languages = []
+    for application in position.students_application:
+        db.session.delete(application)
     db.session.delete(position)
     db.session.commit()
     flash("Position deleted successfully!")

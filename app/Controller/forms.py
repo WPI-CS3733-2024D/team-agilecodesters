@@ -131,6 +131,7 @@ class FacultySearchForm(FlaskForm):
         choices=[
             ("Date", "Start Date"),
             ("GPA", "Required GPA"),
+            ("Recent", "Most Recent"),
             ("Mine", "My Positions"),
         ],
         default="Date",

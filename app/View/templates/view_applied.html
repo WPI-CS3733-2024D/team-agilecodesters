@@ -12,6 +12,7 @@
         </tr>
     </thead>
     <!-- display all info about all the positions applied by the student -->
+    {% if applications %}
     <tbody>
         {% for application in applications %}
         <tr style="text-align: center">
@@ -48,6 +49,12 @@
         </tr>
         {% endfor %}
     </tbody>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        You haven't applied to any positions yet. Apply now to start connecting!
+        <a href="{{ url_for('routes.index') }}" class="btn btn-primary btn-custom">Apply Now</a>
+    </div>
+    {% endif %}
 
     {% endblock %}
 </table>
