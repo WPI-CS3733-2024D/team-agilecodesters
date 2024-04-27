@@ -52,9 +52,11 @@
     {% else %}
     <div class="alert alert-info" role="alert">
         You haven't applied to any positions yet. Apply now to start connecting!
-        <a href="{{ url_for('routes.index') }}" class="btn btn-primary btn-custom">Apply Now</a>
+        <a
+            href="{{ url_for('routes.index') }}"
+            class="btn btn-primary btn-custom"
+            >Apply Now</a
+        >
     </div>
-    {% endif %}
-
-    {% endblock %}
+    {% endif %} {% endblock %}
 </table>
