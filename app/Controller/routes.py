@@ -243,13 +243,7 @@ def edit_position(position_id):
     if form.validate_on_submit():
         position.title = form.title.data
         position.description = form.description.data
-        if form.researchGoals.data:
-            researchGoals = form.researchGoals.data.split(",")
-            for goal in researchGoals:
-                newGoal = PositionField(id=PositionField.query.count() + 1, title=goal)
-                db.session.add(newGoal)
-                db.session.commit()
-                position.fields.append(newGoal)
+        position.researchGoals = form.researchGoals.data.__repr__()
         position.wantedGPA = form.wantedGPA.data
         position.languages = form.languages.data
         position.timeCommitment = form.timeCommitment.data
