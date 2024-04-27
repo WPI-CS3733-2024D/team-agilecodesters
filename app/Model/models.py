@@ -146,6 +146,7 @@ class Student(User):
             if application.position == pos_id:
                 return True
         return False
+
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 

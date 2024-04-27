@@ -12,7 +12,13 @@ from wtforms import (
     validators,
 )
 from wtforms.validators import Length, DataRequired, Email, EqualTo
-from app.Model.models import Department, Major, PositionField, ProgrammingLanguage, ResearchField
+from app.Model.models import (
+    Department,
+    Major,
+    PositionField,
+    ProgrammingLanguage,
+    ResearchField,
+)
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_login import current_user
 
