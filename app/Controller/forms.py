@@ -12,7 +12,7 @@ from wtforms import (
     validators,
 )
 from wtforms.validators import Length, DataRequired, Email, EqualTo
-from app.Model.models import Major, PositionField, ProgrammingLanguage, ResearchField
+from app.Model.models import Department, Major, PositionField, ProgrammingLanguage, ResearchField
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_login import current_user
 
@@ -186,7 +186,11 @@ class EditFacultyProfileForm(FlaskForm):
         "Phone Number", validators=[DataRequired(), validate_phone_number]
     )
     email = StringField("Email", validators=[DataRequired()])
-    department = StringField("Department", validators=[DataRequired()])
+    department = QuerySelectField(
+        "Department",
+        query_factory=lambda: Department.query.all(),
+        get_label=lambda x: x.name,
+    )
     research_areas = QuerySelectMultipleField(
         "Research Areas",
         query_factory=lambda: ResearchField.query.all(),

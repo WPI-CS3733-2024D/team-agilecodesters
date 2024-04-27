@@ -141,6 +141,11 @@ class Student(User):
         """
         self.password_hash = generate_password_hash(password)
 
+    def has_applied_to_position(self, pos_id):
+        for application in self.appliedPositions:
+            if application.position == pos_id:
+                return True
+        return False
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
