@@ -291,7 +291,13 @@ def view_profile():
             get_faculty=lambda id: Faculty.query.get(id),
         )
     else:
-        return render_template("profile.html", title="Profile")
+        applications = Applications.query.filter_by(studentID=current_user.id).all()
+        return render_template(
+            "profile.html",
+            title="Profile",
+            applications=applications,
+            get_faculty=lambda id: Faculty.query.get(id),
+        )
 
 
 @routes_blueprint.route("/profile/edit", methods=["GET", "POST"])

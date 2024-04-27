@@ -74,9 +74,66 @@
 {% elif current_user.user_type == 'Student' %}
 <h3>Your Applications</h3>
 <div class="postlist">
-    {% if applications %} {% for application in applications %}
-    <div class="post-box">{% include '_applied-position.html' %}</div>
-    {% endfor %} {% else %}
+    {% if applications %} 
+        {% for application in applications %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="text-align: center">Position Title</th>
+                    <th style="text-align: center">Professor Name</th>
+                    <th style="text-align: center">Applied Date</th>
+                    <th style="text-align: center">Application Status</th>
+                    <th style="text-align: center">Action</th>
+                </tr>
+            </thead>
+            <!-- display all info about all the positions applied by the student -->
+            <tbody>
+                {% for application in applications %}
+                <tr style="text-align: center">
+                    <td>{{ application.enrolled_position.title }}</td>
+                    <td>
+                        <a
+                            href="{{ url_for('routes.other_profile', user_id=application.enrolled_position.faculty) }}"
+                            class="link-custom"
+                        >
+                            {{
+                            get_faculty(application.enrolled_position.faculty).firstname
+                            }} {{
+                            get_faculty(application.enrolled_position.faculty).lastname
+                            }}</a
+                        >
+                    </td>
+                    <td>
+                        {{ application.applied_date.strftime('%B %d, %Y %I:%M %p') }}
+                    </td>
+                    <td>{{ application.status }}</td>
+                    <!-- show withdraw button if the application is pending -->
+                    <td>
+                        {% if application.status == 'Pending' %}
+                        <form
+                            action="{{ url_for('routes.unapply_for_position', position_id=application.position) }}"
+                            method="post"
+                        >
+                            <button type="submit" class="btn btn-primary btn-custom">
+                                Withdraw
+                            </button>
+                        </form>
+                        {% else %} Good Luck! {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            {% else %}
+            <div class="alert alert-info" role="alert">
+                You haven't applied to any positions yet. Apply now to start connecting!
+                <a
+                    href="{{ url_for('routes.index') }}"
+                    class="btn btn-primary btn-custom"
+                    >Apply Now</a
+                >
+            </div>
+        {% endfor %} 
+    {% else %}
     <div class="alert alert-info" role="alert">
         You haven't applied to any positions yet. Apply now to start connecting!
         <a
@@ -85,5 +142,7 @@
             >Apply Now</a
         >
     </div>
-    {% endif %} {% endif %} {% endblock %}
+    {% endif %} 
+{% endif %} 
+{% endblock %}
 </div>
