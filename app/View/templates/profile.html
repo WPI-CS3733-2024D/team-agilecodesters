@@ -58,8 +58,28 @@
 {% if current_user.user_type == 'Faculty' %}
 <h3>Your Research Positions</h3>
 <div class="postlist">
-    {% for post in posts %}
-    <div class="post-box">{% include '_research-position.html' %}</div>
-    {% endfor %}
+    {% if posts %}
+        {% for post in posts %}
+        <div class="post-box">{% include '_research-position.html' %}</div>
+        {% endfor %}
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        You haven't created any positions yet. Create now to start connecting!
+        <a href="{{ url_for('routes.create_position') }}" class="btn btn-primary btn-custom">Apply Now</a>
+    </div>
+    {% endif %}
 </div>
+{% elif current_user.user_type == 'Student' %}
+<h3>Your Applications</h3>
+<div class="postlist">
+    {% if applications %}
+        {% for application in applications %}
+        <div class="post-box">{% include '_applied-position.html' %}</div>
+        {% endfor %}
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        You haven't applied to any positions yet. Apply now to start connecting!
+        <a href="{{ url_for('routes.index') }}" class="btn btn-primary btn-custom">Apply Now</a>
+    </div>
+    {% endif %}
 {% endif %} {% endblock %}
