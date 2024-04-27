@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms_sqlalchemy.fields import QuerySelectMultipleField
+from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms import (
     DateField,
     IntegerField,
@@ -12,7 +12,7 @@ from wtforms import (
     validators,
 )
 from wtforms.validators import Length, DataRequired, Email, EqualTo
-from app.Model.models import PositionField, ProgrammingLanguage, ResearchField
+from app.Model.models import Major, PositionField, ProgrammingLanguage, ResearchField
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_login import current_user
 
@@ -149,7 +149,9 @@ class EditStudentProfileForm(FlaskForm):
         "Phone Number", validators=[DataRequired(), validate_phone_number]
     )
     email = StringField("Email", validators=[DataRequired(), Email()])
-    major = StringField("Major", validators=[DataRequired()])
+    major = QuerySelectField(
+        "Major", query_factory=lambda: Major.query.all(), get_label=lambda x: x.name
+    )
     GPA = FloatField("GPA", validators=[DataRequired()])
     graduationdate = DateField("Graduation Date", validators=[DataRequired()])
     topics_of_interest = QuerySelectMultipleField(

@@ -31,7 +31,7 @@ def register_student():
             email=sform.email.data,
             firstname=sform.firstname.data,
             lastname=sform.lastname.data,
-            major=sform.major.data.id,
+            major=sform.major.data.name,
             GPA=sform.gpa.data,
             graduationdate=sform.graduation_date.data,
             phone_number=sform.phone_number.data,
