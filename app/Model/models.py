@@ -401,7 +401,7 @@ class Applications(db.Model):
 
     def __repr__(self):
         return "<studentID: {} --- position: {}>".format(self.studentID, self.position)
-    
+
     def get_a_student(self):
         return self.student_enrolled
 
