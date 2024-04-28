@@ -307,7 +307,7 @@ def edit_profile():
         form = EditStudentProfileForm()
     else:
         form = EditFacultyProfileForm()
-    if request.method == "POST":
+    if form.validate_on_submit():
         current_user.firstname = form.firstname.data
         current_user.lastname = form.lastname.data
         current_user.phone_number = form.phone_number.data
@@ -315,7 +315,7 @@ def edit_profile():
         current_user.set_password(form.password.data)
         if current_user.user_type == "Faculty":
             current_user.research_areas = []
-            current_user.department = form.department.data
+            current_user.department = form.department.data.name
             for topic in form.research_areas.data:
                 current_user.research_areas.append(topic)
             if form.other_areas.data:
@@ -328,7 +328,7 @@ def edit_profile():
                     db.session.commit()
                     current_user.research_areas.append(newArea)
         if current_user.user_type == "Student":
-            current_user.major = form.major.data
+            current_user.major = form.major.data.name
             current_user.GPA = form.GPA.data
             current_user.graduationdate = form.graduationdate.data
             current_user.topics_of_interest = []

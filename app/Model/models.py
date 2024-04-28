@@ -224,6 +224,14 @@ class ResearchField(db.Model):
     title = db.Column(db.String(30))
     attachedPosition = db.relationship("PositionField", back_populates="fields")
 
+    faculty_interested = db.relationship(
+        "Faculty",
+        secondary=facultyInterests,
+        primaryjoin=(facultyInterests.c.field_id == id),
+        backref=db.backref("facultyInterests", lazy="dynamic"),
+        lazy="dynamic",
+    )
+
     student_interested = db.relationship(
         "Student",
         secondary=studentFields,
