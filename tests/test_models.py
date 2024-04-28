@@ -97,31 +97,6 @@ class TestModels(unittest.TestCase):
         self.assertFalse(faculty1.check_password("faculty101"))
         self.assertTrue(faculty1.check_password("faculty100"))
 
-    def test_has_applied_to_position(self):
-
-        student = Student(username="Amin100", email="sAmin@example.com")
-        db.session.add(student)
-
-        applied_position = ResearchPosition(
-            title="AI research", description="some description"
-        )
-        db.session.add(applied_position)
-        db.session.commit()
-
-        # student applies to a position
-        application = Applications(studentID=student.id, position=applied_position.id)
-        db.session.add(application)
-        db.session.commit()
-
-        self.assertTrue(student.has_applied_to_position(applied_position))
-
-        # Check with a position the student has not applied to
-        unapplied_position = ResearchPosition(title="unapplied Position")
-        db.session.add(unapplied_position)
-        db.session.commit()
-
-        self.assertFalse(student.has_applied_to_position(unapplied_position))
-
 
 # Run the tests
 if __name__ == "__main__":

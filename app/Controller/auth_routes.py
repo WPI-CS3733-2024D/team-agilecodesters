@@ -31,7 +31,7 @@ def register_student():
             email=sform.email.data,
             firstname=sform.firstname.data,
             lastname=sform.lastname.data,
-            major=sform.major.data.id,
+            major=sform.major.data.name,
             GPA=sform.gpa.data,
             graduationdate=sform.graduation_date.data,
             phone_number=sform.phone_number.data,
@@ -110,13 +110,12 @@ def register_faculty():
 @auth_blueprint.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        # check if user is a student
-        if Student.query.filter_by(id=current_user.id).first():
-            flash("Welcome, Student!")
-            return redirect(url_for("routes.index"))
-            # else check if user is a faculty
-        elif Faculty.query.filter_by(id=current_user.id).first():
-            flash("Welcome, Faculty!")
+        # check if user is a valid member
+        if (
+            Student.query.filter_by(id=current_user.id).first()
+            or Faculty.query.filter_by(id=current_user.id).first()
+        ):
+            flash("Welcome, " + current_user.firstname + "!")
             return redirect(url_for("routes.index"))
         else:
             flash("Unknown user type")
@@ -129,9 +128,11 @@ def login():
         student = Student.query.filter_by(username=lform.username.data).first()
         if faculty and faculty.check_password(lform.password.data):
             login_user(faculty, remember=lform.remember_me.data)
+            flash("Welcome, " + current_user.firstname + "!")
             return redirect(url_for("routes.index"))
         elif student and student.check_password(lform.password.data):
             login_user(student, remember=lform.remember_me.data)
+            flash("Welcome, " + current_user.firstname + "!")
             return redirect(url_for("routes.index"))
         else:
             # login failed

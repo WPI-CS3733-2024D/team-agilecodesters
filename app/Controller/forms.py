@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms_sqlalchemy.fields import QuerySelectMultipleField
+from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms import (
     DateField,
     IntegerField,
@@ -12,7 +12,13 @@ from wtforms import (
     validators,
 )
 from wtforms.validators import Length, DataRequired, Email, EqualTo
-from app.Model.models import PositionField, ProgrammingLanguage, ResearchField
+from app.Model.models import (
+    Department,
+    Major,
+    PositionField,
+    ProgrammingLanguage,
+    ResearchField,
+)
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_login import current_user
 
@@ -131,6 +137,7 @@ class FacultySearchForm(FlaskForm):
         choices=[
             ("Date", "Start Date"),
             ("GPA", "Required GPA"),
+            ("Recent", "Most Recent"),
             ("Mine", "My Positions"),
         ],
         default="Date",
@@ -148,7 +155,9 @@ class EditStudentProfileForm(FlaskForm):
         "Phone Number", validators=[DataRequired(), validate_phone_number]
     )
     email = StringField("Email", validators=[DataRequired(), Email()])
-    major = StringField("Major", validators=[DataRequired()])
+    major = QuerySelectField(
+        "Major", query_factory=lambda: Major.query.all(), get_label=lambda x: x.name
+    )
     GPA = FloatField("GPA", validators=[DataRequired()])
     graduationdate = DateField("Graduation Date", validators=[DataRequired()])
     topics_of_interest = QuerySelectMultipleField(
@@ -183,7 +192,11 @@ class EditFacultyProfileForm(FlaskForm):
         "Phone Number", validators=[DataRequired(), validate_phone_number]
     )
     email = StringField("Email", validators=[DataRequired()])
-    department = StringField("Department", validators=[DataRequired()])
+    department = QuerySelectField(
+        "Department",
+        query_factory=lambda: Department.query.all(),
+        get_label=lambda x: x.name,
+    )
     research_areas = QuerySelectMultipleField(
         "Research Areas",
         query_factory=lambda: ResearchField.query.all(),

@@ -100,6 +100,7 @@ Include a draft of your `Iteration-3 spring backlog`.
     -   no way to remove languages or topics of interest in the edit profile page
         -   Amber, Jonathan
     -   Accepting an application does nothing
+        -   Connor
     -   Sort by relevancy
         -   Amber, Connor
     -   in edit profile it doesnt preselect the topics of interest you already had picked

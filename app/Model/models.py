@@ -96,7 +96,7 @@ class Student(User):
     __tablename__ = "student"
     id = db.Column(None, ForeignKey("user.id"), primary_key=True)
 
-    major = db.Column(db.Integer, db.ForeignKey("major.id"))
+    major = db.Column(db.String(20), db.ForeignKey("major.id"))
     GPA = db.Column(db.Float)
     graduationdate = db.Column(db.DateTime)
     user_type = db.Column(db.String(20), default="Student")
@@ -122,12 +122,6 @@ class Student(User):
         "Applications", back_populates="student_enrolled"
     )
 
-    def has_applied_to_position(self, position):
-        return (
-            Applications.query.filter_by(studentID=self.id, position=position).first()
-            is not None
-        )
-
     __mapper_args__ = {"polymorphic_identity": UserType.Student}
 
     def __repr__(self):
@@ -146,6 +140,12 @@ class Student(User):
             password: String, the password to be hashed
         """
         self.password_hash = generate_password_hash(password)
+
+    def has_applied_to_position(self, pos_id):
+        for application in self.appliedPositions:
+            if application.position == pos_id:
+                return True
+        return False
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -323,7 +323,7 @@ class ResearchPosition(db.Model):
     def topic_scorer(self, topics_of_interest) -> int:
         score = 0
         for topic in topics_of_interest:
-            if self.researchGoals[1:-1].find(str(topic)) is not -1:
+            if self.researchGoals[1:-1].find(str(topic)) != -1:
                 score += 1
         return score
 
@@ -417,6 +417,9 @@ class Major(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True)
     department = db.Column(db.Integer, db.ForeignKey("department.id"))
+
+    def __repr__(self):
+        return self.name
 
 
 @login.user_loader

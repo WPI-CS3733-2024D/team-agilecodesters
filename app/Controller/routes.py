@@ -214,7 +214,7 @@ def unapply_for_position(position_id):
         db.session.delete(application)
         db.session.commit()
         flash("Successfully unapplied for the position.")
-    return redirect(url_for("routes.view_applied"))
+    return redirect(url_for("routes.index"))
 
 
 @routes_blueprint.route("/position/<position_id>", methods=["GET", "POST"])
@@ -243,13 +243,7 @@ def edit_position(position_id):
     if form.validate_on_submit():
         position.title = form.title.data
         position.description = form.description.data
-        if form.researchGoals.data:
-            researchGoals = form.researchGoals.data.split(",")
-            for goal in researchGoals:
-                newGoal = PositionField(id=PositionField.query.count() + 1, title=goal)
-                db.session.add(newGoal)
-                db.session.commit()
-                position.fields.append(newGoal)
+        position.researchGoals = form.researchGoals.data.__repr__()
         position.wantedGPA = form.wantedGPA.data
         position.languages = form.languages.data
         position.timeCommitment = form.timeCommitment.data
@@ -276,6 +270,9 @@ def edit_position(position_id):
 @login_required
 def delete_position(position_id):
     position = ResearchPosition.query.get(position_id)
+    position.languages = []
+    for application in position.students_application:
+        db.session.delete(application)
     db.session.delete(position)
     db.session.commit()
     flash("Position deleted successfully!")
@@ -294,7 +291,13 @@ def view_profile():
             get_faculty=lambda id: Faculty.query.get(id),
         )
     else:
-        return render_template("profile.html", title="Profile")
+        applications = Applications.query.filter_by(studentID=current_user.id).all()
+        return render_template(
+            "profile.html",
+            title="Profile",
+            applications=applications,
+            get_faculty=lambda id: Faculty.query.get(id),
+        )
 
 
 @routes_blueprint.route("/profile/edit", methods=["GET", "POST"])
@@ -362,18 +365,15 @@ def edit_profile():
         form.email.data = current_user.email
         if current_user.user_type == "Faculty":
             form.department.data = current_user.department
-            form.research_areas.data = [
-                topic.id for topic in current_user.research_areas
-            ]
+            form.research_areas.data = current_user.research_areas
         if current_user.user_type == "Student":
             form.major.data = current_user.major
             form.GPA.data = current_user.GPA
+            form.languages.data = current_user.languages
             form.graduationdate.data = datetime.strptime(
                 current_user.graduationdate.strftime("%Y-%m-%d"), "%Y-%m-%d"
             ).date()
-            form.topics_of_interest.data = [
-                topic.id for topic in current_user.topics_of_interest
-            ]
+            form.topics_of_interest.data = current_user.topics_of_interest
     return render_template("edit_profile.html", title="Edit Profile", form=form)
 
 
