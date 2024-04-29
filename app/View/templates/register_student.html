@@ -40,9 +40,8 @@
                 {{ form.languages(class="formselect", multiple="multiple") }}
             </div>
 
-            {{ form.other_languages.label }}
-            {{ form.other_languages(class="formselect") }}
-
+            {{ form.other_languages.label }} {{
+            form.other_languages(class="formselect") }}
         </div>
         <div class="form-group">
             {{ form.topics_of_interest.label }}

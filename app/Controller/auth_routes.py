@@ -66,7 +66,7 @@ def register_student():
         db.session.add(student)
         db.session.commit()
 
-        # add other topics and languages--saved till end 
+        # add other topics and languages--saved till end
         # so that only students who are successfully added to db have their topics and languages added
         for topic in topics_to_commit:
             db.session.add(topic)
