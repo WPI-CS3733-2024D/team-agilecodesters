@@ -37,27 +37,45 @@ def register_student():
             phone_number=sform.phone_number.data,
             user_type="Student",
         )
+
         for topic in sform.topics_of_interest.data:
             student.topics_of_interest.append(topic)
+        # analyze other topics: make empty list, go through form, split by comma, add to list, commit at end and append to student
+        topics_to_commit = []
         if sform.other_topics.data:
             other_topics = sform.other_topics.data.split(",")
             for topic in other_topics:
                 newtopic = ResearchField(
                     title=topic,
                 )
-                db.session.add(newtopic)
-                db.session.commit()
-                student.topics_of_interest.append(newtopic)
+                topics_to_commit.append(newtopic)
+
+        # Languages
         for language in sform.languages.data:
             student.languages.append(language)
+        # analyze other languages in form as well
+        langs_to_commit = []
         if sform.other_languages.data:
             other_languages = sform.other_languages.data.split(",")
             for language in other_languages:
                 newLanguage = ProgrammingLanguage(title=language)
-                db.session.add(newLanguage)
-                db.session.commit()
-                student.languages.append(newLanguage)
+                langs_to_commit.append(newLanguage)
         student.set_password(sform.password.data)
+
+        # add student
+        db.session.add(student)
+        db.session.commit()
+
+        # add other topics and languages--saved till end 
+        # so that only students who are successfully added to db have their topics and languages added
+        for topic in topics_to_commit:
+            db.session.add(topic)
+            db.session.commit()
+            student.topics_of_interest.append(topic)
+        for language in langs_to_commit:
+            db.session.add(language)
+            db.session.commit()
+            student.languages.append(language)
         db.session.add(student)
         db.session.commit()
         flash("You have successfully registered as a student!")
@@ -89,16 +107,25 @@ def register_faculty():
         )
         for topic in fform.research_areas.data:
             faculty.research_areas.append(topic)
+
+        # analyze other topics: make empty list, go through form, split by comma, add to list, commit at end and append to faculty
+        topics_to_commit = []
         if fform.other_topics.data:
             other_topics = fform.other_topics.data.split(", ")
             for topic in other_topics:
                 newtopic = ResearchField(
                     id=ResearchField.query.count() + 1, title=topic
                 )
-                db.session.add(newtopic)
-                db.session.commit()
-                faculty.research_areas.append(newtopic)
+                topics_to_commit.append(newtopic)
         faculty.set_password(fform.password.data)
+        db.session.add(faculty)
+        db.session.commit()
+
+        # add other topics--saved till end so that only faculty who are successfully added to db have their topics added
+        for topic in topics_to_commit:
+            db.session.add(topic)
+            db.session.commit()
+            faculty.research_areas.append(topic)
         db.session.add(faculty)
         db.session.commit()
         flash("You have successfully registered as faculty!")
