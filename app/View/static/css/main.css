@@ -85,3 +85,12 @@ body {
 .label-no-wrap {
     white-space: nowrap;
 }
+
+.profile-box {
+    padding: 4px;
+    border: 2px solid black;
+    border-radius: 15px;
+    background-color: #f1f1f1;
+    margin-bottom: 10px;
+    width: 40%;
+}

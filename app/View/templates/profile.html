@@ -1,52 +1,49 @@
 {% extends "base.html" %} {% block content %}
 
 <h1>Your Profile</h1>
-
-<li><span class="label">Username:</span> {{ current_user.username }}</li>
-<li><span class="label">First Name:</span> {{ current_user.firstname }}</li>
-<li><span class="label">Last Name:</span> {{ current_user.lastname }}</li>
-<li><span class="label">Email:</span> {{ current_user.email }}</li>
-<li>
-    <span class="label">Phone Number:</span> {{ current_user.phone_number[:3]
-    }}-{{ current_user.phone_number[3:6] }}-{{ current_user.phone_number[6:] }}
-</li>
-
+<div class="profile-box">
+<span class="label">Username:</span> {{ current_user.username }}<br>
+<span class="label">First Name:</span> {{ current_user.firstname }}<br>
+<span class="label">Last Name:</span> {{ current_user.lastname }}<br>
+<span class="label">Email:</span> {{ current_user.email }}<br>
+<span class="label">Phone Number:</span> {{ current_user.phone_number[:3] 
+}}-{{ current_user.phone_number[3:6] }}-{{ current_user.phone_number[6:] }} <br>
 <!-- Student specific fields -->
 {% if current_user.user_type == 'Student' %}
-<li><span class="label">Major:</span> {{ current_user.major }}</li>
-<li><span class="label">GPA:</span> {{ current_user.GPA }}</li>
-<li>
-    <span class="label">Graduation Date:</span> {{
-    current_user.graduationdate.strftime('%B %d, %Y') }}
-</li>
-<li>
+<span class="label">Major:</span> {{ current_user.major }} <br>
+<span class="label">GPA:</span> {{ current_user.GPA }} <br>
+<span class="label">Graduation Date:</span> {{
+    current_user.graduationdate.strftime('%B %d, %Y') }} <br>
+</div>
+<div class="profile-box">
     <span class="label">Topics of Interest:</span>
     <ul>
         {% for topic in current_user.topics_of_interest %}
         <li>{{ topic.title }}</li>
         {% endfor %}
     </ul>
-</li>
-<li>
+</div>
+<div class="profile-box">
     <span class="label">Proficient Languages:</span>
     <ul>
         {% for language in current_user.languages %}
         <li>{{ language.title }}</li>
         {% endfor %}
     </ul>
-</li>
+</div>
 
 <!-- Faculty specific fields -->
 {% elif current_user.user_type == 'Faculty' %}
-<li><span class="label">Department:</span> {{ current_user.department }}</li>
-<li>
+<span class="label">Department:</span> {{ current_user.department }}<br>
+</div>
+<div class="profile-box">
     <span class="label">Research Areas:</span>
     <ul>
         {% for area in current_user.research_areas %}
         <li>{{ area.title }}</li>
         {% endfor %}
     </ul>
-</li>
+</div>
 {% endif %}
 
 <p>
@@ -74,7 +71,7 @@
 {% elif current_user.user_type == 'Student' %}
 <h3>Your Applications</h3>
 <div class="postlist">
-    {% if applications %} {% for application in applications %}
+    {% if applications %}
     <table class="table table-striped">
         <thead>
             <tr>
@@ -136,16 +133,6 @@
                 >Apply Now</a
             >
         </div>
-        {% endfor %} {% else %}
-        <div class="alert alert-info" role="alert">
-            You haven't applied to any positions yet. Apply now to start
-            connecting!
-            <a
-                href="{{ url_for('routes.index') }}"
-                class="btn btn-primary btn-custom"
-                >Apply Now</a
-            >
-        </div>
-        {% endif %} {% endif %} {% endblock %}
+    {% endif %}{% endif %}{% endblock %}
     </table>
 </div>
