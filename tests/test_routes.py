@@ -118,97 +118,7 @@ def init_database():
     db.drop_all()
 
 
-<<<<<<< HEAD
-=======
-def test_faculty_create_position(request, test_client, init_database):
-    """Tests faculty making a position
-        - register/faculty
-        - login (faculty)
-        - add position
-    Args:
-        request ():
-        test_client ():
-        init_database ():
-    """
-    thefaculty = new_faculty(
-        uname="cew",
-        uemail="cew@wpi.edu",
-        passwd="123",
-        firstname="Craig",
-        lastname="Wills",
-        research_areas="Computer Networks",
-        depart="Computer Science",
-        phone_number="8888888888",
-    )
 
-    db.session.add(thefaculty)
-    db.session.commit()
-
-    thefaculty_registers = test_client.post(
-        "/register/faculty",
-        data=dict(
-            username="cew",
-            password="123",
-            email="cew@wpi.edu",
-            firstname="Craig",
-            lastname="Wills",
-            research_areas="Computer Networks",
-            department="Computer Science",
-            phone_number="8888888888",
-            remember_me=False,
-        ),
-        follow_redirects=True,
-    )
-
-    assert thefaculty is not None
-    assert thefaculty_registers.status_code == 200
-
-    faculty_id = Faculty.query.filter_by(username="cew", email="cew@wpi.edu").first().id
-    assert faculty_id is not None
-
-    response = test_client.post(
-        "/login",
-        data=dict(username="cew", password="123", remember_me=False),
-        follow_redirects=True,
-    )
-    assert response.status_code == 200
-
-    start_date = datetime.utcnow()
-    end_date = start_date + timedelta(days=10)
-
-    new_position = ResearchPosition(
-        title="Deep Learning Research",
-        # Specifies the lowest desired GPA
-        wantedGPA=3.0,
-        description="Study Physics 101",
-        researchGoals="To learn more about physics ... ",
-        startDate=start_date,
-        endDate=end_date,
-        timeCommitment=3,
-        faculty=faculty_id,
-    )
-    db.session.add(new_position)
-    db.session.commit()
-
-    position_response = test_client.post(
-        "/create_position",
-        data=dict(
-            title="Deep Learning Research",
-            wantedGPA=3.0,
-            description="Study Physics 101",
-            researchGoals="To learn more about physics ... ",
-            startDate=start_date,
-            endDate=end_date,
-            timeCommitment=3,
-            faculty=faculty_id,
-        ),
-        follow_redirects=True,
-    )
-    assert position_response.status_code == 200
-    assert "Study Physics 101" in position_response.data
-
-
->>>>>>> f7e888e33774784a0a9fe7aa90cdf62768286e3e
 def new_student(
     uname, uemail, passwd, firstname, lastname, major, GPA, grad_date, phone_number
 ):
@@ -594,11 +504,11 @@ def test_student_register_apply(request, test_client, init_database):
 #     end_date = start_date + timedelta(days=10)
 #
 #     new_position = ResearchPosition(
-#         title="🅱️eep 🅱️earning 🅱️esearch",
+#         title="Deep Learning Research",
 #         # Specifies the lowest desired GPA
 #         wantedGPA=3.0,
-#         description="🅱️tudy 🅱️hysics 🅱️01",
-#         researchGoals="🅱️tudy 🅱️hysics ...",
+#         description="Study Physics 101",
+#         researchGoals="Study Physics ...",
 #         startDate=start_date,
 #         endDate=end_date,
 #         timeCommitment=3,
