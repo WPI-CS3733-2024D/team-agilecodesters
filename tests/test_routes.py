@@ -228,7 +228,21 @@ def test_apply_for_position(request, test_client, init_database):
         grad_date=None,
         phone_number="8888888888",
     )
+
+    thefaculty = new_faculty(
+            uname="cew",
+            uemail="cew@wpi.edu",
+            passwd="123",
+            firstname="Craig",
+            lastname="Wills",
+            research_areas="Computer Networks",
+            depart="Computer Science",
+            phone_number="8888888888",
+
+            )
+
     db.session.add(thestudent)
+    db.session.add(thefaculty)
     db.session.commit()
 
     thestudent_registers = test_client.post(
@@ -250,12 +264,47 @@ def test_apply_for_position(request, test_client, init_database):
     assert thestudent is not None
     assert thestudent_registers.status_code == 200
 
+
+    thefaculty_registers = test_client.post(
+        "/register/faculty",
+        data=dict(
+            username="cew",
+            password="123",
+            email="cew@wpi.edu",
+            firstname="Craig",
+            lastname="Wills",
+            research_areas="Computer Networks",
+            department="Computer Science",
+            phone_number="8888888888",
+            remember_me=False,
+        ),
+        follow_redirects=True,
+    )
+    assert thefaculty is not None
+    assert thefaculty_registers.status_code == 200
+
     retrieved_student_id = (
         Student.query.filter_by(username="jonB", email="jon@gmail.com").first().id
     )
+    retrieved_faculty_id = (
+            Faculty.query.filter_by(username="cew", email="cew@wpi.edu").first().id
+            )
 
-    # Assert that the retrieved student is not None
+    # Assert that the retrieved student and faculty are not None
     assert retrieved_student_id
+    assert retrieved_faculty_id
+
+    response = test_client.post(
+        "/login",
+        data=dict(username="cew", password="123", remember_me=False),
+        follow_redirects=True,
+    )
+    assert response.status_code == 200
+    response = test_client.post(
+            "/logout",
+            follow_redirects=True,
+            )
+
     response = test_client.post(
         "/login",
         data=dict(username="jonB", password="123", remember_me=False),
@@ -274,13 +323,14 @@ def test_apply_for_position(request, test_client, init_database):
         startDate=start_date,
         endDate=end_date,
         timeCommitment=3,
+        faculty=retrieved_faculty_id,
     )
     db.session.add(new_position)
     db.session.commit()
 
     assert new_position is not None
 
-    position_id = (
+    position = (
         ResearchPosition.query.filter_by(
             title="Deep Learning Research",
             # Specifies the lowest desired GPA
@@ -292,17 +342,30 @@ def test_apply_for_position(request, test_client, init_database):
             timeCommitment=3,
         )
         .first()
-        .id
     )
 
-    assert position_id
+    assert position is not None
+
+    position_id = position.id
+    assert position_id is not None
 
     # NOTE TO SELF: Don't use [studentID] the id when your inputting data on what you're quering.
+
+    application = Applications(
+        studentID=retrieved_student_id,
+        position=position_id,
+        statement_of_interest="I am very interested in this position ...",
+        referenceName="Johnson David",
+        referenceEmail="ProfZoe@gmail.com",
+    )
+    db.session.add(application)
+    db.session.commit()
+
     apply_response = test_client.post(
         f"/apply/{position_id}",
         data=dict(
             studentID=retrieved_student_id,
-            position_id=position_id,
+            position=position_id,
             statement_of_interest="I am very interested in this position ...",
             referenceName="Johnson David",
             referenceEmail="ProfZoe@gmail.com",
@@ -314,6 +377,13 @@ def test_apply_for_position(request, test_client, init_database):
 
     assert apply_response.status_code == 200
 
+    # print all the applications
+    applications = Applications.query.all()
+    for application in applications:
+        print("APP!")
+        print(application)
+
+
     application = Applications.query.filter_by(
         studentID=retrieved_student_id, position=position_id
     ).first()
@@ -323,7 +393,7 @@ def test_apply_for_position(request, test_client, init_database):
     assert (
         application.statement_of_interest == "I am very interested in this position ..."
     )
-    assert application.referenceName == "Prof. Zoe David"
+    assert application.referenceName == "Johnson David"
     assert application.referenceEmail == "ProfZoe@gmail.com"
 
 
