@@ -382,16 +382,15 @@ def test_student_register_apply(request, test_client, init_database):
     )
 
     thefaculty = new_faculty(
-            uname="cew",
-            uemail="cew@wpi.edu",
-            passwd="123",
-            firstname="Craig",
-            lastname="Wills",
-            research_areas="Computer Networks",
-            depart="Computer Science",
-            phone_number="8888888888",
-
-            )
+        uname="cew",
+        uemail="cew@wpi.edu",
+        passwd="123",
+        firstname="Craig",
+        lastname="Wills",
+        research_areas="Computer Networks",
+        depart="Computer Science",
+        phone_number="8888888888",
+    )
 
     db.session.add(thestudent)
     db.session.add(thefaculty)
@@ -419,7 +418,6 @@ def test_student_register_apply(request, test_client, init_database):
     assert thestudent is not None
     assert thestudent_registers.status_code == 200
 
-
     thefaculty_registers = test_client.post(
         "/register/faculty",
         data=dict(
@@ -445,8 +443,8 @@ def test_student_register_apply(request, test_client, init_database):
         Student.query.filter_by(username="jonB", email="jon@gmail.com").first().id
     )
     retrieved_faculty_id = (
-            Faculty.query.filter_by(username="cew", email="cew@wpi.edu").first().id
-            )
+        Faculty.query.filter_by(username="cew", email="cew@wpi.edu").first().id
+    )
 
     # Assert that the retrieved student and faculty are not None
     assert retrieved_student_id
@@ -480,19 +478,16 @@ def test_student_register_apply(request, test_client, init_database):
 
     assert new_position is not None
 
-    position = (
-        ResearchPosition.query.filter_by(
-            title="Deep Learning Research",
-            # Specifies the lowest desired GPA
-            wantedGPA=3.0,
-            description="Study Physics 101",
-            researchGoals="To learn more about physics ... ",
-            startDate=start_date,
-            endDate=end_date,
-            timeCommitment=3,
-        )
-        .first()
-    )
+    position = ResearchPosition.query.filter_by(
+        title="Deep Learning Research",
+        # Specifies the lowest desired GPA
+        wantedGPA=3.0,
+        description="Study Physics 101",
+        researchGoals="To learn more about physics ... ",
+        startDate=start_date,
+        endDate=end_date,
+        timeCommitment=3,
+    ).first()
 
     assert position is not None
 
@@ -532,7 +527,6 @@ def test_student_register_apply(request, test_client, init_database):
     for application in applications:
         print("APP!")
         print(application)
-
 
     application = Applications.query.filter_by(
         studentID=retrieved_student_id, position=position_id
