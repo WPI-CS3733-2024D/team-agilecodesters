@@ -27,7 +27,7 @@ Follow these instructions to set up and run the project locally on your machine.
 ### Installation
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/student-enrollment-app.git
+   git clone https://github.com/WPI-CS3733-2024D/team-agilecodesters.git 
    cd student-enrollment-app
 
 2. **Set Up Virtual Environment** (Recommended):
