@@ -3,6 +3,7 @@ from app import db
 
 errors_blueprint = Blueprint("errors", __name__)
 
+
 # file contains error handling for 404 or 500 errors.
 @errors_blueprint.errorhandler(404)
 def not_found_error(error):

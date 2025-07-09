@@ -108,19 +108,21 @@ def create_position():
         topics = []
         for topic in form.researchGoals.data:
             topics.append(topic)
-        
+
         # populate position object with data from the form.
         position = ResearchPosition(
             title=form.title.data,
             wantedGPA=form.wantedGPA.data,
             description=form.description.data,
-            researchGoals=topics.__repr__(), # convert list to string
+            researchGoals=topics.__repr__(),  # convert list to string
             startDate=form.startDate.data,
             endDate=form.endDate.data,
             timeCommitment=form.timeCommitment.data,
             languages=form.languages.data,
         )
-        position.faculty = current_user.id #faculty attribute is actually the id of the faculty member.
+        position.faculty = (
+            current_user.id
+        )  # faculty attribute is actually the id of the faculty member.
 
         # commit the position to the database.
         db.session.add(position)
@@ -138,7 +140,7 @@ def apply_for_position(position_id):
     if current_user.user_type != "Student":
         flash("You must be a student to apply for a position!")
         return redirect(url_for("routes.index"))
-    
+
     # get the position the student applied for.
     position = ResearchPosition.query.get(position_id)
 
@@ -152,7 +154,7 @@ def apply_for_position(position_id):
         existing_application = Applications.query.filter_by(
             studentID=current_user.id, position=position_id
         ).first()
-        
+
         if existing_application:
             flash("You have already applied to this position!")
             return redirect(url_for("routes.index"))
@@ -223,7 +225,7 @@ def edit_position(position_id):
     ):
         flash("You must be the faculty member who created this position to edit it!")
         return redirect(url_for("routes.index"))
-    
+
     # get that specific position by its id.
     position = ResearchPosition.query.get(position_id)
 

@@ -25,7 +25,7 @@ block styles %} {{super()}}
                 </li>
 
                 {% elif current_user.user_type == 'Faculty' %}
-        
+
                 <li>
                     <a href="{{ url_for('routes.create_position')}}">
                         Create Position
@@ -36,7 +36,7 @@ block styles %} {{super()}}
                         View Created Positions
                     </a>
                 </li>
-                {% endif %} 
+                {% endif %}
 
                 <!-- If there is a valid user, then they have a profile they can view. -->
                 {% if not current_user.is_anonymous %}
@@ -48,7 +48,6 @@ block styles %} {{super()}}
                 <!-- Anyone can access about us page-->
                 <li><a href="{{ url_for('routes.about_us')}}">About Us</a></li>
             </u1>
-
 
             <ul class="nav navbar navbar-right">
                 <!-- Show the login page on top right of page if there is no user logged in yet.-->

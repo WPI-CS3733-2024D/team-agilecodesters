@@ -15,8 +15,9 @@ from wtforms.widgets import ListWidget, CheckboxInput
 
 # This file contains the forms used for user registration and login in the application for students and professors.
 
-# CONCEPT: Forms is used to collect data from users in a structured way. This data will then by 
+# CONCEPT: Forms is used to collect data from users in a structured way. This data will then by
 #   processed by the server and stored in the database.
+
 
 # helps with validating phone numbers and checking the appropiate length and data inputted in this section
 def validate_phone_number(form, field):
@@ -35,12 +36,12 @@ class StudentRegistrationForm(FlaskForm):
         "Phone Number", validators=[DataRequired(), validate_phone_number]
     )
 
-
-    major = QuerySelectField( # dropdown menu for majors.
-        
+    major = QuerySelectField(  # dropdown menu for majors.
         # get all major objects from database
         # Displays each major's name using the name attribute from teh major table model.
-        "Major", query_factory=lambda: Major.query.all(), get_label=lambda x: x.name 
+        "Major",
+        query_factory=lambda: Major.query.all(),
+        get_label=lambda x: x.name,
     )
 
     # decimal for required GPA data input.
@@ -93,7 +94,7 @@ class FacultyRegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     firstname = StringField("First Name", validators=[DataRequired()])
     lastname = StringField("Last Name", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired(), Email()]) 
+    email = StringField("Email", validators=[DataRequired(), Email()])
 
     # uses helper function to check validaty of phone number.
     phone_number = StringField(

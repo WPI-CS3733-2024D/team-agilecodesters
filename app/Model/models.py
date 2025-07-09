@@ -105,13 +105,16 @@ class Student(User):
     # Association Table: linking students and programming languages in a many-to-many relationship.
     # A student can have multiple programming languages.
     languages = db.relationship(
-        "ProgrammingLanguage", 
-        secondary=studentLanguages, # specifies link between students to programming languages.
+        "ProgrammingLanguage",
+        secondary=studentLanguages,  # specifies link between students to programming languages.
         # specifies how a student is linked into the association table.
-        primaryjoin=(studentLanguages.c.student_id == id), # Join where student_id matches the id of the student.
-
+        primaryjoin=(
+            studentLanguages.c.student_id == id
+        ),  # Join where student_id matches the id of the student.
         # allows bidirectionality between Students and Programming Languages through studentLanguages table above. Makes it many-to-many
-        backref=db.backref("studentLanguages", lazy="dynamic"), # access all programming languages a student knows. 
+        backref=db.backref(
+            "studentLanguages", lazy="dynamic"
+        ),  # access all programming languages a student knows.
         lazy="dynamic",
     )
 
@@ -129,7 +132,9 @@ class Student(User):
 
     def has_applied_to_position(self, applied_position):
         return bool(
-            Applications.query.filter_by(studentID=self.id, position=applied_position).first()
+            Applications.query.filter_by(
+                studentID=self.id, position=applied_position
+            ).first()
         )
 
     __mapper_args__ = {"polymorphic_identity": UserType.Student}
@@ -177,7 +182,7 @@ class Faculty(User):
 
     research_areas = db.relationship(
         "ResearchField",
-        secondary=facultyInterests, 
+        secondary=facultyInterests,
         primaryjoin=(facultyInterests.c.faculty_id == id),
         backref=(db.backref("facultyInterests", lazy="dynamic")),
         lazy="dynamic",
@@ -226,15 +231,21 @@ class ResearchField(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30))
-    attachedPosition = db.relationship("PositionField", back_populates="fields") # certain positions belong to specific fields, back_population ensures bidirectionality.
+    attachedPosition = db.relationship(
+        "PositionField", back_populates="fields"
+    )  # certain positions belong to specific fields, back_population ensures bidirectionality.
 
     # Many to Many: association table that links certain fields with students.
-    student_interested = db.relationship( # students in certain research fields
+    student_interested = db.relationship(  # students in certain research fields
         "Student",
         secondary=studentFields,
-        primaryjoin=(studentFields.c.field_id == id), # prove students must be interested in certain fields.
-        backref=db.backref("studentFields", lazy="dynamic"), # Student model access linked research fields
-        lazy="dynamic", # allows querying.
+        primaryjoin=(
+            studentFields.c.field_id == id
+        ),  # prove students must be interested in certain fields.
+        backref=db.backref(
+            "studentFields", lazy="dynamic"
+        ),  # Student model access linked research fields
+        lazy="dynamic",  # allows querying.
     )
 
     def get_fields(self):
