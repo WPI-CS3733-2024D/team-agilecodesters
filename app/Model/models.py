@@ -102,11 +102,16 @@ class Student(User):
     user_type = db.Column(db.String(20), default="Student")
 
     # Programming languages the student is proficient with
+    # Association Table: linking students and programming languages in a many-to-many relationship.
+    # A student can have multiple programming languages.
     languages = db.relationship(
-        "ProgrammingLanguage",
-        secondary=studentLanguages,
-        primaryjoin=(studentLanguages.c.student_id == id),
-        backref=db.backref("studentLanguages", lazy="dynamic"),
+        "ProgrammingLanguage", 
+        secondary=studentLanguages, # specifies link between students to programming languages.
+        # specifies how a student is linked into the association table.
+        primaryjoin=(studentLanguages.c.student_id == id), # Join where student_id matches the id of the student.
+
+        # allows bidirectionality between Students and Programming Languages through studentLanguages table above. Makes it many-to-many
+        backref=db.backref("studentLanguages", lazy="dynamic"), # access all programming languages a student knows. 
         lazy="dynamic",
     )
 
@@ -122,9 +127,9 @@ class Student(User):
         "Applications", back_populates="student_enrolled"
     )
 
-    def has_applied_to_position(self, position):
+    def has_applied_to_position(self, applied_position):
         return bool(
-            Applications.query.filter_by(studentID=self.id, position=position).first()
+            Applications.query.filter_by(studentID=self.id, position=applied_position).first()
         )
 
     __mapper_args__ = {"polymorphic_identity": UserType.Student}
@@ -172,7 +177,7 @@ class Faculty(User):
 
     research_areas = db.relationship(
         "ResearchField",
-        secondary=facultyInterests,
+        secondary=facultyInterests, 
         primaryjoin=(facultyInterests.c.faculty_id == id),
         backref=(db.backref("facultyInterests", lazy="dynamic")),
         lazy="dynamic",
@@ -221,14 +226,15 @@ class ResearchField(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30))
-    attachedPosition = db.relationship("PositionField", back_populates="fields")
+    attachedPosition = db.relationship("PositionField", back_populates="fields") # certain positions belong to specific fields, back_population ensures bidirectionality.
 
-    student_interested = db.relationship(
+    # Many to Many: association table that links certain fields with students.
+    student_interested = db.relationship( # students in certain research fields
         "Student",
         secondary=studentFields,
-        primaryjoin=(studentFields.c.field_id == id),
-        backref=db.backref("studentFields", lazy="dynamic"),
-        lazy="dynamic",
+        primaryjoin=(studentFields.c.field_id == id), # prove students must be interested in certain fields.
+        backref=db.backref("studentFields", lazy="dynamic"), # Student model access linked research fields
+        lazy="dynamic", # allows querying.
     )
 
     def get_fields(self):
@@ -250,6 +256,9 @@ class ProgrammingLanguage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30))
 
+    # many-to-many relationship
+    # link language_id of student languages to the id of the Programming language to make student languages a programming language.
+    # backref: makes bidirectional back to the Student class model (effectively ensuring many-to-many)
     student_proficient = db.relationship(
         "Student",
         secondary=studentLanguages,
@@ -257,6 +266,11 @@ class ProgrammingLanguage(db.Model):
         backref=db.backref("studentLanguages", lazy="dynamic"),
         lazy="dynamic",
     )
+
+    # many-to-many relationship
+    # A programming language can be in multiple research positions.
+    # links language_id from positionLanguages association table with the id of a programming language.
+    # backref: allows bidirectionality from ResearchPosition to ProgrammingLanguages class models.
 
     position_required_by = db.relationship(
         "ResearchPosition",
@@ -323,7 +337,9 @@ class ResearchPosition(db.Model):
         )
 
 
-# A relationship table relation research positions and the fields they pertain to
+# Association Table: A research position is linked to research fields that they are for
+#       EXAMPLE: Research-Position-A requires AI or Cybersecurity.
+# A relationship table relating research positions and the fields they pertain to
 class PositionField(db.Model):
     """
     Represents the relationship between research positions and the fields they pertain to
@@ -366,7 +382,9 @@ class Applications(db.Model):
     )
 
     # Represent relationships to student and ResearchPosition respectively
+    # Each (could be multiple) application linked to one student: many-to-one.
     student_enrolled = db.relationship("Student")
+    # Each (could be multiple) application linked to one research position: many-to-one
     enrolled_position = db.relationship("ResearchPosition")
 
     # status

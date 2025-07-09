@@ -37,11 +37,16 @@ def index():
     posts = ResearchPosition.query.order_by(ResearchPosition.startDate.desc())
 
     if search_form.validate_on_submit():
+
+        # get the specific sort option selected by user.
         sort_option = search_form.sortOrder.data
 
+        # use order_by() for sorting!
         if sort_option == "Date":
+            # order by date from newest to oldest.
             posts = ResearchPosition.query.order_by(ResearchPosition.startDate.asc())
         elif sort_option == "GPA":
+            # order by GPA from highest to lowest. (sorting decimals)
             posts = ResearchPosition.query.order_by(ResearchPosition.wantedGPA.desc())
         # elif sort_option == 'Fields':
         #     if current_user.user_type == "Student":
@@ -91,26 +96,33 @@ def index():
 @routes_blueprint.route("/create_position", methods=["GET", "POST"])
 @login_required
 def create_position():
+    # only faculty can create positions.
     if current_user.user_type != "Faculty":
         flash("You must be a faculty member to create a position!")
         return redirect(url_for("routes.index"))
     form = CreatePositionForm()
+
     if form.validate_on_submit():
+
+        # check if the faculty member has selected at least one research goal.
         topics = []
         for topic in form.researchGoals.data:
             topics.append(topic)
-
+        
+        # populate position object with data from the form.
         position = ResearchPosition(
             title=form.title.data,
             wantedGPA=form.wantedGPA.data,
             description=form.description.data,
-            researchGoals=topics.__repr__(),
+            researchGoals=topics.__repr__(), # convert list to string
             startDate=form.startDate.data,
             endDate=form.endDate.data,
             timeCommitment=form.timeCommitment.data,
             languages=form.languages.data,
         )
-        position.faculty = current_user.id
+        position.faculty = current_user.id #faculty attribute is actually the id of the faculty member.
+
+        # commit the position to the database.
         db.session.add(position)
         db.session.commit()
         flash("Position created successfully!")
@@ -121,21 +133,32 @@ def create_position():
 @routes_blueprint.route("/apply/<position_id>", methods=["POST"])
 @login_required
 def apply_for_position(position_id):
+
+    # only students can apply for positions.
     if current_user.user_type != "Student":
         flash("You must be a student to apply for a position!")
         return redirect(url_for("routes.index"))
+    
+    # get the position the student applied for.
     position = ResearchPosition.query.get(position_id)
+
     aform = ApplicationForm()
     aform.firstname.data = current_user.firstname
     aform.lastname.data = current_user.lastname
     if aform.validate_on_submit() and request.method == "POST":
+
+        # check if student already applied for this position.
+        # if they have, we will not allow them to apply again.
         existing_application = Applications.query.filter_by(
             studentID=current_user.id, position=position_id
         ).first()
+        
         if existing_application:
             flash("You have already applied to this position!")
             return redirect(url_for("routes.index"))
         else:
+
+            # populate the application object with data from the application form.
             application = Applications(
                 studentID=current_user.id,
                 position=position_id,
@@ -145,6 +168,8 @@ def apply_for_position(position_id):
                 + aform.reference_faculty_lastname.data,
                 referenceEmail=aform.reference_faculty_email.data,
             )
+
+            # add that application to the database.
             db.session.add(application)
             db.session.commit()
             flash("Application submitted successfully!")
@@ -161,9 +186,13 @@ def apply_for_position(position_id):
 @routes_blueprint.route("/unapply/<position_id>", methods=["POST"])
 @login_required
 def unapply_for_position(position_id):
+
+    # get that particular application that student applied for.
     application = Applications.query.filter_by(
         studentID=current_user.id, position=position_id
     ).first()
+
+    # if application exists, delete it from the database.
     if application:
         db.session.delete(application)
         db.session.commit()
@@ -186,14 +215,22 @@ def view_position(position_id):
 @routes_blueprint.route("/position/edit/<position_id>", methods=["GET", "POST"])
 @login_required
 def edit_position(position_id):
+
+    # only faculty who created the position can edit it.
     if (
         current_user.user_type != "Faculty"
         and current_user.id != ResearchPosition.query.get(position_id).faculty
     ):
         flash("You must be the faculty member who created this position to edit it!")
         return redirect(url_for("routes.index"))
+    
+    # get that specific position by its id.
     position = ResearchPosition.query.get(position_id)
+
+    # get new data we want to update the position with.
     form = EditPositionForm()
+
+    # update that particular position with updated data from the form
     if form.validate_on_submit():
         position.title = form.title.data
         position.description = form.description.data
@@ -214,6 +251,7 @@ def edit_position(position_id):
         flash("Position updated successfully!")
         return redirect(url_for("routes.view_position", position_id=position_id))
     else:
+        # if no research goals were inputted.
         form.title.data = position.title
         form.description.data = position.description
         form.wantedGPA.data = position.wantedGPA

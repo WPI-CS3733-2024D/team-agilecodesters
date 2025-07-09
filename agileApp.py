@@ -36,6 +36,8 @@ def initDB(*args, **kwargs):
                 {"name": "Physics", "dname": "Hard Sciences"},
                 {"name": "Biochemicalphysics", "dname": "Hard Sciences"},
             ]
+
+            # If there is a department, then there is a major.
             for major in majors:
                 with db.session.no_autoflush:
                     department = Department.query.filter_by(name=major["dname"]).first()

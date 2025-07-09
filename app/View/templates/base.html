@@ -14,7 +14,8 @@ block styles %} {{super()}}
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <u1 class="nav navbar-nav">
                 <li><a href="{{ url_for('routes.index')}}"> Home </a></li>
-                <!-- Change to route for Applied Postions Page -->
+
+                <!-- Change to route for Applied Postions Page based on who's the user -->
                 {% if current_user.user_type == 'Student' %}
 
                 <li>
@@ -24,7 +25,7 @@ block styles %} {{super()}}
                 </li>
 
                 {% elif current_user.user_type == 'Faculty' %}
-                <!-- Change to route for (Applied Postions Page?) -->
+        
                 <li>
                     <a href="{{ url_for('routes.create_position')}}">
                         Create Position
@@ -35,17 +36,27 @@ block styles %} {{super()}}
                         View Created Positions
                     </a>
                 </li>
-                {% endif %} {% if not current_user.is_anonymous %}
+                {% endif %} 
+
+                <!-- If there is a valid user, then they have a profile they can view. -->
+                {% if not current_user.is_anonymous %}
                 <li>
                     <a href="{{ url_for('routes.view_profile')}}"> Profile </a>
                 </li>
                 {% endif %}
+
+                <!-- Anyone can access about us page-->
                 <li><a href="{{ url_for('routes.about_us')}}">About Us</a></li>
             </u1>
+
+
             <ul class="nav navbar navbar-right">
+                <!-- Show the login page on top right of page if there is no user logged in yet.-->
                 {% if current_user.is_anonymous %}
                 <li><a href="{{ url_for('auth.login')}}"> Login </a></li>
                 {% else %}
+
+                <!-- else show the log out link on top right of page.-->
                 <li>
                     <a href="{{ url_for('auth.logout')}}" class="link-custom">
                         Logout
@@ -57,6 +68,7 @@ block styles %} {{super()}}
     </div>
 </nav>
 
+<!-- If there are are flashed messages, get the messages and display them on screen using the alert-info styles-->
 <div>
     {% with messages = get_flashed_messages() %} {% if messages %} {% for
     message in messages %}

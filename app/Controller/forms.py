@@ -25,6 +25,10 @@ def validate_phone_number(form, field):
 
 
 class ApplicationForm(FlaskForm):
+
+    # CONCEPT: This form is used to apply for a position.
+    # It collects the applicant's first name, last name, statement of interest,
+    # as well as the referenced faculty's first name, last name, and email.
     firstname = StringField("First Name", validators=[DataRequired()])
     lastname = StringField("Last Name", validators=[DataRequired()])
     statement_of_interest = TextAreaField(
@@ -45,10 +49,15 @@ class ApplicationForm(FlaskForm):
 
 
 class CreatePositionForm(FlaskForm):
+
+    # CONCEPT: This form is used to create a new position.
+    # It collects the position title, description, research areas, desired GPA,
     title = StringField("Title", validators=[DataRequired()])
     description = StringField(
         "Description", validators=[DataRequired(), Length(max=1500)]
     )
+
+    # can select multiple research areas the position relates to.
     researchGoals = QuerySelectMultipleField(
         "Research Areas",
         query_factory=lambda: ResearchField.query.all(),
@@ -56,7 +65,11 @@ class CreatePositionForm(FlaskForm):
         widget=ListWidget(prefix_label=False),
         option_widget=CheckboxInput(),
     )
+
+    # GPA is a float field, so it can have decimal values.
     wantedGPA = FloatField("Lowest Desired GPA", validators=[DataRequired()])
+
+    # dropdown of all programming languages that can be selected.
     languages = QuerySelectMultipleField(
         "Programming Languages",
         query_factory=lambda: ProgrammingLanguage.query.all(),
@@ -76,6 +89,8 @@ class CreatePositionForm(FlaskForm):
 
 
 class EditPositionForm(FlaskForm):
+
+    # CONCEPT: This form is used to edit an existing position. (same fields as CreatePositionForm)
     title = StringField("Title", validators=[DataRequired()])
     description = StringField(
         "Description", validators=[DataRequired(), Length(max=1500)]
@@ -108,6 +123,10 @@ class EditPositionForm(FlaskForm):
 
 # SEARCH FEATURE on index page
 class SearchForm(FlaskForm):
+
+    # CONCEPT: This form is used to search for positions.
+    # It allows the user to filter positions by Date, GPA, or Recommended.
+    # default is set to Date which meaning results will be sorted by start date.
     sortOrder = SelectField(
         "Sort by:",
         choices=[
@@ -119,11 +138,15 @@ class SearchForm(FlaskForm):
     )
     submit = SubmitField("Search")
 
+    # method to get the choices for the sortOrder field
+    # used to populate the dropdown menu.
     def get_choices(self):
         return self.sortOrder.choices
 
 
 class EditStudentProfileForm(FlaskForm):
+    # CONCEPT: This form is used to edit a student's profile. (which was originally created by the registration form)
+    # we will later update the student object with this inputted data.
     firstname = StringField("First Name", validators=[DataRequired()])
     lastname = StringField("Last Name", validators=[DataRequired()])
     phone_number = StringField(
@@ -159,6 +182,8 @@ class EditStudentProfileForm(FlaskForm):
 
 
 class EditFacultyProfileForm(FlaskForm):
+    # CONCEPT: This form is used to edit a faculty member's profile. (which was originally created by the registration form)
+    # we will later update the faculty object with this inputted data.
     firstname = StringField("First Name", validators=[DataRequired()])
     lastname = StringField("Last Name", validators=[DataRequired()])
     phone_number = StringField(
