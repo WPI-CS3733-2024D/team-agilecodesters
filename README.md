@@ -33,23 +33,26 @@ Follow these instructions to set up and run the project locally on your machine.
 2. **Set Up Virtual Environment** (Recommended):
    
    ```bash
-# Create virtual environment
-python -m venv venv
+    # Create virtual environment
+    python -m venv venv
 
-# Activate environment
-# Linux/MacOS:
-source venv/bin/activate  
+    # Activate environment
+    # Linux/MacOS:  
+    source venv/bin/activate  
    
-# Windows:
-.\venv\Scripts\activate
+    # Windows:
+    .\venv\Scripts\activate
 
 
 3. **Install Dependencies**:
    ```bash
    # Install core requirements ensure you are in your activated virtual environment
    pip install -r requirements.txt
+   
+   # Verify installations
+   pip list | grep -E "flask|sqlalchemy"
 
-# If requirements.txt doesn't exist, install manually:
+   # If requirements.txt does not exist, install manually:
    pip install flask==2.3.2 \
                flask-sqlalchemy==3.0.3 \
                python-dotenv==1.0.0
