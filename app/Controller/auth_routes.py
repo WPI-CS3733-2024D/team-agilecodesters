@@ -10,10 +10,15 @@ from sqlalchemy import func
 from config import Config
 from app import db
 
-auth_blueprint = Blueprint("auth", __name__) # auth.[route_name] will be used to access routes in this file.
-auth_blueprint.template_folder = Config.TEMPLATE_FOLDER # templates of blueprints are stored here.
+auth_blueprint = Blueprint(
+    "auth", __name__
+)  # auth.[route_name] will be used to access routes in this file.
+auth_blueprint.template_folder = (
+    Config.TEMPLATE_FOLDER
+)  # templates of blueprints are stored here.
 
 # CONCEPT: This file allows use to do operations with the data collected from the authentication forms.
+
 
 @auth_blueprint.route("/register/student", methods=["GET", "POST"])
 def register_student():
@@ -29,7 +34,7 @@ def register_student():
         if existing_student:
             flash("Username or email is taken! Please try again.")
             return redirect(url_for("auth.register_student"))
-        
+
         # If the username does not exist, then we can register the student.
 
         # we populate the student object with data from the form.
@@ -51,7 +56,7 @@ def register_student():
 
         # here is where we will handle the comma-separated topics of interest.
         if sform.other_topics.data:
-            other_topics = sform.other_topics.data.split(",") # deliminate by comma
+            other_topics = sform.other_topics.data.split(",")  # deliminate by comma
 
             # for each topic of interest, newtopic is created and added to the database.
             # every topic has to have a research field and each topic is the title of the research field.
@@ -65,7 +70,7 @@ def register_student():
                 student.topics_of_interest.append(newtopic)
 
         # for each language chosen in the form, we add it to the student's proficient languages.
-        # 
+        #
         for language in sform.languages.data:
             student.languages.append(language)
 
@@ -161,7 +166,7 @@ def login():
     if lform.validate_on_submit():
         # check if user is a student, faculty, or if login fails
 
-        #Find faculty and student objects in the database with the username.
+        # Find faculty and student objects in the database with the username.
         faculty = Faculty.query.filter_by(username=lform.username.data).first()
         student = Student.query.filter_by(username=lform.username.data).first()
 
@@ -181,7 +186,7 @@ def login():
 
 
 @auth_blueprint.route("/logout", methods=["GET"])
-@login_required # decorator ensures only logged in users can log out and be redirected to the login page.
+@login_required  # decorator ensures only logged in users can log out and be redirected to the login page.
 def logout():
     # utils function we didn't implement.
     logout_user()
